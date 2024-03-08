@@ -20,8 +20,9 @@ class MyApp extends StatelessWidget {
     Get.put(HomeController());
 
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'codecrafter ',
       debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple.shade900),
         useMaterial3: true,

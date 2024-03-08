@@ -34,6 +34,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
+
       appBar: AppBar(  backgroundColor: Color(0xFFF735DA5) ,title: Text(
         'Home',
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
