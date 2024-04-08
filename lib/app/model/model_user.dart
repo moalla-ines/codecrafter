@@ -1,16 +1,14 @@
-
-
-
-class Users{
+class UserEntity {
   int? iduser;
   String? username;
   String? password;
   String? email;
 
-  Users({this.iduser, this.username, this.password, this.email});
 
-Users.fromJson(Map<String, dynamic> json) {
-    iduser = json['id'];
+  UserEntity(this.iduser, this.username, this.password, this.email);
+
+  UserEntity.fromJson(Map<String, dynamic> json) {
+    iduser = json['id']; // Utiliser 'id' au lieu de 'iduser'
     username = json['username'];
     password = json['password'];
     email = json['email'];
