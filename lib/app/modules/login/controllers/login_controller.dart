@@ -44,6 +44,7 @@ class LoginController extends GetxController {
             // Stocker le token dans un endroit sécurisé comme le stockage local
             // Naviguer vers la page d'accueil après l'authentification réussie
             Get.to(() => HomeView());
+          print('ines');
         } else {
           Get.snackbar('Erreur de connexion', 'Email ou mot de passe incorrect');
         }
