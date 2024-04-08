@@ -1,56 +1,55 @@
-import 'package:codecrafter/app/model/model_user.dart';
-import 'package:codecrafter/app/model/registrations.dart';
-import 'package:codecrafter/app/modules/home/views/home_view.dart';
-import 'package:codecrafter/app/services/userservice.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-
-
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
 
 class LoginController extends GetxController {
-
-  late TextEditingController usernameController;
+  late TextEditingController emailController;
   late TextEditingController passwordController;
-
 
   @override
   void onInit() {
     super.onInit();
-    usernameController = TextEditingController();
+    emailController = TextEditingController();
     passwordController = TextEditingController();
   }
 
   void onSubmitLoginForm() async {
-    if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       try {
-        // Appel du service pour récupérer les utilisateurs
-        List<Users> users = await UsersServices.getAllUsers();
-print(users);
-        // Comparaison des données de connexion avec les utilisateurs récupérés
-        for (Users user in users) {
-          if (user.username == usernameController.text && user.password == passwordController.text) {
-            // Connexion réussie, naviguer vers la page d'accueil
-            Get.to(() => HomeView());
-            return;
-          }
-        }
+        final response = await http.post(
+          Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'email': emailController.text,
+            'password': passwordController.text,
+          }),
+        );
 
-        // Si aucune correspondance n'est trouvée, afficher un message d'erreur
-        Get.snackbar('Erreur', 'Identifiants incorrects.');
+        if (response.statusCode == 200) {
+          print('marche');
+          final responseData = json.decode(response.body);
+          final token = responseData['token'];
+          // Stockez le token dans un endroit sécurisé comme le stockage local
+          // Naviguer vers la page d'accueil après l'authentification réussie
+          Get.to(() => HomeView());
+        } else {
+          Get.snackbar('Erreur de connexion', 'Email ou mot de passe incorrect');
+        }
       } catch (e) {
-        // En cas d'erreur lors de la récupération des utilisateurs, afficher un message d'erreur
-        Get.snackbar('Erreur', 'Une erreur s\'est produite lors de la connexion.');
+        Get.snackbar('Erreur', 'Une erreur s\'est produite lors de la connexion');
       }
     } else {
-      // Si l'un des champs est vide, afficher un message d'erreur
-      Get.snackbar('Erreur', 'Veuillez remplir tous les champs.');
+      Get.snackbar('Erreur', 'Veuillez remplir tous les champs');
     }
   }
 
   @override
   void onClose() {
-    usernameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.onClose();
   }

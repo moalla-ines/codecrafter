@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 
 class UsersServices {
-  static Future<List<Users>> getAllUsers() async {
+   Future<List<Users>> getAllUsers() async {
     final url = Uri.parse('http://localhost:8080/api/v1/user');
     final response = await http.get(url);
 
