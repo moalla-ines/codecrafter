@@ -12,10 +12,15 @@ class LoginController extends GetxController {
   void onInit() {
     super.onInit();
     emailController = TextEditingController();
+    assert(emailController != null);
     passwordController = TextEditingController();
+    assert(passwordController != null);
   }
 
   void onSubmitLoginForm() async {
+    assert(emailController != null);
+    assert(passwordController != null);
+
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       try {
         final response = await http.post(
@@ -29,17 +34,21 @@ class LoginController extends GetxController {
           }),
         );
 
+
+        assert(response != null);
+
         if (response.statusCode == 200) {
-          print('marche');
           final responseData = json.decode(response.body);
-          final token = responseData['token'];
-          // Stockez le token dans un endroit sécurisé comme le stockage local
-          // Naviguer vers la page d'accueil après l'authentification réussie
-          Get.to(() => HomeView());
+          final token = responseData['token'] as String?;
+          assert(token != null);
+            // Stocker le token dans un endroit sécurisé comme le stockage local
+            // Naviguer vers la page d'accueil après l'authentification réussie
+            Get.to(() => HomeView());
         } else {
           Get.snackbar('Erreur de connexion', 'Email ou mot de passe incorrect');
         }
       } catch (e) {
+        print('ines');
         Get.snackbar('Erreur', 'Une erreur s\'est produite lors de la connexion');
       }
     } else {
@@ -54,3 +63,4 @@ class LoginController extends GetxController {
     super.onClose();
   }
 }
+
