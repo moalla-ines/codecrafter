@@ -5,22 +5,10 @@ import 'package:get/get.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
 
 class LoginController extends GetxController {
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-
-  @override
-  void onInit() {
-    super.onInit();
-    emailController = TextEditingController();
-    assert(emailController != null);
-    passwordController = TextEditingController();
-    assert(passwordController != null);
-  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   void onSubmitLoginForm() async {
-    assert(emailController != null);
-    assert(passwordController != null);
-
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       try {
         final response = await http.post(
@@ -34,22 +22,20 @@ class LoginController extends GetxController {
           }),
         );
 
-
-        assert(response != null);
-
         if (response.statusCode == 200) {
           final responseData = json.decode(response.body);
           final token = responseData['token'] as String?;
-          assert(token != null);
+          if (token != null) {
             // Stocker le token dans un endroit sécurisé comme le stockage local
             // Naviguer vers la page d'accueil après l'authentification réussie
             Get.to(() => HomeView());
-          print('ines');
+          } else {
+            Get.snackbar('Erreur', 'Token non valide');
+          }
         } else {
           Get.snackbar('Erreur de connexion', 'Email ou mot de passe incorrect');
         }
       } catch (e) {
-        print('ines');
         Get.snackbar('Erreur', 'Une erreur s\'est produite lors de la connexion');
       }
     } else {
@@ -64,4 +50,3 @@ class LoginController extends GetxController {
     super.onClose();
   }
 }
-

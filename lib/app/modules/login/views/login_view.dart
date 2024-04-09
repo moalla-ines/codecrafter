@@ -1,9 +1,7 @@
 import 'package:codecrafter/app/modules/inscription/views/inscription_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controllers/login_controller.dart';
-
 
 
 class LoginView extends StatelessWidget {
@@ -59,7 +57,14 @@ class LoginView extends StatelessWidget {
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: controller.onSubmitLoginForm,
+                onPressed: () {
+                  if (controller.emailController.text.isNotEmpty &&
+                      controller.passwordController.text.isNotEmpty) {
+                    controller.onSubmitLoginForm();
+                  } else {
+                    Get.snackbar('Error', 'Please fill in all fields');
+                  }
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade100),
                 ),
