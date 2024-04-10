@@ -9,12 +9,9 @@ class QuizView extends StatelessWidget {
       backgroundColor: Color(0xFFF732DA2),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF732DA2) ,
-        title: Text(
-        'Quiz',
-          textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),
+        title: Text('Quiz', style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),   ),
+          centerTitle: true,
 
-      ),
       ),
 
       body: SingleChildScrollView(

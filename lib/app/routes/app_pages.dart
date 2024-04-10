@@ -6,6 +6,8 @@ import '../modules/inscription/bindings/inscription_binding.dart';
 import '../modules/inscription/views/inscription_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/niveau/bindings/niveau_binding.dart';
+import '../modules/niveau/views/niveau_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/quiz/bindings/quiz_binding.dart';
@@ -16,7 +18,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.QUIZ;
+  static const INITIAL = Routes.NIVEAU;
 
   static final routes = [
     GetPage(
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.NIVEAU,
+      page: () => const NiveauView(),
+      binding: NiveauBinding(),
     ),
   ];
 }
