@@ -10,6 +10,8 @@ import '../modules/niveau/bindings/niveau_binding.dart';
 import '../modules/niveau/views/niveau_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/question/bindings/question_binding.dart';
+import '../modules/question/views/question_view.dart';
 import '../modules/quiz/bindings/quiz_binding.dart';
 import '../modules/quiz/views/quiz_view.dart';
 
@@ -18,11 +20,11 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.NIVEAU;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
-      name: _Paths.LOGIN,
+      name: _Paths.QUIZ,
       page: () => LoginView(),
       binding: LoginBinding(),
     ),
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.NIVEAU,
       page: () => const NiveauView(),
       binding: NiveauBinding(),
+    ),
+    GetPage(
+      name: _Paths.QUESTION,
+      page: () => const QuestionView(),
+      binding: QuestionBinding(),
     ),
   ];
 }
