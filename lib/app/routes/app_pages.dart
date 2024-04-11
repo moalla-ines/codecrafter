@@ -35,7 +35,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.INSCRIPTION,
-      page: () => const InscriptionView(),
+      page: () =>  InscriptionView(),
       binding: InscriptionBinding(),
     ),
     GetPage(
@@ -45,7 +45,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () =>ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
@@ -55,7 +55,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.QUESTION,
-      page: () => const QuestionView(),
+      page: () => QuestionView(),
       binding: QuestionBinding(),
     ),
   ];
