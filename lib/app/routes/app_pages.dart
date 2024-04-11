@@ -20,7 +20,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.NIVEAU;
 
   static final routes = [
     GetPage(
@@ -40,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.QUIZ,
-      page: () => const QuizView(),
+      page: () =>  QuizView(),
       binding: QuizBinding(),
     ),
     GetPage(
@@ -50,7 +50,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.NIVEAU,
-      page: () => const NiveauView(),
+      page: () =>  NiveauView(),
       binding: NiveauBinding(),
     ),
     GetPage(

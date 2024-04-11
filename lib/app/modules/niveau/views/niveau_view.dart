@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 import 'package:codecrafter/app/modules/quiz/views/quiz_view.dart';
 import 'package:flutter/material.dart';
 
@@ -6,21 +7,24 @@ import 'package:get/get.dart';
 import '../controllers/niveau_controller.dart';
 
 class NiveauView extends GetView<NiveauController> {
-  const NiveauView({Key? key}) : super(key: key);
+
+  final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
+
+ NiveauView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF732DA2),
-
-
+      backgroundColor: Color(0xFFF732DA2),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF732DA2) ,
-        title: Text('Niveau', style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),   ),
+        backgroundColor: const Color(0xFFF732DA2),
+        title: Text(
+          'Niveau',
+          style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-
         child: Center(
           child: Container(
             padding: EdgeInsets.all(15),
@@ -32,7 +36,7 @@ class NiveauView extends GetView<NiveauController> {
                   context,
                   'niveau 01 ',
                   'Facile',
-                  'pour les debutants',
+                  'pour les débutants',
                   Colors.grey.shade200,
                   SizedBox(height: 2),
                   Container(
@@ -41,9 +45,9 @@ class NiveauView extends GetView<NiveauController> {
                 ),
                 buildHeroTile(
                   context,
-                  ' niveau 02',
-                  'moyen',
-                  'pour les peux experiencés',
+                  'niveau 02',
+                  'Moyen',
+                  'pour les peu expérimentés',
                   Colors.grey.shade200,
                   SizedBox(height: 2),
                   Container(
@@ -53,8 +57,8 @@ class NiveauView extends GetView<NiveauController> {
                 buildHeroTile(
                   context,
                   'niveau 03',
-                  'difficile  ',
-                  'pour les profecionnels',
+                  'Difficile',
+                  'pour les professionnels',
                   Colors.grey.shade200,
                   SizedBox(height: 2),
                   Container(
@@ -83,7 +87,12 @@ class NiveauView extends GetView<NiveauController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(QuizView());
+                Get.to(() => QuizView(),
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut(() => QuizController(), tag: 'quizController');
+                  }),
+
+                );
               },
             ),
           ),

@@ -1,139 +1,85 @@
+import 'package:codecrafter/app/modules/question/views/question_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 
-class QuizView extends StatelessWidget {
-  const QuizView({Key? key}) : super(key: key);
+class QuizView extends GetView<QuizController> {
+  final GlobalKey<NavigatorState> quizViewKey = GlobalKey<NavigatorState>();
+
+  QuizView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF732DA2),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF732DA2) ,
-        title: Text('Quiz', style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),   ),
-          centerTitle: true,
-
-      ),
-
-      body: SingleChildScrollView(
-
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 10),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning widgets',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
+    return Navigator(
+      key: quizViewKey,
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) {
+            return Scaffold(
+              backgroundColor: const Color(0xFFF732DA2),
+              appBar: AppBar(
+                backgroundColor: const Color(0xFFF732DA2),
+                title: Text(
+                  'Quiz',
+                  style: TextStyle(
+                    color: Colors.grey.shade200,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
+                centerTitle: true,
+              ),
+              body: SingleChildScrollView(
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: 10),
+                        buildQuizTile(
+                          context,
+                          'Flutter quiz 1',
+                          'Flutter quiz',
+                          'questions concerning widgets',
+                          Colors.grey.shade200,
+                          SizedBox(height: 2),
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                          ),
+                        ),
+                        buildQuizTile(
+                          context,
+                          'Flutter quiz 2',
+                          'Flutter quiz',
+                          'questions concerning get cli',
+                          Colors.grey.shade200,
+                          SizedBox(height: 2),
+                          Container(
+                            padding: const EdgeInsets.all(3),
+                          ),
+                        ),
+                        // Add more buildQuizTile calls as needed
+                      ],
+                    ),
                   ),
                 ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions about Stateful and stateless',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-                buildHeroTile(
-                  context,
-                  'Flutter quiz ',
-                  'Flutter quiz',
-                  'questions concerning get cli',
-                  Colors.grey.shade200,
-                  SizedBox(height: 2),
-                  Container(
-
-                    padding: EdgeInsets.all(3),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
-  Widget buildHeroTile(BuildContext context, String tag, String title,
-      String subtitle, Color tileColor, Widget? sizedBox, Widget? container) {
+  Widget buildQuizTile(
+      BuildContext context,
+      String tag,
+      String title,
+      String subtitle,
+      Color tileColor,
+      Widget? sizedBox,
+      Widget? container,
+      ) {
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -146,27 +92,7 @@ class QuizView extends StatelessWidget {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (BuildContext context) {
-                  return Scaffold(
-                    appBar: AppBar(title: const Text('ListTile Hero')),
-                    body: Center(
-                      child: Hero(
-                        tag: 'ListTile-Hero',
-                        child: Material(
-                          child: ListTile(
-                            title: const Text('ListTile with Hero'),
-                            subtitle: const Text('Tap here to go back'),
-                            tileColor: Colors.blue[700],
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }));
+                Get.to(() => QuestionView());
               },
             ),
           ),
