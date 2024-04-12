@@ -63,7 +63,7 @@ class LoginView extends GetView<LoginController> {
                   if (controller.emailController.text.isNotEmpty &&
                       controller.passwordController.text.isNotEmpty) {
                     controller.onSubmitLoginForm();
-                    Get.to(() => HomeView(key: loginViewKey));
+
                   } else {
                     Get.snackbar('Error', 'Please fill in all fields');
                   }

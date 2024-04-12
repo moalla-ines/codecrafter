@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
-
 class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -19,20 +18,23 @@ class LoginController extends GetxController {
   void onSubmitLoginForm() async {
     try {
       if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-        Get.snackbar('Error', 'Please fill in all fields'); // Affiche un message d'erreur
+        Get.snackbar('Error', 'Please fill in all fields');
         return;
       }
 
       final response = await http.post(
-        Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
+        Uri.parse('http://192.168.1.90:8080/api/v1/auth/authenticate'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json; charset=utf-8',
         },
         body: jsonEncode(<String, String>{
           'email': emailController.text,
           'password': passwordController.text,
         }),
       );
+      print(response.statusCode);
+      // Utilisation de response.body au lieu de response directement
+      print(json.decode(response.body));
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
@@ -46,7 +48,8 @@ class LoginController extends GetxController {
         Get.snackbar('Connection Error', 'Incorrect email or password');
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred while logging in');
+      Get.snackbar('Error', 'An error occurred while logging in'  );
+      print(e);
     }
   }
 }

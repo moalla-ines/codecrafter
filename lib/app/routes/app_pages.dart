@@ -24,7 +24,7 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: _Paths.QUIZ,
+      name: _Paths.LOGIN,
       page: () => LoginView(),
       binding: LoginBinding(),
     ),
