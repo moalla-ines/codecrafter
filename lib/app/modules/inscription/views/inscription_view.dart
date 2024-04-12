@@ -1,22 +1,50 @@
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/inscription_controller.dart';
 
-class InscriptionView extends GetView<InscriptionController> {
-  const InscriptionView({Key? key}) : super(key: key);
+class InscriptionView extends StatelessWidget {
+  final InscriptionController controller = Get.put(InscriptionController());
+
+  InscriptionView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('InscriptionView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'InscriptionView is working',
-          style: TextStyle(fontSize: 20),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  onChanged: (value) => controller.username.value = value,
+                  decoration: InputDecoration(
+                    labelText: "User Name",
+                  ),
+                ),
+                TextFormField(
+                  onChanged: (value) => controller.password.value = value,
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                  ),
+                ),
+
+                TextFormField(
+                  onChanged: (value) => controller.email.value = value,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: controller.submitForm,
+                  child: const Text('Submit'),
+
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

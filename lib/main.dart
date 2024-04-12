@@ -12,17 +12,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-
   Widget build(BuildContext context) {
     Get.put(HomeController());
 
     return GetMaterialApp(
-      title: 'codecrafter ',
+      title: 'codecrafter',
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple.shade900),
         useMaterial3: true,

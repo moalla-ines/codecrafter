@@ -16,15 +16,13 @@ class QuizView extends GetView<QuizController> {
         return MaterialPageRoute(
           builder: (context) {
             return Scaffold(
-              backgroundColor: const Color(0xFFF732DA2),
+              backgroundColor: Color(0xFFF732DA2),
               appBar: AppBar(
-                backgroundColor: const Color(0xFFF732DA2),
+                backgroundColor: Color(0xFFF732DA2),
                 title: Text(
                   'Quiz',
                   style: TextStyle(
-                    color: Colors.grey.shade200,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      color: Colors.grey.shade200, fontWeight: FontWeight.bold),
                 ),
                 centerTitle: true,
               ),
@@ -71,15 +69,8 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-  Widget buildQuizTile(
-      BuildContext context,
-      String tag,
-      String title,
-      String subtitle,
-      Color tileColor,
-      Widget? sizedBox,
-      Widget? container,
-      ) {
+  Widget buildQuizTile(BuildContext context, String tag, String title,
+      String subtitle, Color tileColor, Widget? sizedBox, Widget? container) {
     return Column(
       children: [
         if (sizedBox != null) sizedBox,

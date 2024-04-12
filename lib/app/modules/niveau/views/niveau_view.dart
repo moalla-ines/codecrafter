@@ -7,17 +7,12 @@ import 'package:get/get.dart';
 import '../controllers/niveau_controller.dart';
 
 class NiveauView extends GetView<NiveauController> {
-
-  final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
-
- NiveauView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF732DA2),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF732DA2),
+        backgroundColor: Color(0xFFF732DA2),
         title: Text(
           'Niveau',
           style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),
@@ -73,8 +68,10 @@ class NiveauView extends GetView<NiveauController> {
     );
   }
 
-  Widget buildHeroTile(BuildContext context, String tag, String title,
-      String subtitle, Color tileColor, Widget? sizedBox, Widget? container) {
+
+  Widget buildHeroTile(BuildContext context, String tag, String title, String subtitle, Color tileColor, Widget? sizedBox, Widget? container) {
+    final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>(); // Déplacez cette ligne ici
+
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -87,12 +84,7 @@ class NiveauView extends GetView<NiveauController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(() => QuizView(),
-                  binding: BindingsBuilder(() {
-                    Get.lazyPut(() => QuizController(), tag: 'quizController');
-                  }),
-
-                );
+                Get.to(() => QuizView(key: niveauViewKey)); // Utilisez la clé ici
               },
             ),
           ),
@@ -101,3 +93,4 @@ class NiveauView extends GetView<NiveauController> {
     );
   }
 }
+
