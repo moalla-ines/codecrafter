@@ -1,23 +1,15 @@
-import 'package:codecrafter/app/model/registrations.dart';
+import 'dart:convert';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class InscriptionController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  final RegistrationData inscriptionData = RegistrationData();
   final username = RxString('');
   final password = RxString('');
   final confirmPassword = RxString('');
   final email = RxString('');
-
-  void submitForm() {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      Get.to(() => HomeView());
-      Get.snackbar('Success', 'Form submitted successfully');
-    }
-  }
 
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
@@ -42,5 +34,43 @@ class InscriptionController extends GetxController {
       return 'Veuillez entrer une adresse e-mail valide';
     }
     return null;
+  }
+
+  void onRegisterForm() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:8080/api/v1/auth/register'),
+        headers: <String, String>{
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
+        },
+        body: jsonEncode(<String, String>{
+          'username': username.value,
+          'email': email.value,
+          'password': password.value,
+        }),
+      );
+
+      print(response.statusCode);
+      print(json.decode(response.body));
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        final token = responseData['token'] as String?;
+        if (token != null) {
+          Get.to(() => HomeView());
+          Get.snackbar('Success', 'Form submitted successfully');
+        } else {
+          Get.snackbar('Error', 'Invalid token');
+        }
+      } else {
+        Get.snackbar('Connection Error', 'Incorrect email or password');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred while logging in');
+      print(e);
+    }
   }
 }

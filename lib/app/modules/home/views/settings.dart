@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controllers/home_controller.dart';
-import 'home_view.dart';
 
 
 class SettingsView extends GetView<HomeController> {
@@ -17,7 +16,7 @@ class SettingsView extends GetView<HomeController> {
         backgroundColor: Color(0xFFF735DA5),
         title: Text(
           "Settings",
-          style: TextStyle(fontSize: 22, color: Colors.white , fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       body: Stack(
@@ -46,25 +45,14 @@ class SettingsView extends GetView<HomeController> {
                 ),
                 const SizedBox(height: 10.0),
                 Card(
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 8.0),
+                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        leading: Icon(Icons.lock_clock_outlined,
-                            color: Color(0xFFF735DA5)),
+                        leading: Icon(Icons.lock_clock_outlined, color: Color(0xFFF735DA5)),
                         title: Text("Change Password"),
                         trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () {},
-                      ),
-                      _buildExpansionTile(context, "Change Language",
-                          Color(0xFFFE5D4FF)),
-                      _buildDivider(),
-                      ListTile(
-                        leading: Icon(Icons.location_pin, color: Color(0xFFF735DA5)),
-                        title: Text("Change Location "),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: () {},
+                        onTap: controller.changePassword,
                       ),
                     ],
                   ),
@@ -74,12 +62,12 @@ class SettingsView extends GetView<HomeController> {
                   child: ListTile(
                     onTap: () {},
                     title: Text(
-                        "Notification Settings",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFF735DA5),
-                        )
+                      "Notification Settings",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFF735DA5),
+                      ),
                     ),
                   ),
                 ),
@@ -114,7 +102,6 @@ class SettingsView extends GetView<HomeController> {
               ],
             ),
           ),
-
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
@@ -122,60 +109,26 @@ class SettingsView extends GetView<HomeController> {
   }
 
   Widget _buildBottomNavigationBar() {
-    return Obx(() => GNav(
-      backgroundColor: Color(0xFFF735DA5),
-      color: Colors.white,
-      activeColor: Color(0xFFF735DA5),
-      tabBackgroundColor: Colors.grey.shade50,
-      padding: EdgeInsets.all(20),
-      gap: 8,
-      selectedIndex: controller.selectedIndex.value,
-      onTabChange: controller.onItemTapped,
-      tabs: [
-        GButton(icon: Icons.settings, text: 'Settings'),
-        GButton(icon: Icons.home, text: 'Home'),
-        GButton(icon: Icons.list, text: 'List'),
-      ],
-    ));
-  }
-
-  Container _buildDivider() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      width: double.infinity,
-      height: 1.0,
-      color: Colors.grey.shade200,
-    );
-  }
-
-  Widget _buildExpansionTile(BuildContext context, String title, Color color) {
-    return ExpansionTile(
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 18, color: Colors.black),
+    return Obx(
+          () => GNav(
+        backgroundColor: Color(0xFFF735DA5),
+        color: Colors.white,
+        activeColor: Color(0xFFF735DA5),
+        tabBackgroundColor: Colors.grey.shade50,
+        padding: EdgeInsets.all(20),
+        gap: 8,
+        selectedIndex: controller.selectedIndex.value,
+        onTabChange: controller.onItemTapped,
+        tabs: [
+          GButton(icon: Icons.settings, text: 'Settings'),
+          GButton(icon: Icons.home, text: 'Home'),
+          GButton(icon: Icons.list, text: 'List'),
+        ],
       ),
-      backgroundColor: color,
-      children: [
-        ListTile(
-          title: Text(
-            "Francais",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-          ),
-        ),
-        ListTile(
-          title: Text(
-            "Anglais",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-          ),
-        ),
-        ListTile(
-          title: Text(
-            "Arabe",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-          ),
-        ),
-      ],
     );
   }
-}
+
+
+  }
+
 

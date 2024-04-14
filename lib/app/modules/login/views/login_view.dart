@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
-
 class LoginView extends GetView<LoginController> {
-  final GlobalKey<NavigatorState> loginViewKey = GlobalKey<NavigatorState>();
-  final GlobalKey<NavigatorState> inscriptionViewKey = GlobalKey<NavigatorState>();
-
+ LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +61,6 @@ class LoginView extends GetView<LoginController> {
                   if (controller.emailController.text.isNotEmpty &&
                       controller.passwordController.text.isNotEmpty) {
                     controller.onSubmitLoginForm();
-
                   } else {
                     Get.snackbar('Error', 'Please fill in all fields');
                   }
@@ -77,7 +73,7 @@ class LoginView extends GetView<LoginController> {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => InscriptionView(key: inscriptionViewKey)); // Use inscriptionViewKey
+                  Get.to(() => InscriptionView());
                 },
                 child: Text(
                   'New User? Create Account',

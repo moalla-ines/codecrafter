@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../controllers/inscription_controller.dart';
 
 class InscriptionView extends GetView<InscriptionController> {
-
   InscriptionView({Key? key}) : super(key: key);
 
   @override
@@ -33,7 +32,7 @@ class InscriptionView extends GetView<InscriptionController> {
               ),
               SizedBox(height: 10),
               Container(
-                color: Colors.grey.shade400,
+                color: Colors.grey.shade200,
                 padding: const EdgeInsets.all(30),
                 margin: const EdgeInsets.all(50),
                 child: Form(
@@ -90,13 +89,17 @@ class InscriptionView extends GetView<InscriptionController> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey.shade400,
                         ),
-                        onPressed: controller.submitForm,
+                        onPressed: () {
+                          if (controller.formKey.currentState!.validate()) {
+                            controller.onRegisterForm();
+                          }
+                        },
                         child: const Text('Submit'),
                       ),
                       SizedBox(height: 20),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => LoginView()); // Use inscriptionViewKey
+                          Get.to(() => LoginView());
                         },
                         child: Text(
                           'You already have an account? Click here',
@@ -117,4 +120,3 @@ class InscriptionView extends GetView<InscriptionController> {
     );
   }
 }
-
