@@ -41,7 +41,7 @@ class HomeController extends GetxController {
   }
 
   void updateUser(int id, String password) async {
-    final url = Uri.parse('http://localhost:8080/api/v1/user');
+    final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
 
     final response = await http.put(url,
         headers: <String, String>{
@@ -54,6 +54,7 @@ class HomeController extends GetxController {
       body: jsonEncode(<String, dynamic>{
         'id': id,
         'password': password,
+
       }),
     );
     print(response.statusCode);
@@ -62,7 +63,10 @@ class HomeController extends GetxController {
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
       final token = responseData['token'] as String?;
-      if (token != null)
+      if (token != null){
+
+      }
+
         Get.snackbar('Success', 'Password changed successfully');
     } else if (response.statusCode == 403) {
       throw Exception('Unauthorized'); // Utilisateur non autorisé
