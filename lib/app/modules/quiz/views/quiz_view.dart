@@ -5,8 +5,9 @@ import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 
 class QuizView extends GetView<QuizController> {
   final GlobalKey<NavigatorState> quizViewKey = GlobalKey<NavigatorState>();
+  final String? imageUrl;
 
-  QuizView({Key? key}) : super(key: key);
+  QuizView({this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,7 @@ class QuizView extends GetView<QuizController> {
                 backgroundColor: Color(0xFFF732DA2),
                 title: Text(
                   'Quiz',
-                  style: TextStyle(
-                      color: Colors.grey.shade200, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),
                 ),
                 centerTitle: true,
               ),
@@ -41,9 +41,8 @@ class QuizView extends GetView<QuizController> {
                           'questions concerning widgets',
                           Colors.grey.shade200,
                           SizedBox(height: 2),
-                          Container(
-                            padding: const EdgeInsets.all(3),
-                          ),
+                          Container(padding: const EdgeInsets.all(3)),
+                          imageUrl,
                         ),
                         buildQuizTile(
                           context,
@@ -52,9 +51,8 @@ class QuizView extends GetView<QuizController> {
                           'questions concerning get cli',
                           Colors.grey.shade200,
                           SizedBox(height: 2),
-                          Container(
-                            padding: const EdgeInsets.all(3),
-                          ),
+                          Container(padding: const EdgeInsets.all(3)),
+                          imageUrl,
                         ),
                         // Add more buildQuizTile calls as needed
                       ],
@@ -69,8 +67,7 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-  Widget buildQuizTile(BuildContext context, String tag, String title,
-      String subtitle, Color tileColor, Widget? sizedBox, Widget? container) {
+  Widget buildQuizTile(BuildContext context, String tag, String title, String subtitle, Color tileColor, Widget? sizedBox, Widget? container, String? imageUrl) {
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -79,6 +76,7 @@ class QuizView extends GetView<QuizController> {
           tag: tag,
           child: Material(
             child: ListTile(
+              leading: imageUrl != null ? Image.asset(imageUrl, width: 40, height: 40) : Icon(Icons.image),
               title: Text(title),
               subtitle: Text(subtitle),
               tileColor: tileColor,
@@ -92,3 +90,4 @@ class QuizView extends GetView<QuizController> {
     );
   }
 }
+

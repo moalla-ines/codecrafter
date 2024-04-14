@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class AuthService {
   Future<String> authenticate(String email, String password) async {
-    final url = Uri.parse('http://192.168.1.90:8080/api/v1/auth/authenticate');
+    final url = Uri.parse('http://localhost:8080/api/v1/auth/authenticate');
 
 
 

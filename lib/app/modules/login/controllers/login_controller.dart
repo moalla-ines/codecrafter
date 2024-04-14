@@ -23,17 +23,20 @@ class LoginController extends GetxController {
       }
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.90:8080/api/v1/auth/authenticate'),
+        Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=utf-8',
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
         },
         body: jsonEncode(<String, String>{
           'email': emailController.text,
           'password': passwordController.text,
         }),
       );
+
       print(response.statusCode);
-      // Utilisation de response.body au lieu de response directement
       print(json.decode(response.body));
 
       if (response.statusCode == 200) {
@@ -48,7 +51,7 @@ class LoginController extends GetxController {
         Get.snackbar('Connection Error', 'Incorrect email or password');
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred while logging in'  );
+      Get.snackbar('Error', 'An error occurred while logging in');
       print(e);
     }
   }

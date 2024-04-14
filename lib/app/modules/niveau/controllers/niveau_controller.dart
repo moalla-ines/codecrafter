@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NiveauController extends GetxController {
-  //TODO: Implement NiveauController
-
+  late final String imageUrl;
   final count = 0.obs;
+  final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
+
   @override
   void onInit() {
     super.onInit();

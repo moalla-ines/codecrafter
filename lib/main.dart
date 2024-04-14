@@ -3,6 +3,7 @@
 
 
 import 'package:codecrafter/app/modules/home/controllers/home_controller.dart';
+import 'package:codecrafter/app/modules/login/controllers/login_controller.dart';
 import 'package:codecrafter/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
-
+    Get.put(LoginController());
     return GetMaterialApp(
       title: 'codecrafter',
       debugShowCheckedModeBanner: false,

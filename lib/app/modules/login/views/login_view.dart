@@ -9,6 +9,7 @@ class LoginView extends GetView<LoginController> {
   final GlobalKey<NavigatorState> loginViewKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> inscriptionViewKey = GlobalKey<NavigatorState>();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

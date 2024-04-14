@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.codecrafter">
 
     <!-- Ajout de la permission Internet -->
@@ -7,7 +8,8 @@
     <application
         android:label="codecrafter"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        tools:ignore="ExtraText">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -34,5 +36,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="flutterServletPort"
+            android:value="8080"/>
+
     </application>
 </manifest>
