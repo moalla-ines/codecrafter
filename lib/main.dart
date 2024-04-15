@@ -1,12 +1,12 @@
-
-
-
-
-import 'package:codecrafter/app/modules/home/controllers/home_controller.dart';
-import 'package:codecrafter/app/modules/login/controllers/login_controller.dart';
-import 'package:codecrafter/app/routes/app_pages.dart';
+import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'app/routes/app_pages.dart';
+
+import 'app/modules/home/controllers/home_controller.dart';
+import 'app/modules/login/controllers/login_controller.dart';
+import 'app/modules/inscription/controllers/inscription_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,15 +17,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(HomeController());
-    Get.put(LoginController());
     return GetMaterialApp(
       title: 'codecrafter',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple.shade900),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.white
+        ),
         useMaterial3: true,
       ),
+      initialBinding: BindingsBuilder(() {
+        Get.put(AuthService());
+        Get.put(HomeController());
+        Get.put(LoginController());
+        Get.put(InscriptionController());
+      }),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     );

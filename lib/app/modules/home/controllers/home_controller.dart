@@ -1,11 +1,13 @@
 import 'dart:convert';
 
-import 'package:codecrafter/app/modules/home/views/home_view.dart';
-import 'package:codecrafter/app/modules/home/views/list.dart';
-import 'package:codecrafter/app/modules/home/views/settings.dart';
+import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
+import 'package:codecrafter/app/modules/home/views/list.dart';
+import 'package:codecrafter/app/modules/home/views/settings.dart';
 
 
 class HomeController extends GetxController {
@@ -16,6 +18,7 @@ class HomeController extends GetxController {
     super.onInit();
     selectedIndex.value = 1;
   }
+
   void changePassword() {
     String newPassword = '';
     Get.defaultDialog(
@@ -34,7 +37,7 @@ class HomeController extends GetxController {
       actions: [
         TextButton(
           onPressed: () {
-            if (newPassword.isNotEmpty ) {
+            if (newPassword.isNotEmpty) {
               updateUser(1, newPassword);
             } else {
               Get.snackbar('Error', 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit');
@@ -47,37 +50,30 @@ class HomeController extends GetxController {
     );
   }
 
-
-
-
   void updateUser(int id, String newPassword) async {
-    final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
-
     try {
+      final AuthService authService = Get.find<AuthService>();
+      final token = await authService.getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
+
       final response = await http.put(
         url,
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
+          "Authorization": "Bearer $token",
         },
         body: jsonEncode(<String, String>{
-
           'newPassword': newPassword,
         }),
       );
-      print(response.statusCode);
-      print(response.body);
 
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        final token = responseData['token'] as String?;
-        if (token != null) {
-          Get.snackbar('Success', 'Password changed successfully');
-        } else {
-          throw Exception('Failed to change password');
-        }
+        Get.snackbar('Success', 'Password changed successfully');
       } else if (response.statusCode == 403) {
         throw Exception('Unauthorized');
       } else {
@@ -94,13 +90,13 @@ class HomeController extends GetxController {
     selectedIndex.value = index;
     switch (index) {
       case 0:
-        Get.off(() => SettingsView());
+        Get.to(() => SettingsView());
         break;
       case 1:
-        Get.off(() => HomeView());
+        Get.to(() => HomeView());
         break;
       case 2:
-        Get.off(() => ListViewPage());
+        Get.to(() => ListViewPage());
         break;
     }
   }

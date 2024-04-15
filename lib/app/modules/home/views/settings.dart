@@ -9,6 +9,8 @@ class SettingsView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find();
+
     return Scaffold(
       backgroundColor: const Color(0xFFFD3C5E5),
       appBar: AppBar(
@@ -90,4 +92,3 @@ class SettingsView extends GetView<HomeController> {
     );
   }
 }
-
