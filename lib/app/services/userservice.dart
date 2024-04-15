@@ -64,7 +64,7 @@ class AuthService {
 
 
   Future<String> updateUser(int id, String password) async {
-    final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
+    final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
 
     final response = await http.put(
       url,

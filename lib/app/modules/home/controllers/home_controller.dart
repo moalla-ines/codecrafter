@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+
 class HomeController extends GetxController {
   var selectedIndex = 0.obs;
 
@@ -16,62 +17,80 @@ class HomeController extends GetxController {
     selectedIndex.value = 1;
   }
 
-  // Fonction pour changer le mot de passe
   void changePassword() {
+    String oldPassword = '';
+    String newPassword = '';
     Get.defaultDialog(
       title: 'Change Password',
-      content: TextField(
-        decoration: InputDecoration(hintText: 'Enter new password'),
-        onChanged: (value) {
-          // Mettre à jour le mot de passe dans la base de données
-          updateUser(1, value); // Remplacez 1 par l'ID de l'utilisateur
-        },
+      content: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(hintText: 'Enter your old password'),
+            onChanged: (value) {
+              oldPassword = value;
+            },
+          ),
+          TextField(
+            decoration: InputDecoration(hintText: 'Enter new password'),
+            onChanged: (value) {
+              newPassword = value;
+            },
+          ),
+        ],
       ),
       actions: [
         TextButton(
           onPressed: () {
-            Get.back(); // Fermer la boîte de dialogue
+            if (oldPassword.isNotEmpty && newPassword.isNotEmpty) {
+              updateUser(1, oldPassword, newPassword);
+            } else {
+              Get.snackbar('Error', 'Passwords cannot be empty');
+            }
+            Get.back();
           },
           child: Text('Save'),
-
         ),
-
       ],
     );
   }
 
-  void updateUser(int id, String password) async {
-    final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
+  void updateUser(int id, String oldPassword, String newPassword) async {
+    final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
 
-    final response = await http.put(url,
+    try {
+      final response = await http.put(
+        url,
         headers: <String, String>{
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          // Les en-têtes Access-Control-Allow-* sont généralement utilisés par le serveur et ne doivent pas être définis par le client.
+           "Access-Control-Allow-Origin": "*",
+           "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
+        },
+        body: jsonEncode(<String, String>{
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+        }),
+      );
+      print(response.statusCode);
+      print(response.body);
 
-      },
-      body: jsonEncode(<String, dynamic>{
-        'id': id,
-        'password': password,
-
-      }),
-    );
-    print(response.statusCode);
-    print(json.decode(response.body));
-
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
-      final token = responseData['token'] as String?;
-      if (token != null){
-
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        final token = responseData['token'] as String?;
+        if (token != null) {
+          Get.snackbar('Success', 'Password changed successfully');
+        } else {
+          throw Exception('Failed to change password');
+        }
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        throw Exception('Failed to change password');
       }
-
-        Get.snackbar('Success', 'Password changed successfully');
-    } else if (response.statusCode == 403) {
-      throw Exception('Unauthorized'); // Utilisateur non autorisé
-    } else {
-      throw Exception('Failed to change password'); // Échec de la mise à jour du mot de passe
+    } catch (e) {
+      print('Failed to update password: $e');
+      Get.snackbar('Error', 'Failed to change password');
     }
   }
 

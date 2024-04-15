@@ -4,116 +4,81 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controllers/home_controller.dart';
 
-
 class SettingsView extends GetView<HomeController> {
   SettingsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFD3C5E5),
+      backgroundColor: const Color(0xFFFD3C5E5),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF735DA5),
+        backgroundColor: const Color(0xFFF735DA5),
         title: Text(
           "Settings",
           style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Card(
-                  color: Colors.grey.shade200,
-                  child: ListTile(
-                    onTap: () {},
-                    title: Text(
-                      "Account",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFF735DA5)),
-                    ),
-                    trailing: Icon(
-                      Icons.person,
-                      color: Color(0xFFF735DA5),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: Icon(Icons.lock_clock_outlined, color: Color(0xFFF735DA5)),
-                        title: Text("Change Password"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        onTap: controller.changePassword,
-                      ),
-                    ],
-                  ),
-                ),
-                Card(
-                  color: Colors.grey.shade200,
-                  child: ListTile(
-                    onTap: () {},
-                    title: Text(
-                      "Notification Settings",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFF735DA5),
-                      ),
-                    ),
-                  ),
-                ),
-                SwitchListTile(
-                  activeColor: Color(0xFFF735DA5),
-                  contentPadding: const EdgeInsets.all(5),
-                  value: true,
-                  title: Text("Received Notification"),
-                  onChanged: (val) {},
-                ),
-                SwitchListTile(
-                  activeColor: Color(0xFFF735DA5),
-                  contentPadding: const EdgeInsets.all(5),
-                  value: true,
-                  title: Text("Received offer Notification"),
-                  onChanged: (val) {},
-                ),
-                SwitchListTile(
-                  activeColor: Color(0xFFF735DA5),
-                  contentPadding: const EdgeInsets.all(5),
-                  value: false,
-                  title: Text("Received Newsletter"),
-                  onChanged: (val) {},
-                ),
-                SwitchListTile(
-                  activeColor: Color(0xFFF735DA5),
-                  contentPadding: const EdgeInsets.all(5),
-                  value: false,
-                  title: Text("Received App Updates"),
-                  onChanged: (val) {},
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildListTile("Account", Icons.person, () {}),
+            const SizedBox(height: 10.0),
+            _buildCard(ListTile(
+              leading: Icon(Icons.lock_clock_outlined, color: const Color(0xFFF735DA5)),
+              title: Text("Change Password"),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: controller.changePassword,
+            )),
+            _buildListTile("Notification Settings", null, () {}),
+            _buildSwitchListTile("Received Notification", true),
+            _buildSwitchListTile("Received offer Notification", true),
+            _buildSwitchListTile("Received Newsletter", false),
+            _buildSwitchListTile("Received App Updates", false),
+          ],
+        ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildListTile(String title, IconData? icon, VoidCallback onTap) {
+    return Card(
+      color: Colors.grey.shade200,
+      child: ListTile(
+        onTap: onTap,
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: const Color(0xFFF735DA5)),
+        ),
+        trailing: icon != null ? Icon(icon, color: const Color(0xFFF735DA5)) : null,
+      ),
+    );
+  }
+
+  Widget _buildCard(Widget child) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      child: child,
+    );
+  }
+
+  Widget _buildSwitchListTile(String title, bool value) {
+    return SwitchListTile(
+      activeColor: const Color(0xFFF735DA5),
+      contentPadding: const EdgeInsets.all(5),
+      value: value,
+      title: Text(title),
+      onChanged: (val) {},
     );
   }
 
   Widget _buildBottomNavigationBar() {
     return Obx(
           () => GNav(
-        backgroundColor: Color(0xFFF735DA5),
+        backgroundColor: const Color(0xFFF735DA5),
         color: Colors.white,
-        activeColor: Color(0xFFF735DA5),
+        activeColor: const Color(0xFFF735DA5),
         tabBackgroundColor: Colors.grey.shade50,
         padding: EdgeInsets.all(20),
         gap: 8,
@@ -127,8 +92,4 @@ class SettingsView extends GetView<HomeController> {
       ),
     );
   }
-
-
-  }
-
-
+}
