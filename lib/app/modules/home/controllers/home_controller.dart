@@ -40,7 +40,7 @@ class HomeController extends GetxController {
             if (newPassword.isNotEmpty) {
               updateUser(1, newPassword);
             } else {
-              Get.snackbar('Error', 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit');
+              Get.snackbar('Error', 'Password must not be empty');
             }
             Get.back();
           },
@@ -55,6 +55,7 @@ class HomeController extends GetxController {
       final AuthService authService = Get.find<AuthService>();
       final token = await authService.getToken();
       if (token == null) {
+        print(token);
         throw Exception('Token not found');
       }
 
@@ -67,6 +68,7 @@ class HomeController extends GetxController {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
         },
+
         body: jsonEncode(<String, String>{
           'newPassword': newPassword,
         }),
