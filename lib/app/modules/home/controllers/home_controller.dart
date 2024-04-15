@@ -16,22 +16,15 @@ class HomeController extends GetxController {
     super.onInit();
     selectedIndex.value = 1;
   }
-
   void changePassword() {
-    String oldPassword = '';
     String newPassword = '';
     Get.defaultDialog(
       title: 'Change Password',
       content: Column(
         children: [
           TextField(
-            decoration: InputDecoration(hintText: 'Enter your old password'),
-            onChanged: (value) {
-              oldPassword = value;
-            },
-          ),
-          TextField(
             decoration: InputDecoration(hintText: 'Enter new password'),
+            obscureText: true,
             onChanged: (value) {
               newPassword = value;
             },
@@ -41,10 +34,10 @@ class HomeController extends GetxController {
       actions: [
         TextButton(
           onPressed: () {
-            if (oldPassword.isNotEmpty && newPassword.isNotEmpty) {
-              updateUser(1, oldPassword, newPassword);
+            if (newPassword.isNotEmpty ) {
+              updateUser(1, newPassword);
             } else {
-              Get.snackbar('Error', 'Passwords cannot be empty');
+              Get.snackbar('Error', 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit');
             }
             Get.back();
           },
@@ -54,7 +47,10 @@ class HomeController extends GetxController {
     );
   }
 
-  void updateUser(int id, String oldPassword, String newPassword) async {
+
+
+
+  void updateUser(int id, String newPassword) async {
     final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
 
     try {
@@ -63,12 +59,11 @@ class HomeController extends GetxController {
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
-          // Les en-têtes Access-Control-Allow-* sont généralement utilisés par le serveur et ne doivent pas être définis par le client.
-           "Access-Control-Allow-Origin": "*",
-           "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept"
         },
         body: jsonEncode(<String, String>{
-          'oldPassword': oldPassword,
+
           'newPassword': newPassword,
         }),
       );
