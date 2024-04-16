@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
+import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -43,6 +44,8 @@ class LoginController extends GetxController {
         final responseData = json.decode(response.body);
         final token = responseData['token'] as String?;
         if (token != null) {
+          final AuthService authService =Get.find<AuthService>();
+          authService.setToken(token);
           Get.offAll(() => HomeView());
         } else {
           Get.snackbar('Error', 'Invalid token');

@@ -53,9 +53,10 @@ class HomeController extends GetxController {
   void updateUser(int id, String newPassword) async {
     try {
       final AuthService authService = Get.find<AuthService>();
-      final token = await authService.getToken();
-      if (token == null) {
-        print(token);
+      final token = authService.token;
+      print(token);
+            if (token == null) {
+
         throw Exception('Token not found');
       }
 
@@ -73,7 +74,8 @@ class HomeController extends GetxController {
           'newPassword': newPassword,
         }),
       );
-
+      print(response.statusCode);
+      print(json.decode(response.body));
       if (response.statusCode == 200) {
         Get.snackbar('Success', 'Password changed successfully');
       } else if (response.statusCode == 403) {

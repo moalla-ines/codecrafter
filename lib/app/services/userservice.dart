@@ -4,11 +4,13 @@ import 'package:http/http.dart' as http;
 
 class AuthService extends GetxService {
   String? _token;
-
+String ? get token =>_token;
   void setToken(String token) {
     _token = token;
   }
-
+  void clearToken(){
+    _token = null;
+  }
   Future<String?> getToken() async {
     // Simuler une récupération de token (à remplacer par votre propre logique)
     await Future.delayed(Duration(seconds: 1));
