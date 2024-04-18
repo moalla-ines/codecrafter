@@ -9,7 +9,6 @@ import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/modules/home/views/list.dart';
 import 'package:codecrafter/app/modules/home/views/settings.dart';
 
-
 class HomeController extends GetxController {
   var selectedIndex = 0.obs;
 
@@ -55,8 +54,7 @@ class HomeController extends GetxController {
       final AuthService authService = Get.find<AuthService>();
       final token = authService.token;
       print(token);
-            if (token == null) {
-
+      if (token == null) {
         throw Exception('Token not found');
       }
 
@@ -69,11 +67,9 @@ class HomeController extends GetxController {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
         },
-
-        body: jsonEncode(<String, String>{
-          'newPassword': newPassword,
-        }),
+        body: newPassword,
       );
+
       print(response.statusCode);
       print(json.decode(response.body));
       if (response.statusCode == 200) {

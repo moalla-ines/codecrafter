@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class AuthService extends GetxService {
   String? _token;
-String ? get token =>_token;
+  String ? get token =>_token;
   void setToken(String token) {
     _token = token;
   }

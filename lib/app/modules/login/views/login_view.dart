@@ -1,11 +1,11 @@
-import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/modules/inscription/views/inscription_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
+
 class LoginView extends GetView<LoginController> {
- LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
