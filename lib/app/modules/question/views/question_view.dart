@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/question_controller.dart';
 
 class QuestionView extends GetView<QuestionController> {
-   QuestionView({Key? key}) : super(key: key);
+   QuestionView({Key? key, quizId}) : super(key: key);
 
 
   @override

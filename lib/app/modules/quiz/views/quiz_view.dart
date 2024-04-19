@@ -1,99 +1,50 @@
 import 'package:codecrafter/app/modules/question/views/question_view.dart';
+import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 
 class QuizView extends GetView<QuizController> {
-  final GlobalKey<NavigatorState> quizViewKey = GlobalKey<NavigatorState>();
   final String? imageUrl;
 
   QuizView({this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: quizViewKey,
-      onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (context) {
-            return Scaffold(
-              backgroundColor: Color(0xFFF732DA2),
-              appBar: AppBar(
-                backgroundColor: Color(0xFFF732DA2),
-                title: Text(
-                  'Quiz',
-                  style: TextStyle(color: Colors.grey.shade200, fontWeight: FontWeight.bold),
-                ),
-                centerTitle: true,
-              ),
-              body: SingleChildScrollView(
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(height: 10),
-                        buildQuizTile(
-                          context,
-                          'Flutter quiz 1',
-                          'Flutter quiz',
-                          'questions concerning widgets',
-                          Colors.grey.shade200,
-                          SizedBox(height: 2),
-                          Container(padding: const EdgeInsets.all(3)),
-                          imageUrl,
-                        ),
-                        buildQuizTile(
-                          context,
-                          'Flutter quiz 2',
-                          'Flutter quiz',
-                          'questions concerning get cli',
-                          Colors.grey.shade200,
-                          SizedBox(height: 2),
-                          Container(padding: const EdgeInsets.all(3)),
-                          imageUrl,
-                        ),
-                        buildQuizTile(
-                          context,
-                          'Flutter quiz 3',
-                          'Flutter quiz',
-                          'questions concerning get cli',
-                          Colors.grey.shade200,
-                          SizedBox(height: 2),
-                          Container(padding: const EdgeInsets.all(3)),
-                          imageUrl,
-                        ),
-                        buildQuizTile(
-                          context,
-                          'Flutter quiz 4',
-                          'Flutter quiz',
-                          'questions concerning get cli',
-                          Colors.grey.shade200,
-                          SizedBox(height: 2),
-                          Container(padding: const EdgeInsets.all(3)),
-                          imageUrl,
-                        ),
-                        buildQuizTile(
-                          context,
-                          'Flutter quiz 5',
-                          'Flutter quiz',
-                          'questions concerning get cli',
-                          Colors.grey.shade200,
-                          SizedBox(height: 2),
-                          Container(padding: const EdgeInsets.all(3)),
-                          imageUrl,
-                        ),
-                        // Add more buildQuizTile calls as needed
-                      ],
-                    ),
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quiz List'),
+      ),
+      body: Obx(() {
+        if (controller.quizzes.isEmpty) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return SingleChildScrollView(
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 10),
+                    for (var quiz in controller.quizzes)
+                      buildQuizTile(
+                        context,
+                        quiz['id'].toString(), // Utilisez l'ID du quiz comme tag pour le Hero widget
+                        quiz['titre_quiz'],
+                        quiz['description'],
+                        Colors.grey.shade200,
+                        SizedBox(height: 2),
+                        Container(padding: const EdgeInsets.all(3)),
+                        quiz['imageUrl'], // Supposons que l'image du quiz est stockée dans un champ 'imageUrl'
+                      ),
+                    // Add more buildQuizTile calls as needed
+                  ],
                 ),
               ),
-            );
-          },
-        );
-      },
+            ),
+          );
+        }
+      }),
     );
   }
 
@@ -111,7 +62,7 @@ class QuizView extends GetView<QuizController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(() => QuestionView());
+                Get.to(() => QuestionView(quizId: tag)); // Passer l'ID du quiz à la vue des questions
               },
             ),
           ),
@@ -120,4 +71,3 @@ class QuizView extends GetView<QuizController> {
     );
   }
 }
-

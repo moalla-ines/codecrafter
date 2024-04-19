@@ -1,3 +1,5 @@
+import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
+import 'package:codecrafter/app/services/quizservice.dart';
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +30,9 @@ class MyApp extends StatelessWidget {
       ),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => AuthService());
+        Get.lazyPut(() => QuizzesService());
         Get.put(HomeController());
+        Get.put(QuizController());
         Get.put(LoginController());
         Get.put(InscriptionController());
       }),

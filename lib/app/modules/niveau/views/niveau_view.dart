@@ -1,10 +1,7 @@
 import 'package:codecrafter/app/modules/quiz/views/quiz_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controllers/niveau_controller.dart';
-
-
 class NiveauView extends GetView<NiveauController> {
   final String? imageUrl;
 
@@ -28,7 +25,6 @@ class NiveauView extends GetView<NiveauController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (imageUrl != null) ...[
-
               SizedBox(height: 20.0),
               Center(
                 child: Image.asset(
@@ -81,8 +77,6 @@ class NiveauView extends GetView<NiveauController> {
 
   Widget _buildHeroTile(BuildContext context, String tag, String title,
       String subtitle, Color tileColor, Widget? sizedBox, Widget? container) {
-    final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
-
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -95,7 +89,7 @@ class NiveauView extends GetView<NiveauController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(() => QuizView(imageUrl: imageUrl));
+                Get.to(() => QuizView(imageUrl: imageUrl)); // Utilisez QuizView avec l'URL de l'image
               },
             ),
           ),

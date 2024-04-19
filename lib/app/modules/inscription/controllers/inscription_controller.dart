@@ -56,9 +56,10 @@ class InscriptionController extends GetxController {
       print(response.statusCode);
       print(json.decode(response.body));
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         final token = responseData['token'] as String?;
+        final id = responseData['id'] as int?;
         if (token != null) {
           Get.to(() => HomeView());
           Get.snackbar('Success', 'Form submitted successfully');

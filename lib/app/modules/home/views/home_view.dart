@@ -5,9 +5,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controllers/home_controller.dart';
 
-
 class HomeView extends GetView<HomeController> {
-  HomeView({Key? key}) : super(key: key);
+  int? id;
+  HomeView({this.id});
 
   final List<String> images = [
     "assets/images/Angular.png",
@@ -33,6 +33,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.id = id;
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
@@ -66,7 +67,8 @@ class HomeView extends GetView<HomeController> {
     return GridTile(
       child: GestureDetector(
         onTap: () {
-          String imageUrl = images[index]; // Récupère l'URL de l'image sélectionnée
+          String imageUrl =
+          images[index]; // Récupère l'URL de l'image sélectionnée
           Get.to(() => NiveauView(imageUrl: imageUrl));
         },
         child: Container(

@@ -1,12 +1,9 @@
 import 'dart:convert';
-
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:codecrafter/app/modules/home/views/home_view.dart';
-
+import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -46,17 +43,12 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         final token = responseData['token'] as String?;
+        final id = responseData['id'] as int?;
+        print(id);
         if (token != null) {
           final AuthService authService = Get.find<AuthService>();
-          // Obtenez l'ID de l'utilisateur à partir de son email
-          int? userId = authService.getUserIdFromEmail(emailController.text);
-          if (userId != null) {
-            // Utilisez l'ID de l'utilisateur
-            print('User ID: $userId');
-            Get.offAll(() => HomeView());
-          } else {
-            Get.snackbar('Error', 'User not found');
-          }
+          authService.setToken(token);
+          Get.offAll(() => HomeView(id: id));
         } else {
           Get.snackbar('Error', 'Invalid token');
         }
@@ -68,6 +60,4 @@ class LoginController extends GetxController {
       print(e);
     }
   }
-
-
 }
