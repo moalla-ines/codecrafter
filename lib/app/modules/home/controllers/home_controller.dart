@@ -9,7 +9,9 @@ import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/modules/home/views/list.dart';
 import 'package:codecrafter/app/modules/home/views/settings.dart';
 
+
 class HomeController extends GetxController {
+  final AuthService authService = Get.find<AuthService>();
   var selectedIndex = 0.obs;
 
   @override
@@ -17,7 +19,6 @@ class HomeController extends GetxController {
     super.onInit();
     selectedIndex.value = 1;
   }
-
   void changePassword() {
     String newPassword = '';
     Get.defaultDialog(
@@ -37,10 +38,18 @@ class HomeController extends GetxController {
         TextButton(
           onPressed: () {
             if (newPassword.isNotEmpty) {
-              updateUser(1, newPassword);
+              String? token = authService.token;
+              int userId = authService.getUserIdFromToken(token!) ?? 0; // 0 est une valeur par défaut, vous pouvez utiliser une autre valeur si nécessaire
+
+              if (userId != null) {
+                updateUser(userId, newPassword);
+              } else {
+                Get.snackbar('Error', 'User ID not found in token');
+              }
             } else {
               Get.snackbar('Error', 'Password must not be empty');
             }
+
             Get.back();
           },
           child: Text('Save'),
@@ -49,31 +58,31 @@ class HomeController extends GetxController {
     );
   }
 
-  void updateUser(int id, String newPassword) async {
+
+
+  Future<String> updateUser(int id, String password) async {
     try {
-      final AuthService authService = Get.find<AuthService>();
-      final token = authService.token;
-      print(token);
-      if (token == null) {
-        throw Exception('Token not found');
-      }
+      final token = getToken() ?? ''; // Utilisation d'une valeur par défaut si le token est null
 
       final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
 
       final response = await http.put(
         url,
         headers: <String, String>{
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
+          'Content-Type': 'application/json; charset=utf-8',
+          'Authorization': 'Bearer $token',
         },
-        body: newPassword,
+        body: jsonEncode(<String, dynamic>{
+          'id': id,
+          'password': password,
+        }),
       );
 
-      print(response.statusCode);
-      print(json.decode(response.body));
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Password changed successfully');
+        final responseData = jsonDecode(response.body);
+        final newToken = responseData['token'] as String;
+        setToken(newToken);
+        return newToken;
       } else if (response.statusCode == 403) {
         throw Exception('Unauthorized');
       } else {
@@ -81,11 +90,11 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print('Failed to update password: $e');
-      Get.snackbar('Error', 'Failed to change password');
+      throw Exception('Failed to update password');
     }
   }
 
-  // Navigation
+
   void onItemTapped(int index) {
     selectedIndex.value = index;
     switch (index) {

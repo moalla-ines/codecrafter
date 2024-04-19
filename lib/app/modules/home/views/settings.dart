@@ -44,13 +44,15 @@ class SettingsView extends GetView<HomeController> {
   Widget _buildListTile(String title, IconData? icon, VoidCallback onTap) {
     return Card(
       color: Colors.grey.shade200,
-      child: ListTile(
+      child: InkWell(
         onTap: onTap,
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFFF735DA5)),
+        child: ListTile(
+          title: Text(
+            title,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFFF735DA5)),
+          ),
+          trailing: icon != null ? Icon(icon, color: const Color(0xFFF735DA5)) : null,
         ),
-        trailing: icon != null ? Icon(icon, color: const Color(0xFFF735DA5)) : null,
       ),
     );
   }
@@ -68,7 +70,9 @@ class SettingsView extends GetView<HomeController> {
       contentPadding: const EdgeInsets.all(5),
       value: value,
       title: Text(title),
-      onChanged: (val) {},
+      onChanged: (val) {
+        // Mettre à jour l'état ici si nécessaire
+      },
     );
   }
 

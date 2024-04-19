@@ -66,14 +66,15 @@ class LoginView extends GetView<LoginController> {
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade100),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Utilisation d'une couleur plus contrastée
                 ),
-                child: const Text('Send', style: TextStyle(color: Colors.black54)),
+                child: const Text('Send', style: TextStyle(color: Colors.black)),
               ),
-              const SizedBox(height: 20),
+
+// Utilisation de Get.toNamed pour la création de compte
               GestureDetector(
                 onTap: () {
-                  Get.to(() => InscriptionView());
+                  Get.toNamed('/inscription'); // Assurez-vous d'avoir configuré cette route dans votre application
                 },
                 child: Text(
                   'New User? Create Account',
@@ -83,6 +84,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
+
             ],
           ),
         ),

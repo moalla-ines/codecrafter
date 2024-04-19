@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialBinding: BindingsBuilder(() {
-        Get.put(AuthService());
+        Get.lazyPut(() => AuthService());
         Get.put(HomeController());
         Get.put(LoginController());
         Get.put(InscriptionController());
