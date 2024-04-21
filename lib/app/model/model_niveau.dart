@@ -1,14 +1,16 @@
-class Niveaux  {
+import 'package:codecrafter/app/model/Quizzes.dart';
+
+class Niveau {
   int? idNiveau;
   String? name;
   Categorie? categorie;
 
-  Niveaux({this.idNiveau, this.name, this.categorie});
+  Niveau({this.idNiveau, this.name, this.categorie});
 
-  Niveaux.fromJson(Map<String, dynamic> json) {
+  Niveau.fromJson(Map<String, dynamic> json) {
     idNiveau = json['idNiveau'];
     name = json['name'];
-    categorie = json['categorie'] != null ? new Categorie.fromJson(json['categorie']) : null;
+    categorie = json['categorie'] != null ? Categorie.fromJson(json['categorie']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class Niveaux  {
     return data;
   }
 }
+
 
 class Categorie {
   int? idcategorie;
@@ -49,32 +52,4 @@ class Categorie {
   }
 }
 
-class Quizzes {
-  int? id;
-  String? titreQuiz;
-  String? description;
-  int? nbQuestions;
-  Niveaux ? niveau;
 
-  Quizzes({this.id, this.titreQuiz, this.description, this.nbQuestions, this.niveau});
-
-  Quizzes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    titreQuiz = json['titre_quiz'];
-    description = json['description'];
-    nbQuestions = json['nb_questions'];
-    niveau = json['niveau'] != null ? new Niveaux.fromJson(json['niveau']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['titre_quiz'] = this.titreQuiz;
-    data['description'] = this.description;
-    data['nb_questions'] = this.nbQuestions;
-    if (this.niveau != null) {
-      data['niveau'] = this.niveau!.toJson();
-    }
-    return data;
-  }
-}

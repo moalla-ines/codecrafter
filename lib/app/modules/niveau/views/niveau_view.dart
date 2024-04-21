@@ -31,14 +31,14 @@ class NiveauView extends GetView<NiveauController> {
                 return Column(
                   children: [
                     for (var niveau in controller.niveaux)
-                      _buildHeroTile(
+                      _buildNiveauTile(
                         context,
                         niveau.idNiveau.toString(),
                         niveau.name!,
                         niveau.categorie!.titreCategorie!,
                         Colors.grey.shade200,
+                        imageUrl, // Passer l'URL de l'image sélectionnée
                       ),
-
                   ],
                 );
               }
@@ -48,8 +48,9 @@ class NiveauView extends GetView<NiveauController> {
       ),
     );
   }
-  Widget _buildHeroTile(BuildContext context, String tag, String title,
-      String subtitle, Color tileColor) {
+
+  Widget _buildNiveauTile(BuildContext context, String tag, String title,
+      String subtitle, Color tileColor, [String? imageUrl]) {
     return Column(
       children: [
         SizedBox(height: 20.0),
@@ -70,3 +71,4 @@ class NiveauView extends GetView<NiveauController> {
     );
   }
 }
+

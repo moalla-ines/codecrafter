@@ -28,8 +28,7 @@ class QuizzesService extends GetxService {
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url =
-      Uri.parse('http://localhost:8080/api/v1/quizzes/niveau/$niveau');
+      final url = Uri.parse('http://localhost:8080/api/v1/quizzes/niveau/$niveau');
       final response = await http.get(
         url,
         headers: <String, String>{
@@ -39,9 +38,14 @@ class QuizzesService extends GetxService {
         },
       );
       if (response.statusCode == 200) {
+        print(response.statusCode);
         final jsonData = jsonDecode(response.body) as List<dynamic>;
+        print(response.body);
         return jsonData.map((json) => Quizzes.fromJson(json)).toList();
+
       } else {
+        print(response.statusCode);
+        print(response);
         throw Exception('Failed to load quizzes');
       }
     } catch (e) {
@@ -49,4 +53,5 @@ class QuizzesService extends GetxService {
       throw Exception('Failed to load quizzes');
     }
   }
+
 }

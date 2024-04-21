@@ -8,7 +8,7 @@ class NiveauController extends GetxController {
   final count = 0.obs;
   final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
   final NiveauxService niveauxService = Get.find();
-  final niveaux = <Niveaux>[].obs;
+  final niveaux = <Niveau>[].obs;
 
   @override
   void onInit() {
@@ -16,17 +16,17 @@ class NiveauController extends GetxController {
   // Appel initial pour récupérer les niveaux (avec une catégorie par défaut de 1)
   fetchNiveaux(1);
   }
-
   void fetchNiveaux(int categorie) async {
-  try {
-    final token = niveauxService.token.value;
-  final data = await niveauxService.getNiveauByCategorie(categorie);
-  niveaux.assignAll(data);
-  } catch (e) {
-  print(e.toString());
-  // Gérer l'erreur comme vous le souhaitez
+    try {
+      final token = niveauxService.token.value;
+      final data = await niveauxService.getNiveauByCategorie(categorie);
+      niveaux.assignAll(data);
+    } catch (e) {
+      print('Failed to load niveaux: $e');
+      // Gérer l'erreur comme vous le souhaitez
+    }
   }
-  }
+
 
   @override
   void onReady() {

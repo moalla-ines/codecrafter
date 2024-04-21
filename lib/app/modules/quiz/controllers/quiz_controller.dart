@@ -17,14 +17,15 @@ class QuizController extends GetxController {
     try {
       final token = quizzesService.token.value;
       final data = await quizzesService.getQuizzesByNiveau(niveau);
+      print(data);
       quizzes.assignAll(data);
-
-
+      print(data);
     } catch (e) {
-      print(e.toString());
+      print('Failed to load quizzes: $e');
       // Gérer l'erreur comme vous le souhaitez
     }
   }
+
 
   @override
   void onReady() {

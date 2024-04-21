@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizView extends GetView<QuizController> {
-
   final String? imageUrl;
-  QuizView({Key? key, this.imageUrl}) : super(key: key);
+
+  QuizView({this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +35,8 @@ class QuizView extends GetView<QuizController> {
                         Colors.grey.shade200,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
-                       null
+                        imageUrl, // Utilisez l'URL de l'image passée en paramètre
                       ),
-                    SizedBox(height: 10),
-                    for (var quiz in controller.quizzes)
-                    buildQuizTile(
-                        context,
-                        quiz.id.toString(),
-                        quiz.titreQuiz!,
-                        quiz.description!,
-                        Colors.grey.shade200,
-                        SizedBox(height: 2),
-                        Container(padding: const EdgeInsets.all(3)),
-                        null
-                    ),
-
-                    // Add more buildQuizTile calls as needed
                   ],
                 ),
               ),
@@ -84,3 +70,4 @@ class QuizView extends GetView<QuizController> {
     );
   }
 }
+

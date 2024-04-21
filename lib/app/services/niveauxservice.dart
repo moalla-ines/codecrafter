@@ -20,9 +20,10 @@ class NiveauxService extends GetxService{
     await Future.delayed(Duration(seconds: 1));
     return _token.value;
   }
-  Future<List<Niveaux>> getNiveauByCategorie(int categorie) async {
+  Future<List<Niveau>> getNiveauByCategorie(int categorie) async {
     try {
       final token = await getToken();
+
       if (token == null) {
         throw Exception('Token not found');
       }
@@ -37,13 +38,17 @@ class NiveauxService extends GetxService{
         },
       );
       if (response.statusCode == 200) {
+        print(response.statusCode);
         final jsonData = jsonDecode(response.body) as List<dynamic>;
-        return jsonData.map((json) => Niveaux.fromJson(json)).toList();
+
+        return jsonData.map((json) => Niveau.fromJson(json)).toList();
+
       } else {
+        print(response);
         throw Exception('Failed to load niveaux');
       }
     } catch (e) {
-      print(e.toString());
+      print('Failed to load niveaux:$e');
       throw Exception('Failed to load niveaux');
     }
   }
