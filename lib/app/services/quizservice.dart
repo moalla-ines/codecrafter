@@ -34,6 +34,8 @@ class QuizzesService extends GetxService {
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept",
           "Authorization": "Bearer $token",
         },
       );

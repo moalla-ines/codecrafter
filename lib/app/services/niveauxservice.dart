@@ -27,30 +27,28 @@ class NiveauxService extends GetxService{
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url =
-      Uri.parse('http://localhost:8080/api/v1/niveau');
+      final url = Uri.parse('http://localhost:8080/api/v1/niveau/categorie/$categorie');
       final response = await http.get(
         url,
         headers: <String, String>{
-          "Accept": "application/json",
-          "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept",
           "Authorization": "Bearer $token",
         },
       );
+
       if (response.statusCode == 200) {
-        print(response.statusCode);
         final jsonData = jsonDecode(response.body) as List<dynamic>;
-
         return jsonData.map((json) => Niveau.fromJson(json)).toList();
-
       } else {
-        print(response);
         throw Exception('Failed to load niveaux');
       }
     } catch (e) {
-      print('Failed to load niveaux:$e');
       throw Exception('Failed to load niveaux');
     }
   }
+
 }
 

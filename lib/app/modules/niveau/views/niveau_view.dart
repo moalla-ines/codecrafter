@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import '../controllers/niveau_controller.dart';
 class NiveauView extends GetView<NiveauController> {
   final String? imageUrl;
+  final int? index;
 
-  NiveauView({this.imageUrl});
+  NiveauView({this.imageUrl, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class NiveauView extends GetView<NiveauController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(() => QuizView(imageUrl: imageUrl)); // Utilisez QuizView avec l'URL de l'image
+                Get.to(() => QuizView(imageUrl: imageUrl, )); // Utilisez QuizView avec l'URL de l'image
               },
             ),
           ),

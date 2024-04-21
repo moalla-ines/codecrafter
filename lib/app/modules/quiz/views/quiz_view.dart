@@ -32,10 +32,12 @@ class QuizView extends GetView<QuizController> {
                         quiz.id.toString(),
                         quiz.titreQuiz!,
                         quiz.description!,
+
                         Colors.grey.shade200,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
-                        imageUrl, // Utilisez l'URL de l'image passée en paramètre
+                        imageUrl,
+                        // Utilisez l'URL de l'image passée en paramètre
                       ),
                   ],
                 ),
