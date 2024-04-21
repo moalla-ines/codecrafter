@@ -1,12 +1,11 @@
-import 'dart:convert';
+import 'package:get/get.dart';
 
 import 'package:codecrafter/app/services/quizservice.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:codecrafter/app/model/Quizzes.dart'; // Assurez-vous d'importer correctement votre modèle QuizList
 
 class QuizController extends GetxController {
   final QuizzesService quizzesService = Get.find();
-  final quizzes = [].obs;
+  final quizzes = <Quizzes>[].obs;
 
   @override
   void onInit() {
@@ -17,24 +16,13 @@ class QuizController extends GetxController {
   void fetchQuizzesByNiveau(int niveau) async {
     try {
       final token = quizzesService.token.value;
-      final url = Uri.parse('http://localhost:8080/quizzes/niveau/$niveau');
-      final response = await http.get(
-        url,
-        headers: <String, String>{
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
+      final data = await quizzesService.getQuizzesByNiveau(niveau);
+      quizzes.assignAll(data);
 
-      if (response.statusCode == 200) {
-        final jsonData = jsonDecode(response.body);
-        quizzes.assignAll(jsonData); // Assurez-vous que jsonData est une liste
-      } else {
-        throw Exception('Failed to load quizzes');
-      }
+
     } catch (e) {
       print(e.toString());
+      // Gérer l'erreur comme vous le souhaitez
     }
   }
 

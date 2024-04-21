@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizView extends GetView<QuizController> {
-  final String? imageUrl;
 
-  QuizView({this.imageUrl});
+  final String? imageUrl;
+  QuizView({Key? key, this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,27 @@ class QuizView extends GetView<QuizController> {
                     for (var quiz in controller.quizzes)
                       buildQuizTile(
                         context,
-                        quiz['id'].toString(), // Utilisez l'ID du quiz comme tag pour le Hero widget
-                        quiz['titre_quiz'],
-                        quiz['description'],
+                        quiz.id.toString(),
+                        quiz.titreQuiz!,
+                        quiz.description!,
                         Colors.grey.shade200,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
-                        quiz['imageUrl'], // Supposons que l'image du quiz est stockée dans un champ 'imageUrl'
+                       null
                       ),
+                    SizedBox(height: 10),
+                    for (var quiz in controller.quizzes)
+                    buildQuizTile(
+                        context,
+                        quiz.id.toString(),
+                        quiz.titreQuiz!,
+                        quiz.description!,
+                        Colors.grey.shade200,
+                        SizedBox(height: 2),
+                        Container(padding: const EdgeInsets.all(3)),
+                        null
+                    ),
+
                     // Add more buildQuizTile calls as needed
                   ],
                 ),
@@ -57,7 +70,7 @@ class QuizView extends GetView<QuizController> {
           tag: tag,
           child: Material(
             child: ListTile(
-              leading: imageUrl != null ? Image.asset(imageUrl, width: 40, height: 40) : Icon(Icons.image),
+              leading: imageUrl != null ? Image.network(imageUrl, width: 40, height: 40) : Icon(Icons.image),
               title: Text(title),
               subtitle: Text(subtitle),
               tileColor: tileColor,
