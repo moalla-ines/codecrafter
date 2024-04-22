@@ -8,18 +8,18 @@ class NiveauController extends GetxController {
   final count = 0.obs;
   final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
   final NiveauxService niveauxService = Get.find();
-  final niveaux = <Niveau>[].obs;
+  var niveaux = [].obs;
 
   @override
   void onInit() {
-  super.onInit();
-  // Appel initial pour récupérer les niveaux (avec une catégorie par défaut de 1)
-  fetchNiveaux(1);
+    super.onInit();
   }
-  void fetchNiveaux(int categorie) async {
+
+  void fetchNiveaux(int? categorie) async {
     try {
       final token = niveauxService.token.value;
-      final data = await niveauxService.getNiveauByCategorie(categorie);
+      print(categorie);
+      final data = await niveauxService.getNiveauByCategorie(categorie!);
       niveaux.assignAll(data);
     } catch (e) {
       print('Failed to load niveaux: $e');
@@ -27,14 +27,13 @@ class NiveauController extends GetxController {
     }
   }
 
-
   @override
   void onReady() {
-  super.onReady();
+    super.onReady();
   }
 
   @override
   void onClose() {
-  super.onClose();
+    super.onClose();
   }
-  }
+}

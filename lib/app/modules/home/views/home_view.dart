@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controllers/home_controller.dart';
+import '../../niveau/controllers/niveau_controller.dart' as niveau_controller;
 
 class HomeView extends GetView<HomeController> {
   int? id;
@@ -69,7 +70,7 @@ class HomeView extends GetView<HomeController> {
         onTap: () {
           String imageUrl =
           images[index]; // Récupère l'URL de l'image sélectionnée
-          Get.to(() => NiveauView(imageUrl: imageUrl));
+          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1));
         },
         child: Container(
           color: Color(0xFFFc19ee0),
