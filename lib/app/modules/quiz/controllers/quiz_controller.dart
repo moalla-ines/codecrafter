@@ -5,7 +5,7 @@ import 'package:codecrafter/app/model/Quizzes.dart'; // Assurez-vous d'importer 
 
 class QuizController extends GetxController {
   final QuizzesService quizzesService = Get.find();
-  var quizzes = <Quizzes>[].obs;
+  final quizzes = <Quizzes>[].obs;
 
   @override
   void onInit() {

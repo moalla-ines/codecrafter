@@ -32,30 +32,29 @@ class QuizView extends GetView<QuizController> {
         ),
       ),
       body: Obx(() {
-        if (controller.quizzes.isEmpty && niveau != null) {
-          controller.fetchQuizzesByNiveau(niveau!);
+        if (controller.quizzes.isEmpty) {
+          if (niveau != null) {
+            controller.fetchQuizzesByNiveau(niveau!);
+          }
           return Center(child: CircularProgressIndicator());
-        } else if (controller.quizzes.isEmpty) {
-          return Center(child: Text('No data available'));
         } else {
           return SingleChildScrollView(
             child: Center(
               child: Container(
                 padding: const EdgeInsets.all(15),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                     for (var quiz in controller.quizzes)
-                      buildQuizTile(
-                        context,
-                        quiz.id.toString(),
-                        quiz.titreQuiz!,
-                        quiz.description!,
-                        Colors.grey.shade200,
-                        SizedBox(height: 2),
-                        Container(padding: const EdgeInsets.all(3)),
-                        imageUrl,
-                      ),
+                buildQuizTile(
+                context,
+                quiz.id.toString(),
+                quiz.titreQuiz!,
+                quiz.description!,
+                Colors.grey.shade200,
+                SizedBox(height: 2),
+                Container(padding: const EdgeInsets.all(3)),
+                imageUrl,),
                   ],
                 ),
               ),
