@@ -29,31 +29,30 @@ class QuizzesService extends GetxService {
         throw Exception('Token not found');
       }
       final url = Uri.parse('http://localhost:8080/api/v1/quizzes/niveau/$niveau');
+
       final response = await http.get(
         url,
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Access-Control-Allow-Origin, Accept",
           "Authorization": "Bearer $token",
         },
       );
+      print(response.body);
+      print(response.statusCode);
       if (response.statusCode == 200) {
-        print(response.statusCode);
         final jsonData = jsonDecode(response.body) as List<dynamic>;
-        print(response.body);
         return jsonData.map((json) => Quizzes.fromJson(json)).toList();
-
       } else {
-        print(response.statusCode);
-        print(response);
+        print('Failed to load quizzes. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
         throw Exception('Failed to load quizzes');
       }
     } catch (e) {
-      print(e.toString());
+      print('Exception occurred: $e');
       throw Exception('Failed to load quizzes');
     }
   }
+
 
 }

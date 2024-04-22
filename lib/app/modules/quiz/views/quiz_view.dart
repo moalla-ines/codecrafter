@@ -5,18 +5,38 @@ import 'package:get/get.dart';
 
 class QuizView extends GetView<QuizController> {
   final String? imageUrl;
+  final int? niveau;
 
-  QuizView({this.imageUrl});
+  QuizView({this.imageUrl, this.niveau});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF732DA2),
       appBar: AppBar(
-        title: Text('Quiz List'),
+        backgroundColor: Color(0xFFF732DA2),
+        title: Text(
+          'Quiz List',
+          style: TextStyle(
+            color: Colors.grey.shade200,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            controller.quizzes.clear();
+            Get.back();
+          },
+        ),
       ),
       body: Obx(() {
-        if (controller.quizzes.isEmpty) {
+        if (controller.quizzes.isEmpty && niveau != null) {
+          controller.fetchQuizzesByNiveau(niveau!);
           return Center(child: CircularProgressIndicator());
+        } else if (controller.quizzes.isEmpty) {
+          return Center(child: Text('No data available'));
         } else {
           return SingleChildScrollView(
             child: Center(
@@ -24,20 +44,17 @@ class QuizView extends GetView<QuizController> {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: 10),
+                  children: [
                     for (var quiz in controller.quizzes)
                       buildQuizTile(
                         context,
                         quiz.id.toString(),
                         quiz.titreQuiz!,
                         quiz.description!,
-
                         Colors.grey.shade200,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
                         imageUrl,
-                        // Utilisez l'URL de l'image passée en paramètre
                       ),
                   ],
                 ),
@@ -72,4 +89,3 @@ class QuizView extends GetView<QuizController> {
     );
   }
 }
-

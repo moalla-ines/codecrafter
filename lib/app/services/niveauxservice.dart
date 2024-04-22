@@ -45,7 +45,9 @@ class NiveauxService extends GetxService{
       } else {
         throw Exception('Failed to load niveaux');
       }
+
     } catch (e) {
+
       throw Exception('Failed to load niveaux');
     }
   }

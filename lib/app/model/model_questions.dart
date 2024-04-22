@@ -1,39 +1,40 @@
-class Questions {
+import 'package:codecrafter/app/model/Quizzes.dart';
+
+class Question {
   int? idquestion;
-  int? indice_option_correcte;
+  String? text;
   String? option1;
   String? option2;
   String? option3;
   String? option4;
-  String? text;
-  int? idquiz;
+  int? indiceOptionCorrecte;
+  Quizzes? quiz;
 
-  Questions(this.idquestion, this.indice_option_correcte, this.option1,
-      this.option2, this.option3, this.option4, this.text, this.idquiz);
+  Question({this.idquestion, this.text, this.option1, this.option2, this.option3, this.option4, this.indiceOptionCorrecte, this.quiz});
 
-  factory Questions.fromJson(Map<String, dynamic> json) {
-    return Questions(
-      json['idquestion'],
-      json['indice_option_correcte'],
-      json['option1'],
-      json['option2'],
-      json['option3'],
-      json['option4'],
-      json['text'],
-      json['idquiz'],
-    );
+  Question.fromJson(Map<String, dynamic> json) {
+    idquestion = json['idquestion'];
+    text = json['text'];
+    option1 = json['option1'];
+    option2 = json['option2'];
+    option3 = json['option3'];
+    option4 = json['option4'];
+    indiceOptionCorrecte = json['indice_optionCorrecte'];
+    quiz = json['quiz'] != null ? Quizzes.fromJson(json['quiz']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'idquestion': idquestion,
-      'indice_option_correcte': indice_option_correcte,
-      'option1': option1,
-      'option2': option2,
-      'option3': option3,
-      'option4': option4,
-      'text': text,
-      'idquiz': idquiz,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['idquestion'] = this.idquestion;
+    data['text'] = this.text;
+    data['option1'] = this.option1;
+    data['option2'] = this.option2;
+    data['option3'] = this.option3;
+    data['option4'] = this.option4;
+    data['indice_optionCorrecte'] = this.indiceOptionCorrecte;
+    if (this.quiz != null) {
+      data['quiz'] = this.quiz!.toJson();
+    }
+    return data;
   }
 }

@@ -5,18 +5,18 @@ import 'package:codecrafter/app/model/Quizzes.dart'; // Assurez-vous d'importer 
 
 class QuizController extends GetxController {
   final QuizzesService quizzesService = Get.find();
-  final quizzes = <Quizzes>[].obs;
+  var quizzes = <Quizzes>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchQuizzesByNiveau(1); // Appel initial pour récupérer les quiz pour le niveau 1
+
   }
 
-  void fetchQuizzesByNiveau(int niveau) async {
+  void fetchQuizzesByNiveau(int? niveau) async {
     try {
       final token = quizzesService.token.value;
-      final data = await quizzesService.getQuizzesByNiveau(niveau);
+      final data = await quizzesService.getQuizzesByNiveau(niveau!);
       print(data);
       quizzes.assignAll(data);
       print(data);
@@ -37,3 +37,4 @@ class QuizController extends GetxController {
     super.onClose();
   }
 }
+
