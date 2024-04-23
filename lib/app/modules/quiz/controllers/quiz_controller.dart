@@ -5,12 +5,11 @@ import 'package:codecrafter/app/model/Quizzes.dart'; // Assurez-vous d'importer 
 
 class QuizController extends GetxController {
   final QuizzesService quizzesService = Get.find();
-  final quizzes = <Quizzes>[].obs;
+  var quiz = [].obs;
 
   @override
   void onInit() {
     super.onInit();
-
   }
 
   void fetchQuizzesByNiveau(int? niveau) async {
@@ -18,14 +17,13 @@ class QuizController extends GetxController {
       final token = quizzesService.token.value;
       final data = await quizzesService.getQuizzesByNiveau(niveau!);
       print(data);
-      quizzes.assignAll(data);
+      quiz.assignAll(data);
       print(data);
     } catch (e) {
       print('Failed to load quizzes: $e');
       // Gérer l'erreur comme vous le souhaitez
     }
   }
-
 
   @override
   void onReady() {
@@ -37,4 +35,3 @@ class QuizController extends GetxController {
     super.onClose();
   }
 }
-

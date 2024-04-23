@@ -28,16 +28,16 @@ class Niveau {
 class Categorie {
   int? idcategorie;
   String? titreCategorie;
-  List<Quizzes>? quizzes;
+  List<Quiz>? quiz;
 
-  Categorie({this.idcategorie, this.titreCategorie, this.quizzes});
+  Categorie({this.idcategorie, this.titreCategorie, this.quiz});
 
   Categorie.fromJson(Map<String, dynamic> json) {
     idcategorie = json['idcategorie'];
     titreCategorie = json['titre_categorie'];
     if (json['quizzes'] != null) {
-      quizzes = <Quizzes>[];
-      json['quizzes'].forEach((v) { quizzes!.add(new Quizzes.fromJson(v)); });
+      quiz = <Quiz>[];
+      json['quizzes'].forEach((v) { quiz!.add(new Quiz.fromJson(v)); });
     }
   }
 
@@ -45,8 +45,8 @@ class Categorie {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['idcategorie'] = this.idcategorie;
     data['titre_categorie'] = this.titreCategorie;
-    if (this.quizzes != null) {
-      data['quizzes'] = this.quizzes!.map((v) => v.toJson()).toList();
+    if (this.quiz != null) {
+      data['quizzes'] = this.quiz!.map((v) => v.toJson()).toList();
     }
     return data;
   }

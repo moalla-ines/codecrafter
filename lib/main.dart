@@ -1,5 +1,7 @@
+import 'package:codecrafter/app/modules/question/controllers/question_controller.dart';
 import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 import 'package:codecrafter/app/services/niveauxservice.dart';
+import 'package:codecrafter/app/services/questionservice.dart';
 import 'package:codecrafter/app/services/quizservice.dart';
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +35,11 @@ class MyApp extends StatelessWidget {
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => AuthService());
         Get.lazyPut(() => QuizzesService());
+        Get.lazyPut(() => QuestionsService());
         Get.lazyPut(() => NiveauxService());
         Get.put(HomeController());
         Get.put(QuizController());
+        Get.put(QuestionController());
         Get.put(NiveauController());
         Get.put(LoginController());
         Get.put(InscriptionController());

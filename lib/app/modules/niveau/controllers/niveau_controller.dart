@@ -18,7 +18,6 @@ class NiveauController extends GetxController {
   void fetchNiveaux(int? categorie) async {
     try {
       final token = niveauxService.token.value;
-      print(categorie);
       final data = await niveauxService.getNiveauByCategorie(categorie!);
       niveaux.assignAll(data);
     } catch (e) {

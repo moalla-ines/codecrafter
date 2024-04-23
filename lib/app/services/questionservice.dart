@@ -1,10 +1,8 @@
-import 'dart:convert';
-
-import 'package:codecrafter/app/model/Quizzes.dart';
+import 'package:codecrafter/app/model/model_questions.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-class QuizzesService extends GetxService {
+class QuestionsService extends GetxService{
   RxString _token = RxString('');
   RxString get token => _token;
 
@@ -21,15 +19,14 @@ class QuizzesService extends GetxService {
     await Future.delayed(Duration(seconds: 1));
     return _token.value;
   }
-
-  Future<List<Quiz>> getQuizzesByNiveau(int niveau) async {
+  Future<List<Question>> getQuestionsByQuizzes(int quiz) async {
     try {
       final token = await getToken();
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/quizzes/niveau/$niveau');
-
+      final url = Uri.parse('http://localhost:8080/api/v1/questions/quizzes/$quiz');
+      print(quiz);
       final response = await http.get(
         url,
         headers: <String, String>{
@@ -38,19 +35,19 @@ class QuizzesService extends GetxService {
           "Authorization": "Bearer $token",
         },
       );
-
+      print(response.body);
       print(response.statusCode);
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body) as List<dynamic>;
-        return jsonData.map((json) => Quiz.fromJson(json)).toList();
+        return jsonData.map((json) => Question.fromJson(json)).toList();
       } else {
         print('Failed to load quizzes. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-        throw Exception('Failed to load quizzes');
+        throw Exception('Failed to load questions');
       }
     } catch (e) {
       print('Exception occurred: $e');
-      throw Exception('Failed to load quizzes');
+      throw Exception('Failed to load questions');
     }
   }
 

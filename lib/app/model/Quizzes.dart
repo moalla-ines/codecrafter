@@ -1,24 +1,24 @@
 
 
 
-  class Quizzes {
-    int? id;
+  class Quiz {
+    int? idquiz;
     String? titreQuiz;
     String? description;
     int? nbQuestions;
     Niveau? niveau;
     Categorie? categorie;
 
-  Quizzes(
-        {this.id,
+  Quiz(
+        {this.idquiz,
           this.titreQuiz,
           this.description,
           this.nbQuestions,
           this.niveau,
           this.categorie});
 
-  Quizzes.fromJson(Map<String, dynamic> json) {
-      id = json['id'];
+  Quiz.fromJson(Map<String, dynamic> json) {
+      idquiz = json['id'];
       titreQuiz = json['titre_quiz'];
       description = json['description'];
       nbQuestions = json['nb_questions'];
@@ -31,7 +31,7 @@
 
     Map<String, dynamic> toJson() {
       final Map<String, dynamic> data = new Map<String, dynamic>();
-      data['id'] = this.id;
+      data['id'] = this.idquiz;
       data['titre_quiz'] = this.titreQuiz;
       data['description'] = this.description;
       data['nb_questions'] = this.nbQuestions;
