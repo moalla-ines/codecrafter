@@ -12,9 +12,11 @@ class QuestionController extends GetxController {
     super.onInit();
   }
 
-  Future<void> fetchQuestionsByQuizzes(int quiz) async {
+  Future<void> fetchQuestionsByQuizzes(int? quiz) async {
     try {
-      questions.assignAll(await questionsService.getQuestionsByQuizzes(quiz));
+      final token = questionsService.token.value;
+      final data = await questionsService.getQuestionsByQuizzes(quiz!);
+      print(data);
       print(questions);
       print(quiz);
     } catch (e) {
@@ -27,4 +29,14 @@ class QuestionController extends GetxController {
     _questions.add(question);
     update();
   }
+
+@override
+void onReady() {
+  super.onReady();
+}
+
+@override
+void onClose() {
+  super.onClose();
+}
 }
