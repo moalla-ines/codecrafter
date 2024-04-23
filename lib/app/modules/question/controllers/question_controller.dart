@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class QuestionController extends GetxController {
   final QuestionsService questionsService = Get.find();
   List<Question> _questions = [];
-  final questions = <Question>[].obs;
+  var questions = <Question>[].obs;
 
   @override
   void onInit() {

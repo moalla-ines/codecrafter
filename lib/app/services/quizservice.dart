@@ -28,7 +28,7 @@ class QuizzesService extends GetxService {
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/quizzes/niveau/$niveau');
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz/niveau/$niveau');
 
       final response = await http.get(
         url,

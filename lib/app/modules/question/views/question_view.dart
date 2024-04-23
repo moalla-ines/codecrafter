@@ -9,6 +9,7 @@ class QuestionView extends GetView<QuestionController>{
 
   @override
   Widget build(BuildContext context) {
+    print(quiz);
     if (quiz == null) {
       return Scaffold(
         appBar: AppBar(
@@ -21,10 +22,24 @@ class QuestionView extends GetView<QuestionController>{
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Questions pour le quiz $quiz'),
-        centerTitle: true,
+        backgroundColor: const Color(0xFFF732DA2),
+    appBar: AppBar(
+    backgroundColor: const Color(0xFFF732DA2),
+        title: Text('Questions pour le quiz $quiz' , style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+        ),
+    ),
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          controller.questions.clear();
+          Get.back();
+        },
       ),
+    ),
+
       body: Obx(() {
         if (controller.questions.isEmpty) {
           return Center(child: CircularProgressIndicator());
