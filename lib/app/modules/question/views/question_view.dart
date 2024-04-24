@@ -7,7 +7,11 @@ import 'package:codecrafter/app/modules/score/views/score_view.dart';
 class QuestionView extends GetView<QuestionController> {
   final int? quiz;
 
-  QuestionView({this.quiz});
+  QuestionView({this.quiz}) {
+    if (quiz != null) {
+      controller.fetchQuestionsByQuizzes(quiz!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +23,15 @@ class QuestionView extends GetView<QuestionController> {
       backgroundColor: const Color(0xFFF732DA2),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF732DA2),
-        title: Text('Questions pour le quiz $quiz',textAlign: TextAlign.center, style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),),
+        title: Text(
+          'Questions pour le quiz $quiz',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -35,85 +43,110 @@ class QuestionView extends GetView<QuestionController> {
       ),
       body: Obx(() {
         if (controller.questions.isEmpty) {
-          if (quiz != null) {
-            controller.fetchQuestionsByQuizzes(quiz!);
-          }
           return Center(child: CircularProgressIndicator());
         } else {
-          final question = controller.currentQuestion;
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Question $_questionNumber/${controller.questions.length}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey.shade200,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    question.text ?? 'Missing question text',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                SizedBox(height: 10),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    int optionIndex = index + 1;
-                    return Card(
-                      color: _getColor(question.selectedOption, optionIndex),
-                      child: ListTile(
-                        onTap: () {
-                          _answerQuestion(
-                            controller,
-                            question,
-                            optionIndex,
-                            _controller,
-                            _questionNumber,
-                            score,
-                          );
-                          print("nanes");
-                        },
-                        title: Text(question.getOption(optionIndex) ?? 'Missing option'),
+          return PageView.builder(
+            controller: _controller,
+            itemCount: controller.questions.length,
+            itemBuilder: (context, index) {
+              final question = controller.questions[index];
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Question ${index + 1}/${controller.questions.length}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey.shade200,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    );
-                  },
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        question.text ?? 'Missing question text',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 4,
+                      itemBuilder: (context, optionIndex) {
+                        int optionNumber = optionIndex + 1;
+                        return Card(
+                          color: controller.color.value,
+                          child: ListTile(
+                            onTap: () {
+                              _answerQuestion(
+                                  controller,
+                                  question,
+                                  optionNumber,
+                                  _controller,
+                                  index + 1,
+                                  score,
+                                  optionIndex + 1);
+                              print("nanes");
+                            },
+                            title: Text(question.getOption(optionNumber) ??
+                                'Missing option'),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         }
       }),
     );
   }
 
-  void _answerQuestion(QuestionController controller, Question question,
-      int selectedOption, PageController _controller, int _questionNumber,
-      int score) {
+  void _answerQuestion(
+      QuestionController controller,
+      Question question,
+      int selectedOption,
+      PageController _controller,
+      int _questionNumber,
+      int score,
+      int optionIndex) {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
-      if (selectedOption == question.indiceOptionCorrecte) {
+      if (selectedOption == question.indiceoptionCorrecte) {
         score++;
+        print(score);
+      } else
+        print(score);
+
+      if (selectedOption != null &&
+          selectedOption == question.indiceoptionCorrecte) {
+        controller.color.value =
+            Colors.green; // Update color to green for correct answer
+      } else {
+        print(score);
+        controller.color.value =
+            Colors.red; // Update color to red for incorrect answer
       }
       _nextQuestion(controller, _controller, _questionNumber, score);
     }
   }
 
-  Color _getColor(int? selectedOption, int optionIndex) {
-    if (selectedOption == optionIndex) {
-      return Colors.green;
+  Color _getColor(int? selectedOption, int? correctOption, int optionIndex) {
+    if (selectedOption != null) {
+      if (selectedOption == correctOption) {
+        return Colors.green; // Correct answer
+      } else {
+        return Colors.red; // Incorrect answer
+      }
     }
-    return Colors.white;
+    return Colors.white; // Default color
   }
 
   void _nextQuestion(QuestionController controller, PageController _controller,
@@ -122,8 +155,9 @@ class QuestionView extends GetView<QuestionController> {
       if (_questionNumber < controller.questions.length) {
         _controller.nextPage(
             duration: Duration(milliseconds: 300), curve: Curves.ease);
-        controller
-            .nextQuestion(); // Utilisation de la méthode du contrôleur pour mettre à jour le numéro de question
+        controller.nextQuestion();
+
+        _questionNumber++; // Increment _questionNumber here
       } else {
         Get.off(() => ScoreView(
           score: score,

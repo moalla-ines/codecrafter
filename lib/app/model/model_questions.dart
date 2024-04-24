@@ -6,7 +6,7 @@ class Question {
   String? option3;
   String? option4;
   int? selectedOption;
-  int? indiceOptionCorrecte;
+  int? indiceoptionCorrecte;
   Quiz? quiz;
 
   Question(
@@ -17,7 +17,7 @@ class Question {
         this.option3,
         this.option4,
         this.selectedOption,
-        this.indiceOptionCorrecte,
+        this.indiceoptionCorrecte,
         this.quiz});
 
   Question.fromJson(Map<String, dynamic> json) {
@@ -28,7 +28,7 @@ class Question {
     option3 = json['option3'];
     option4 = json['option4'];
     selectedOption = json['selectedOption'];
-    indiceOptionCorrecte = json['indice_optionCorrecte'];
+    indiceoptionCorrecte = json['indiceoptionCorrecte'];
     quiz = json['quiz'] != null ? new Quiz.fromJson(json['quiz']) : null;
   }
 
@@ -41,7 +41,7 @@ class Question {
     data['option3'] = this.option3;
     data['option4'] = this.option4;
     data['selectedOption'] = this.selectedOption;
-    data['indice_optionCorrecte'] = this.indiceOptionCorrecte;
+    data['indiceoptionCorrecte'] = this.indiceoptionCorrecte;
     if (this.quiz != null) {
       data['quiz'] = this.quiz!.toJson();
     }
