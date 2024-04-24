@@ -21,7 +21,7 @@ class QuizView extends GetView<QuizController> {
         title: const Text(
           'Quiz List',
           style: TextStyle(
-            color: Colors.grey,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),

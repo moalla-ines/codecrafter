@@ -10,6 +10,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const NIVEAU = _Paths.NIVEAU;
   static const QUESTION = _Paths.QUESTION;
+  static const SCORE = _Paths.SCORE;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const NIVEAU = '/niveau';
   static const QUESTION = '/question';
+  static const SCORE = '/score';
 }

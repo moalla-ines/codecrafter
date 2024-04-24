@@ -18,7 +18,7 @@
           this.categorie});
 
   Quiz.fromJson(Map<String, dynamic> json) {
-      idquiz = json['id'];
+      idquiz = json['idquiz'];
       titreQuiz = json['titre_quiz'];
       description = json['description'];
       nbQuestions = json['nb_questions'];
@@ -31,7 +31,7 @@
 
     Map<String, dynamic> toJson() {
       final Map<String, dynamic> data = new Map<String, dynamic>();
-      data['id'] = this.idquiz;
+      data['idquiz'] = this.idquiz;
       data['titre_quiz'] = this.titreQuiz;
       data['description'] = this.description;
       data['nb_questions'] = this.nbQuestions;

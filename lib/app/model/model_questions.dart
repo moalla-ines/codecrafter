@@ -5,6 +5,7 @@ class Question {
   String? option2;
   String? option3;
   String? option4;
+  int? selectedOption;
   int? indiceOptionCorrecte;
   Quiz? quiz;
 
@@ -15,6 +16,7 @@ class Question {
         this.option2,
         this.option3,
         this.option4,
+        this.selectedOption,
         this.indiceOptionCorrecte,
         this.quiz});
 
@@ -25,6 +27,7 @@ class Question {
     option2 = json['option2'];
     option3 = json['option3'];
     option4 = json['option4'];
+    selectedOption = json['selectedOption'];
     indiceOptionCorrecte = json['indice_optionCorrecte'];
     quiz = json['quiz'] != null ? new Quiz.fromJson(json['quiz']) : null;
   }
@@ -37,11 +40,27 @@ class Question {
     data['option2'] = this.option2;
     data['option3'] = this.option3;
     data['option4'] = this.option4;
+    data['selectedOption'] = this.selectedOption;
     data['indice_optionCorrecte'] = this.indiceOptionCorrecte;
     if (this.quiz != null) {
       data['quiz'] = this.quiz!.toJson();
     }
     return data;
+  }
+
+  String? getOption(int index) {
+    switch (index) {
+      case 1:
+        return option1;
+      case 2:
+        return option2;
+      case 3:
+        return option3;
+      case 4:
+        return option4;
+      default:
+        return null;
+    }
   }
 }
 
