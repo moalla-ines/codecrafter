@@ -17,7 +17,7 @@ class QuestionView extends GetView<QuestionController> {
   Widget build(BuildContext context) {
     final PageController _controller = PageController();
     int _questionNumber = 1;
-    int score = 0;
+
 
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
@@ -89,7 +89,7 @@ class QuestionView extends GetView<QuestionController> {
                                   optionNumber,
                                   _controller,
                                   index + 1,
-                                  score,
+                                 controller.score,
                                   optionIndex + 1);
                               print("nanes");
                             },
@@ -120,7 +120,7 @@ class QuestionView extends GetView<QuestionController> {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
-        score++;
+        controller.score++;
         print(score);
       } else
         print(score);
