@@ -29,7 +29,7 @@ class QuizView extends GetView<QuizController> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            controller.quiz.clear();
+            controller.quiz = [].obs;
             Get.back();
           },
         ),

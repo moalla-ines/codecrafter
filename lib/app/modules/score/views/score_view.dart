@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/modules/score/views/result_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,16 @@ class ScoreView extends GetView<ScoreController> {
       },
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              controller.score = 0.obs;
+              Get.back();
+              // Utilisez .value pour accéder à la variable observée
+
+
+            },
+          ),
           automaticallyImplyLeading: false,
           backgroundColor: bgColor3,
           elevation: 0,
@@ -101,10 +112,11 @@ class ScoreView extends GetView<ScoreController> {
                       ),
                       elevation: MaterialStateProperty.all(4),
                     ),
+
                     onPressed: () {
-                      Navigator.popUntil(context, (route) => route.isFirst);
-                    },
-                    child: const Text(
+                      controller.score = 0.obs;
+                      Get.back();
+                    },child: const Text(
                       "Take another test",
                       style: TextStyle(
                         color: Colors.white,
@@ -112,8 +124,7 @@ class ScoreView extends GetView<ScoreController> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                  ),             ],
               ),
             ],
           ),

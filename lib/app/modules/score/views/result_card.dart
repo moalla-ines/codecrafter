@@ -120,8 +120,7 @@ class ResultsCard extends GetView<ScoreController> {
   }
 
   Widget buildScoreWidget(BuildContext context) {
-    if (score != null && score! >= 75) {
-      print("hello : $score");
+    if (roundedPercentageScore >= 75) {
       return Column(
         children: [
           Text(
@@ -144,7 +143,7 @@ class ResultsCard extends GetView<ScoreController> {
           ),
         ],
       );
-    } else if (score != null && score! <= 75) {
+    } else {
       return Column(
         children: [
           Text(
@@ -168,8 +167,5 @@ class ResultsCard extends GetView<ScoreController> {
         ],
       );
     }
-
-    // Return null if score is between 51 and 74, as there's no specific widget for that range
-    return SizedBox.shrink();
   }
 }

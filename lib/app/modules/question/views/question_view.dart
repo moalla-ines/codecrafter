@@ -43,7 +43,8 @@ class QuestionView extends GetView<QuestionController> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            controller.questions.clear();
+            controller.questions=<Question>[].obs;
+            controller.color.value = Colors.white;
             Get.back();
           },
         ),
@@ -128,7 +129,8 @@ class QuestionView extends GetView<QuestionController> {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
         // Increment score if the selected option is correct
-        controller.score.value++; // Utilisez controller.score.value pour incrémenter le score
+        controller.score
+            .value++; // Utilisez controller.score.value pour incrémenter le score
         print("score est ${controller.score.value}");
       }
 
@@ -140,7 +142,10 @@ class QuestionView extends GetView<QuestionController> {
         controller.color.value =
             Colors.red; // Update color to red for incorrect answer
       }
+
+    }
       _nextQuestion(controller, _controller, _questionNumber, score);
+
     }
   }
 
@@ -175,4 +180,3 @@ class QuestionView extends GetView<QuestionController> {
       }
     });
   }
-}
