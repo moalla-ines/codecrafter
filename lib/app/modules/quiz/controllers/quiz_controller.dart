@@ -18,12 +18,21 @@ class QuizController extends GetxController {
       final data = await quizzesService.getQuizzesByNiveau(niveau!);
       print(data);
       quiz.assignAll(data);
-      print(data);
+      print(quiz);
     } catch (e) {
       print('Failed to load quizzes: $e');
       // Gérer l'erreur comme vous le souhaitez
     }
   }
+  void onCreateQuizzes(String titre, String description) async {
+    try {
+      final data = await quizzesService.createQuizzes(titre, description);
+      quiz.assignAll(data);
+    } catch (e) {
+      print('Failed to create quizzes: $e');
+    }
+  }
+
 
   @override
   void onReady() {

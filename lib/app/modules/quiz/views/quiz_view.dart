@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,8 @@ class QuizView extends GetView<QuizController> {
   final int? niveau;
 
   QuizView({this.imageUrl, this.niveau});
+
+  var context;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,14 @@ class QuizView extends GetView<QuizController> {
             Get.back();
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _showCreateQuizDialog(context);
+            },
+          ),
+        ],
       ),
       body: Obx(() {
         if (controller.quiz.isEmpty) {
@@ -70,8 +82,7 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-  Widget buildQuizTile(
-      BuildContext context,
+  Widget buildQuizTile(BuildContext context,
       String tag,
       String title,
       String subtitle,
@@ -79,8 +90,7 @@ class QuizView extends GetView<QuizController> {
       Widget? sizedBox,
       Widget? container,
       String? imageUrl,
-      Quiz quiz,
-      ) {
+      Quiz quiz,) {
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -96,12 +106,58 @@ class QuizView extends GetView<QuizController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(() => QuestionView(quiz:quiz.idquiz));
+                Get.to(() => QuestionView(quiz: quiz.idquiz));
               },
             ),
           ),
         ),
       ],
+    );
+  }
+
+  // Method to display the create quiz dialog
+  void _showCreateQuizDialog(BuildContext context) {
+    final TextEditingController titleQuizController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            title: Text('Créer un nouveau quiz'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: titleQuizController,
+                  decoration: InputDecoration(labelText: 'Titre'),
+                ),
+                TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(labelText: 'Description'),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  controller.onCreateQuizzes(
+                    titleQuizController.text,
+                    descriptionController.text,
+                  );
+                  Navigator.pop(context); // Fermer la boîte de dialogue
+                },
+                child: Text('Créer'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(
+                      context); // Fermer la boîte de dialogue sans créer le quiz
+                },
+                child: Text('Annuler'),
+              ),
+            ],
+          ),
     );
   }
 }
