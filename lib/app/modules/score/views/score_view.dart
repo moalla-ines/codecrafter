@@ -12,10 +12,12 @@ class ScoreView extends GetView<ScoreController> {
   @override
   Widget build(BuildContext context) {
     const Color bgColor3 = Color(0xFFF732DA2);
-    print(score);
+    print("SCORE est  $score");
     print(totalQuestions);
     final double percentageScore = (score! / totalQuestions!) * 100;
+    print(score);
     final int roundedPercentageScore = percentageScore.round();
+    print(roundedPercentageScore);
     const Color cardColor =Color(0xFFF732DA2);
     return WillPopScope(
       onWillPop: () {
@@ -56,6 +58,7 @@ class ScoreView extends GetView<ScoreController> {
                       ),
                     ),
                     for (var i = 0; i < "Score!!!".length; i++) ...[
+
                       TextSpan(
                         text: "Score!!!"[i],
                         style: Theme.of(context).textTheme.headline6!.copyWith(
@@ -81,10 +84,12 @@ class ScoreView extends GetView<ScoreController> {
               ),
               Column(
                 children: [
+
                   ResultsCard(
                     roundedPercentageScore: roundedPercentageScore,
                     bgColor3: bgColor3,
                   ),
+
                   const SizedBox(
                     height: 25,
                   ),

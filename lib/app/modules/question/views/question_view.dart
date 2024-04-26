@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/model_questions.dart';
@@ -6,6 +8,11 @@ import 'package:codecrafter/app/modules/score/views/score_view.dart';
 
 class QuestionView extends GetView<QuestionController> {
   final int? quiz;
+
+  int ?score;
+
+  var globalScore;
+
 
   QuestionView({this.quiz}) {
     if (quiz != null) {
@@ -84,17 +91,16 @@ class QuestionView extends GetView<QuestionController> {
                           child: ListTile(
                             onTap: () {
                               _answerQuestion(
-                                  controller,
-                                  question,
-                                  optionNumber,
-                                  _controller,
-                                  index + 1,
-                                 controller.score,
-                                  optionIndex + 1);
-                              print("nanes");
+                                controller,
+                                question,
+                                optionNumber,
+                                _controller,
+                                index + 1,
+                                controller.score.value, // Utilisez controller.score.value
+                                optionIndex + 1,
+                              );
                             },
-                            title: Text(question.getOption(optionNumber) ??
-                                'Missing option'),
+                            title: Text(question.getOption(optionNumber) ?? 'Missing option'),
                           ),
                         );
                       },
@@ -116,27 +122,29 @@ class QuestionView extends GetView<QuestionController> {
       PageController _controller,
       int _questionNumber,
       int score,
-      int optionIndex) {
+      int optionIndex,
+      ) {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
-        controller.score++;
-        print(score);
-      } else
-        print(score);
+        // Increment score if the selected option is correct
+        controller.score.value++; // Utilisez controller.score.value pour incrémenter le score
+        print("score est ${controller.score.value}");
+      }
 
       if (selectedOption != null &&
           selectedOption == question.indiceoptionCorrecte) {
         controller.color.value =
             Colors.green; // Update color to green for correct answer
       } else {
-        print(score);
         controller.color.value =
             Colors.red; // Update color to red for incorrect answer
       }
       _nextQuestion(controller, _controller, _questionNumber, score);
     }
   }
+
+
 
   Color _getColor(int? selectedOption, int? correctOption, int optionIndex) {
     if (selectedOption != null) {
@@ -151,16 +159,17 @@ class QuestionView extends GetView<QuestionController> {
 
   void _nextQuestion(QuestionController controller, PageController _controller,
       int _questionNumber, int score) {
+
     Future.delayed(Duration(seconds: 1), () {
       if (_questionNumber < controller.questions.length) {
         _controller.nextPage(
             duration: Duration(milliseconds: 300), curve: Curves.ease);
         controller.nextQuestion();
 
-        _questionNumber++; // Increment _questionNumber here
+        _questionNumber++;
+        // Increment _questionNumber here
       } else {
-        Get.off(() => ScoreView(
-          score: score,
+        Get.off(() => ScoreView(score: controller.score.value,
           totalQuestions: controller.questions.length,
         ));
       }

@@ -1,22 +1,30 @@
-
+import 'package:codecrafter/app/modules/score/controllers/score_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ResultsCard extends StatelessWidget {
-  const ResultsCard({
-    super.key,
-    required this.roundedPercentageScore,
-    required this.bgColor3,
-  });
-
+class ResultsCard extends GetView<ScoreController> {
   final int roundedPercentageScore;
   final Color bgColor3;
+  final int? score;
+
+  ResultsCard({
+    Key? key,
+    required this.roundedPercentageScore,
+    required this.bgColor3,
+    this.score,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const Color bgColor3 = Color(0xFF5170FD);
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.888,
-      height: MediaQuery.of(context).size.height * 0.568,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.888,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.568,
       child: Stack(
         children: [
           Card(
@@ -42,7 +50,8 @@ class ResultsCard extends StatelessWidget {
                             ii++) ...[
                               TextSpan(
                                 text: "Congratulations!,"[ii],
-                                style: Theme.of(context)
+                                style: Theme
+                                    .of(context)
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(fontSize: 12 + ii.toDouble()),
@@ -51,11 +60,15 @@ class ResultsCard extends StatelessWidget {
                             //m'adamfo(Twi) - my friend
                             TextSpan(
                               text: "  m'adamfo\n You Scored  \n",
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodySmall,
                             ),
                             TextSpan(
                               text: "$roundedPercentageScore%",
-                              style: Theme.of(context)
+                              style: Theme
+                                  .of(context)
                                   .textTheme
                                   .bodyLarge!
                                   .copyWith(
@@ -67,53 +80,9 @@ class ResultsCard extends StatelessWidget {
                       ),
                     ),
                   ),
-
-
-
                   Expanded(
                     flex: 2,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 25),
-                        child: roundedPercentageScore >= 75
-                            ? Column(
-                          children: [
-                            Text(
-                              "You have Earned this Trophy",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Image.asset("assets/images/bouncy-cup.gif",
-                                fit: BoxFit.fill,
-                                height:
-                                MediaQuery.of(context).size.height *
-                                    0.25),
-                          ],
-                        )
-                            : Column(
-                          children: [
-                            Text(
-                              "I know You can do better!!",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Image.asset("assets/images/sad.png",
-                                fit: BoxFit.fill,
-                                height:
-                                MediaQuery.of(context).size.height *
-                                    0.25),
-                          ],
-                        ),
-                      ),
-                    ),
+                    child: buildScoreWidget(context),
                   )
                 ],
               ),
@@ -121,26 +90,86 @@ class ResultsCard extends StatelessWidget {
           ),
           Positioned(
             left: -10,
-            top: MediaQuery.of(context).size.height * 0.178,
+            top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.178,
             child: Container(
               height: 25,
               width: 25,
               decoration:
-              const BoxDecoration(color: bgColor3, shape: BoxShape.circle),
+              BoxDecoration(color: bgColor3, shape: BoxShape.circle),
             ),
           ),
           Positioned(
             right: -10,
-            top: MediaQuery.of(context).size.height * 0.178,
+            top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.178,
             child: Container(
               height: 25,
               width: 25,
               decoration:
-              const BoxDecoration(color: bgColor3, shape: BoxShape.circle),
+              BoxDecoration(color: bgColor3, shape: BoxShape.circle),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget buildScoreWidget(BuildContext context) {
+    if (score != null && score! >= 75) {
+      print("hello : $score");
+      return Column(
+        children: [
+          Text(
+            "You have Earned this Trophy",
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Image.asset(
+            "assets/images/bouncy-cup.gif",
+            fit: BoxFit.fill,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.25,
+          ),
+        ],
+      );
+    } else if (score != null && score! <= 75) {
+      return Column(
+        children: [
+          Text(
+            "I know You can do better!!",
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Image.asset(
+            "assets/images/sad.png",
+            fit: BoxFit.fill,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.25,
+          ),
+        ],
+      );
+    }
+
+    // Return null if score is between 51 and 74, as there's no specific widget for that range
+    return SizedBox.shrink();
   }
 }

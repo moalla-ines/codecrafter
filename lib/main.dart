@@ -1,8 +1,10 @@
 import 'package:codecrafter/app/modules/question/controllers/question_controller.dart';
 import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
+import 'package:codecrafter/app/modules/score/controllers/score_controller.dart';
 import 'package:codecrafter/app/services/niveauxservice.dart';
 import 'package:codecrafter/app/services/questionservice.dart';
 import 'package:codecrafter/app/services/quizservice.dart';
+import 'package:codecrafter/app/services/scoreservice.dart';
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +39,8 @@ class MyApp extends StatelessWidget {
         Get.lazyPut(() => QuizzesService());
         Get.lazyPut(() => QuestionsService());
         Get.lazyPut(() => NiveauxService());
+        Get.lazyPut(() => ScoreService());
+        Get.put(ScoreController());
         Get.put(HomeController());
         Get.put(QuizController());
         Get.put(QuestionController());

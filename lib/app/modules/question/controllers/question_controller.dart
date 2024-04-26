@@ -8,7 +8,7 @@ class QuestionController extends GetxController {
   var currentQuestionIndex = 0.obs;
   var questions = <Question>[].obs;
   var selectedOption = 0.obs;
-var score = 0;
+var score = 0.obs;
   var color = Colors.white.obs;
   @override
   void onInit() {
