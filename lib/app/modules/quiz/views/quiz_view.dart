@@ -115,10 +115,11 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-  // Method to display the create quiz dialog
+// Method to display the create quiz dialog
   void _showCreateQuizDialog(BuildContext context) {
     final TextEditingController titleQuizController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
+
 
     showDialog(
       context: context,

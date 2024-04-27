@@ -12,7 +12,10 @@ var score = 0.obs;
   var color = Colors.white.obs;
   @override
   void onInit() {
+    color.value = Colors.white;
+
     super.onInit();
+
   }
 
   Future<void> fetchQuestionsByQuizzes(int? quiz) async {
