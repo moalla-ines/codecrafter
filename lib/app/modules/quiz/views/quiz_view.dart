@@ -153,13 +153,7 @@ class QuizView extends GetView<QuizController> {
                   descriptionController.text,
                   nbQuestions,
                 );
-                Navigator.pop(context);
-                if (nbQuestions != null && nbQuestions > 0) {
-                  // Le nombre est valide
-                } else {
-                  // Le nombre n'est pas valide
-                }
-// Close the dialog after creating quiz
+                Navigator.pop(context); // Close the dialog after creating quiz
               } else {
                 // Handle case where conversion to int fails
                 print('Invalid input for nb_questions');

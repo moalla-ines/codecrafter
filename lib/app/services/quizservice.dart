@@ -55,8 +55,7 @@ class QuizzesService extends GetxService {
     }
   }
 
-  Future<void> createQuizzes(String titreQuiz, String description,
-      int nbQuestions) async {
+  Future<void> createQuizzes(String titreQuiz, String description, int nbQuestions) async {
     try {
       final token = await getToken();
       if (token == null) {
@@ -64,11 +63,12 @@ class QuizzesService extends GetxService {
       }
 
       final url = Uri.parse('http://localhost:8080/api/v1/quiz/create');
+
       final response = await http.post(
         url,
         headers: <String, String>{
           "Accept": "application/json",
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
           "Authorization": "Bearer $token",
         },
         body: jsonEncode(<String, dynamic>{
@@ -80,6 +80,9 @@ class QuizzesService extends GetxService {
 
       if (response.statusCode == 201) {
         print('Quiz created successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
       } else {
         print('Failed to create quiz. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
@@ -88,4 +91,5 @@ class QuizzesService extends GetxService {
       print('Exception occurred: $e');
     }
   }
+
 }
