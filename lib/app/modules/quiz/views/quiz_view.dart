@@ -119,46 +119,55 @@ class QuizView extends GetView<QuizController> {
   void _showCreateQuizDialog(BuildContext context) {
     final TextEditingController titleQuizController = TextEditingController();
     final TextEditingController descriptionController = TextEditingController();
-
+    final TextEditingController nbQuestionsController = TextEditingController();
 
     showDialog(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: Text('Créer un nouveau quiz'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: titleQuizController,
-                  decoration: InputDecoration(labelText: 'Titre'),
-                ),
-                TextField(
-                  controller: descriptionController,
-                  decoration: InputDecoration(labelText: 'Description'),
-                ),
-              ],
+      builder: (context) => AlertDialog(
+        title: Text('Créer un nouveau quiz'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleQuizController,
+              decoration: InputDecoration(labelText: 'Titre'),
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  controller.onCreateQuizzes(
-                    titleQuizController.text,
-                    descriptionController.text,
-                  );
-                  Navigator.pop(context); // Fermer la boîte de dialogue
-                },
-                child: Text('Créer'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(
-                      context); // Fermer la boîte de dialogue sans créer le quiz
-                },
-                child: Text('Annuler'),
-              ),
-            ],
+            TextField(
+              controller: descriptionController,
+              decoration: InputDecoration(labelText: 'Description'),
+            ),
+            TextField(
+              controller: nbQuestionsController,
+              keyboardType: TextInputType.number, // Set keyboard type to number
+              decoration: InputDecoration(labelText: 'nb_questions'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              int? nbQuestions = int.tryParse(nbQuestionsController.text);
+              if (nbQuestions != null) {
+                controller.onCreateQuizzes(
+                  titleQuizController.text,
+                  descriptionController.text,
+                  nbQuestions,
+                );
+                Navigator.pop(context);
+                if (nbQuestions != null && nbQuestions > 0) {
+                  // Le nombre est valide
+                } else {
+                  // Le nombre n'est pas valide
+                }
+// Close the dialog after creating quiz
+              } else {
+                // Handle case where conversion to int fails
+                print('Invalid input for nb_questions');
+              }
+            },
+            child: Text('Créer'),
           ),
+        ],
+      ),
     );
-  }
-}
+  }}

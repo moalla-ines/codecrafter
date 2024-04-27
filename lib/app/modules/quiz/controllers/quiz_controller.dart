@@ -24,10 +24,11 @@ class QuizController extends GetxController {
       // Gérer l'erreur comme vous le souhaitez
     }
   }
-  void onCreateQuizzes(String titre, String description) async {
+  void onCreateQuizzes(String titreQuiz, String description, int nbQuestions) async {
     try {
-      final data = await quizzesService.createQuizzes(titre, description);
-      quiz.assignAll(data);
+      await quizzesService.createQuizzes(titreQuiz, description,nbQuestions);
+      // Show a success message or perform any other actions after successful creation
+      print('Quiz created successfully!');
     } catch (e) {
       print('Failed to create quizzes: $e');
     }

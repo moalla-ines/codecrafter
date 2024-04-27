@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 class QuizzesService extends GetxService {
   RxString _token = RxString('');
+
   RxString get token => _token;
 
   void setToken(String token) {
@@ -54,14 +55,15 @@ class QuizzesService extends GetxService {
     }
   }
 
-  Future<List<Quiz>> createQuizzes(String titre_quiz, String description) async {
+  Future<void> createQuizzes(String titreQuiz, String description,
+      int nbQuestions) async {
     try {
       final token = await getToken();
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz');
 
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz/create');
       final response = await http.post(
         url,
         headers: <String, String>{
@@ -69,27 +71,21 @@ class QuizzesService extends GetxService {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
         },
-        body: jsonEncode(<String, String>{
-          'titrequiz': titre_quiz,
+        body: jsonEncode(<String, dynamic>{
+          'titre_quiz': titreQuiz,
           'description': description,
+          'nb_questions': nbQuestions,
         }),
       );
 
-
-      print(response.statusCode);
       if (response.statusCode == 201) {
-        final jsonData = jsonDecode(response.body) as List<dynamic>;
-        return jsonData.map((json) => Quiz.fromJson(json)).toList();
+        print('Quiz created successfully');
       } else {
-        print('Failed to load quizzes. Status code: ${response.statusCode}');
+        print('Failed to create quiz. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-        throw Exception('Failed to load quizzes');
       }
     } catch (e) {
       print('Exception occurred: $e');
-      throw Exception('Failed to load quizzes');
     }
   }
-
-
 }
