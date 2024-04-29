@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,10 +8,9 @@ import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 class QuizView extends GetView<QuizController> {
   final String? imageUrl;
   final int? niveau;
+  final int? categorie;
 
-  QuizView({this.imageUrl, this.niveau});
-
-  var context;
+  QuizView({this.imageUrl, this.niveau, this.categorie});
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +87,7 @@ class QuizView extends GetView<QuizController> {
       Widget? sizedBox,
       Widget? container,
       String? imageUrl,
-      Quiz quiz,) {
+      Quiz quiz) {
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -115,12 +112,11 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-// Method to display the create quiz dialog
-  void _showCreateQuizDialog(BuildContext context) {
-    final TextEditingController titleQuizController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-    final TextEditingController nbQuestionsController = TextEditingController();
+  final TextEditingController titleQuizController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController nbQuestionsController = TextEditingController();
 
+  void _showCreateQuizDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -138,7 +134,8 @@ class QuizView extends GetView<QuizController> {
             ),
             TextField(
               controller: nbQuestionsController,
-              keyboardType: TextInputType.number, // Set keyboard type to number
+              keyboardType: TextInputType.number,
+              // Set keyboard type to number
               decoration: InputDecoration(labelText: 'nb_questions'),
             ),
           ],
@@ -148,15 +145,19 @@ class QuizView extends GetView<QuizController> {
             onPressed: () {
               int? nbQuestions = int.tryParse(nbQuestionsController.text);
               if (nbQuestions != null) {
-                controller.onCreateQuizzes(
-                  titleQuizController.text,
-                  descriptionController.text,
-                  nbQuestions,
-                );
-                Navigator.pop(context); // Close the dialog after creating quiz
-              } else {
-                // Handle case where conversion to int fails
-                print('Invalid input for nb_questions');
+                if (niveau != null && categorie != null) {
+                  controller.onCreateQuizzes(
+                    titleQuizController.text,
+                    descriptionController.text,
+                    nbQuestions,
+                    niveau,
+                    categorie,
+                  );
+                  Navigator.pop(
+                      context); // Fermer la boîte de dialogue après la création du quiz
+                } else {
+                  print('Niveau ou catégorie est null');
+                }
               }
             },
             child: Text('Créer'),
@@ -164,4 +165,5 @@ class QuizView extends GetView<QuizController> {
         ],
       ),
     );
-  }}
+  }
+}

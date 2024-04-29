@@ -55,7 +55,8 @@ class QuizzesService extends GetxService {
     }
   }
 
-  Future<void> createQuizzes(String titreQuiz, String description, int nbQuestions) async {
+  Future<void> createQuizzes(String titreQuiz, String description,
+      int nbQuestions, int niveau, int categorie) async {
     try {
       final token = await getToken();
       if (token == null) {
@@ -75,6 +76,8 @@ class QuizzesService extends GetxService {
           'titre_quiz': titreQuiz,
           'description': description,
           'nb_questions': nbQuestions,
+          'niveau': niveau,
+          'categorie': categorie,
         }),
       );
 
@@ -91,5 +94,4 @@ class QuizzesService extends GetxService {
       print('Exception occurred: $e');
     }
   }
-
 }

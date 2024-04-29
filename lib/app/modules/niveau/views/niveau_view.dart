@@ -1,32 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:codecrafter/app/model/model_niveau.dart';
 import 'package:codecrafter/app/modules/quiz/views/quiz_view.dart';
 import 'package:codecrafter/app/services/niveauxservice.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import '../controllers/niveau_controller.dart';
 
 class NiveauView extends GetView<NiveauController> {
   final String? imageUrl;
   final int? index;
 
-  var niveau;
-
-  NiveauView({super.key, this.imageUrl, this.index, this.niveau});
+  NiveauView({Key? key, this.imageUrl, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF732DA2),
+      backgroundColor: const Color(0xFFF732DA2),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF732DA2),
-        title: Text(
+        backgroundColor: const Color(0xFFF732DA2),
+        title: const Text(
           'Niveau',
           style: TextStyle(
-              color: Colors.grey.shade200, fontWeight: FontWeight.bold),
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             controller.niveaux = [].obs;
             Get.back();
@@ -44,10 +46,10 @@ class NiveauView extends GetView<NiveauController> {
                   // Fetch data if niveaux is empty
                   controller.fetchNiveaux(index);
 
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (controller.niveaux.isEmpty) {
                   // If niveaux is still empty, return a message or placeholder widget
-                  return Center(child: Text('No data available'));
+                  return const Center(child: Text('No data available'));
                 } else {
                   // Build the UI using niveaux data
                   return Column(
@@ -84,7 +86,7 @@ class NiveauView extends GetView<NiveauController> {
             child: ListTile(
               leading: imageUrl != null
                   ? Image.network(imageUrl, width: 40, height: 40)
-                  : Icon(Icons.image),
+                  : const Icon(Icons.image),
               title: Text(title),
               subtitle: Text(subtitle),
               tileColor: tileColor,
@@ -92,6 +94,7 @@ class NiveauView extends GetView<NiveauController> {
                 Get.to(() => QuizView(
                   imageUrl: imageUrl,
                   niveau: niveau.idNiveau,
+                  categorie: niveau.categorie!.idcategorie,
                 ));
               },
             ),
