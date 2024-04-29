@@ -32,15 +32,16 @@ class ScoreService extends GetxService {
         // Construire l'URL pour l'API
         String url = 'http://localhost:8080/api/v1/score/questions/$question';
 
-        // Convertir le score en JSON
+        // Convertir l'objet Score en JSON
         String scoreJson = jsonEncode(score.toJson());
 
         // Envoyer la requête POST avec le score JSON et le token dans l'en-tête
         http.Response response = await http.post(
           Uri.parse(url),
           headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer $token',
+            "Accept": "application/json",
+            'Content-Type': 'application/json; charset=utf-8',
+            "Authorization": "Bearer $token",
           },
           body: scoreJson,
         );

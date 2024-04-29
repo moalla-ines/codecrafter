@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/model/model_score.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/modules/score/views/result_card.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ import '../controllers/score_controller.dart';
 class ScoreView extends GetView<ScoreController> {
   int? totalQuestions;
   int? score;
-
-  ScoreView({this.score, this.totalQuestions});
+int? idquestion;
+  ScoreView({this.score, this.totalQuestions, this.idquestion});
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +113,13 @@ class ScoreView extends GetView<ScoreController> {
                       ),
                       elevation: MaterialStateProperty.all(4),
                     ),
-
                     onPressed: () {
+                      // Appeler createScoreForQuestion lorsque l'utilisateur appuie sur le bouton pour créer un score pour la question
+                      controller.onCreateScoreForQuestion(idquestion!, score as Score);
                       controller.score = 0.obs;
                       Get.back();
-                    },child: const Text(
+                    },
+                    child: const Text(
                       "Take another test",
                       style: TextStyle(
                         color: Colors.white,
@@ -124,7 +127,8 @@ class ScoreView extends GetView<ScoreController> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),             ],
+                  ),
+                ],
               ),
             ],
           ),

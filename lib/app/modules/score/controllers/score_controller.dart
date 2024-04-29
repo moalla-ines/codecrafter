@@ -94,13 +94,24 @@ class ScoreController extends GetxController {
   }
 
   // Méthode pour créer un score pour une question
-  Future<void> createScoreForQuestion(int idQuestion, Score score) async {
+  Future<void> onCreateScoreForQuestion(int idquestion, Score score) async {
     try {
-      Score createdScore = await scoreService.createScoreForQuestion(idQuestion, score);
+      // Appel à la méthode du service pour créer un score pour la question
+      Score createdScore = await scoreService.createScoreForQuestion(idquestion, score);
+
       // Faire quelque chose avec le score créé si nécessaire
+      print('Score created successfully: $createdScore');
+
+      // Par exemple, mettre à jour l'interface utilisateur ou afficher un message de succès
+      Get.snackbar('Success', 'Score created successfully');
+
     } catch (e) {
       // Gérer les erreurs ici
       print('Failed to create score: $e');
+
+      // Afficher un message d'erreur à l'utilisateur
+      Get.snackbar('Error', 'Failed to create score: $e');
     }
   }
+
 }

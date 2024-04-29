@@ -20,6 +20,7 @@ class QuizController extends GetxController {
       final data = await quizzesService.getQuizzesByNiveau(niveau!);
       print(data);
       quiz.assignAll(data);
+      update();
       print(quiz);
     } catch (e) {
       print('Failed to load quizzes: $e');
@@ -39,6 +40,7 @@ class QuizController extends GetxController {
   void onDeleteQuiz(int idquiz) async {
     try {
       await quizzesService.deleteQuizzes(idquiz);
+      update();
       Get.snackbar('Succès', 'Quiz supprimé avec succès !');
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de la suppression du quiz : $e');
@@ -49,6 +51,7 @@ class QuizController extends GetxController {
     try {
       if (niveau != null && categorie != null) {
         await quizzesService.updateQuiz(idquiz, titreQuiz, description, nbQuestions, niveau, categorie);
+        update();
         Get.snackbar('Succès', 'Quiz modifié avec succès !');
       } else {
         Get.snackbar('Erreur', 'Niveau ou catégorie est null');
