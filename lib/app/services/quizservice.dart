@@ -37,6 +37,7 @@ class QuizzesService extends GetxService {
           "Accept": "application/json",
           "Content-Type": "application/json",
           "Authorization": "Bearer $token",
+
         },
       );
 
@@ -76,8 +77,11 @@ class QuizzesService extends GetxService {
           'titre_quiz': titreQuiz,
           'description': description,
           'nb_questions': nbQuestions,
-          'niveau': niveau,
-          'categorie': categorie,
+          'niveau': {'idNiveau': niveau},
+          // Utiliser un objet JSON pour niveau
+          'categorie': {'idcategorie': categorie},
+          // Utiliser un objet JSON pour categorie
+
         }),
       );
 
@@ -94,4 +98,77 @@ class QuizzesService extends GetxService {
       print('Exception occurred: $e');
     }
   }
-}
+
+  Future<void> deleteQuizzes(int idquiz) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz/$idquiz');
+
+      final response = await http.delete(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 204) {
+        print('Quiz deleted successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to delete quiz. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
+
+  Future<void> updateQuiz(int idquiz, String titreQuiz, String description,
+      int nbQuestions, int niveau, int categorie) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz/$idquiz');
+
+      final response = await http.put(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+          body: jsonEncode(<String, dynamic>{
+            'idquiz': idquiz,
+          'titre_quiz': titreQuiz,
+          'description': description,
+          'nb_questions': nbQuestions,
+          'niveau': {'idNiveau': niveau},
+          // Utiliser un objet JSON pour niveau
+          'categorie': {'idcategorie': categorie},
+          // Utiliser un objet JSON pour categorie
+          }),
+      );
+
+          if (response.statusCode == 200) {
+        // Quiz mis à jour avec succès
+        Get.snackbar('Succès', 'Quiz modifié avec succès !');
+          } else if (response.statusCode == 403) {
+            throw Exception('Unauthorized');
+          } else {
+            print('Failed to update quiz. Status code: ${response.statusCode}');
+            print('Response body: ${response.body}');
+          }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }}

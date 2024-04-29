@@ -6,6 +6,8 @@ import 'package:codecrafter/app/model/Quizzes.dart'; // Assurez-vous d'importer 
 class QuizController extends GetxController {
   final QuizzesService quizzesService = Get.find();
   var quiz = [].obs;
+  var selectedQuizzes = <int>{}.obs;
+
 
   @override
   void onInit() {
@@ -34,6 +36,35 @@ class QuizController extends GetxController {
     }
   }
 
+  void onDeleteQuiz(int idquiz) async {
+    try {
+      await quizzesService.deleteQuizzes(idquiz);
+      Get.snackbar('Succès', 'Quiz supprimé avec succès !');
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de la suppression du quiz : $e');
+    }
+  }
+  void onUpdateQuiz(int idquiz, String titreQuiz, String description, int nbQuestions, int? niveau, int? categorie) async {
+    print(idquiz);
+    try {
+      if (niveau != null && categorie != null) {
+        await quizzesService.updateQuiz(idquiz, titreQuiz, description, nbQuestions, niveau, categorie);
+        Get.snackbar('Succès', 'Quiz modifié avec succès !');
+      } else {
+        Get.snackbar('Erreur', 'Niveau ou catégorie est null');
+      }
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de la modification du quiz : $e');
+    }
+  }
+
+  void toggleQuizSelection(int idquiz) {
+    if (selectedQuizzes.contains(idquiz)) {
+      selectedQuizzes.remove(idquiz);
+    } else {
+      selectedQuizzes.add(idquiz);
+    }
+  }
 
 
 

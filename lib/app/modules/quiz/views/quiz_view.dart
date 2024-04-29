@@ -9,8 +9,9 @@ class QuizView extends GetView<QuizController> {
   final String? imageUrl;
   final int? niveau;
   final int? categorie;
+  final int? idquiz;
 
-  QuizView({this.imageUrl, this.niveau, this.categorie});
+  QuizView({this.imageUrl, this.niveau, this.categorie, this.idquiz});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +39,42 @@ class QuizView extends GetView<QuizController> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              _showCreateQuizDialog(context);
+              if (niveau != null && categorie != null) {
+                _showCreateQuizDialog(context);
+              } else {
+                Get.snackbar('Erreur', 'Niveau ou catégorie est null');
+              }
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              for (var id in controller.selectedQuizzes) {
+                controller.onDeleteQuiz(id);
+              }
+              controller.selectedQuizzes.clear();
+              Get.snackbar('Succès', 'Quiz supprimé avec succès !');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              if (controller.selectedQuizzes.isNotEmpty) {
+                var idquiz = controller.selectedQuizzes.first;
+                var quizToUpdate = controller.quiz.firstWhere((quiz) => quiz.idquiz == idquiz, orElse: () => null);
+                if (quizToUpdate != null) {
+                  _showCreateQuizDialog(context, isUpdate: true, quiz: quizToUpdate, idquiz: quizToUpdate.idquiz);
+                } else {
+                  Get.snackbar('Erreur', 'Le quiz à modifier n\'a pas été trouvé');
+                }
+              } else {
+                Get.snackbar('Erreur', 'Aucun quiz sélectionné pour la modification');
+              }
+            },
+          ),
+
+
+
         ],
       ),
       body: Obx(() {
@@ -87,7 +121,7 @@ class QuizView extends GetView<QuizController> {
       Widget? sizedBox,
       Widget? container,
       String? imageUrl,
-      Quiz quiz) {
+      Quiz quiz,) {
     return Column(
       children: [
         if (sizedBox != null) sizedBox,
@@ -108,62 +142,100 @@ class QuizView extends GetView<QuizController> {
             ),
           ),
         ),
+        CheckboxListTile(
+          title: Text(title),
+          subtitle: Text(subtitle),
+          tileColor: tileColor,
+          value: controller.selectedQuizzes.contains(quiz.idquiz),
+          onChanged: (value) {
+            if (value != null && value) {
+              controller.toggleQuizSelection(quiz.idquiz ?? 0);
+            }
+          },
+        ),
+
+
       ],
     );
   }
+
 
   final TextEditingController titleQuizController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController nbQuestionsController = TextEditingController();
 
-  void _showCreateQuizDialog(BuildContext context) {
+  void _showCreateQuizDialog(BuildContext context,
+      {bool isUpdate = false, Quiz? quiz, int? idquiz}) {
+    if (isUpdate && quiz != null) {
+      // Mettre à jour les contrôleurs avec les données du quiz existant
+      titleQuizController.text = quiz.titreQuiz ?? '';
+      descriptionController.text = quiz.description ?? '';
+      nbQuestionsController.text = quiz.nbQuestions?.toString() ?? '';
+    } else {
+      // Réinitialiser les contrôleurs s'il s'agit d'une création de nouveau quiz
+      titleQuizController.text = '';
+      descriptionController.text = '';
+      nbQuestionsController.text = '';
+    }
+
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Créer un nouveau quiz'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleQuizController,
-              decoration: InputDecoration(labelText: 'Titre'),
+      builder: (context) =>
+          AlertDialog(
+            title: Text(
+                isUpdate ? 'Modifier le quiz' : 'Créer un nouveau quiz'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: titleQuizController,
+                  decoration: InputDecoration(labelText: 'Titre'),
+                ),
+                TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(labelText: 'Description'),
+                ),
+                TextField(
+                  controller: nbQuestionsController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: 'Nombre de questions'),
+                ),
+              ],
             ),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
-            ),
-            TextField(
-              controller: nbQuestionsController,
-              keyboardType: TextInputType.number,
-              // Set keyboard type to number
-              decoration: InputDecoration(labelText: 'nb_questions'),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              int? nbQuestions = int.tryParse(nbQuestionsController.text);
-              if (nbQuestions != null) {
-                if (niveau != null && categorie != null) {
-                  controller.onCreateQuizzes(
-                    titleQuizController.text,
-                    descriptionController.text,
-                    nbQuestions,
-                    niveau,
-                    categorie,
-                  );
-                  Navigator.pop(
-                      context); // Fermer la boîte de dialogue après la création du quiz
-                } else {
-                  print('Niveau ou catégorie est null');
-                }
-              }
-            },
-            child: Text('Créer'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  int? nbQuestions = int.tryParse(nbQuestionsController.text);
+                  if (nbQuestions != null) {
+                    if (niveau != null && categorie != null) {
+                      if (isUpdate) {
+                        controller.onUpdateQuiz(
+                        idquiz!, // Utilisez quiz.idquiz au lieu de quiz.id
+                          titleQuizController.text,
+                          descriptionController.text,
+                          nbQuestions,
+                          niveau,
+                          categorie,
+                        );
+
+
+                        Get.back();
+                      } else {
+                        // Créer un nouveau quiz
+                        controller.onCreateQuizzes(titleQuizController.text,
+                            descriptionController.text, nbQuestions, niveau,
+                            categorie);
+                        Navigator.pop(context);
+                      }
+                    } else {
+                      print('Niveau ou catégorie est null');
+                    }
+                  }
+                },
+                child: Text(isUpdate ? 'Modifier' : 'Créer'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }
