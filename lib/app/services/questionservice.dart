@@ -51,5 +51,120 @@ class QuestionsService extends GetxService{
     }
   }
 
+  Future<void> createQuestions(String text, String option1,String option2,String option3,String option4,
+      int indiceoptionCorrecte, int quiz) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
 
-}
+      final url = Uri.parse('http://localhost:8080/api/v1/questions');
+
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+          body: jsonEncode(<String, dynamic>{
+            'text': text,
+            'option1': option1,
+            'option2': option2,
+            'option3': option3,
+            'option4': option4,
+            'indiceoptionCorrecte': indiceoptionCorrecte,
+            'quiz': {'idquiz': quiz},
+          }),
+
+      );
+
+      if (response.statusCode == 201) {
+        print('Quiz created successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to create question. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
+  Future<void> deleteQuestions(int idquestion) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://localhost:8080/api/v1/questions/$idquestion');
+
+
+      final response = await http.delete(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 204) {
+        print('Question deleted successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to delete question. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
+
+  Future<void> updateQuiz(int idquiz, String titreQuiz, String description,
+      int nbQuestions, int niveau, int categorie) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz/$idquiz');
+
+      final response = await http.put(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode(<String, dynamic>{
+          'idquiz': idquiz,
+          'titre_quiz': titreQuiz,
+          'description': description,
+          'nb_questions': nbQuestions,
+          'niveau': {'idNiveau': niveau},
+          // Utiliser un objet JSON pour niveau
+          'categorie': {'idcategorie': categorie},
+          // Utiliser un objet JSON pour categorie
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Quiz mis à jour avec succès
+        Get.snackbar('Succès', 'Quiz modifié avec succès !');
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to update quiz. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }}
+

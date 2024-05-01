@@ -7,7 +7,7 @@ class QuizController extends GetxController {
   final QuizzesService quizzesService = Get.find();
   var quiz = [].obs;
   var selectedQuizzes = <int>{}.obs;
-
+  String? role;
 
   @override
   void onInit() {

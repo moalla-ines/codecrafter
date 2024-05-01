@@ -44,11 +44,12 @@ class LoginController extends GetxController {
         final responseData = json.decode(response.body);
         final token = responseData['token'] as String?;
         final id = responseData['id'] as int?;
+        final role = responseData['role'] as String?;
         print(id);
         if (token != null) {
           final AuthService authService = Get.find<AuthService>();
           authService.setToken(token);
-          Get.offAll(() => HomeView(id: id));
+          Get.offAll(() => HomeView(id: id, role :role));
         } else {
           Get.snackbar('Error', 'Invalid token');
         }

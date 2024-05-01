@@ -10,6 +10,8 @@ class QuestionController extends GetxController {
   var selectedOption = 0.obs;
 var score = 0.obs;
   var color = Colors.white.obs;
+
+  var selectedQuestions = <int>{}.obs;
   @override
   void onInit() {
     color.value = Colors.white;
@@ -67,4 +69,32 @@ var score = 0.obs;
       questions[index] = question;
     }
   }
+  Future<void> onCreateQuestion(String text, String option1, String option2, String option3, String option4, int indiceoptionCorrecte, int? quiz) async {
+    print(quiz);
+
+    try {
+      await questionsService.createQuestions(text, option1, option2, option3, option4, indiceoptionCorrecte, quiz!);
+
+    } catch (e) {
+
+      print('Error creating question: $e');
+    }
+  }
+  void onDeleteQuestions(int? idquestion) async {
+    try {
+      await questionsService.deleteQuestions(idquestion!);
+      update();
+      Get.snackbar('Succès', 'question supprimé avec succès !');
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de la suppression du question : $e');
+    }
+  }
+  void toggleQuestionSelection(int idquestion) {
+    if (selectedQuestions.contains(idquestion)) {
+      selectedQuestions.remove(idquestion);
+    } else {
+      selectedQuestions.add(idquestion);
+    }
+  }
+
 }

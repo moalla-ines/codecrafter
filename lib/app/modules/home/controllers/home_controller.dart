@@ -12,6 +12,7 @@ import 'package:codecrafter/app/modules/home/views/settings.dart';
 class HomeController extends GetxController {
   var selectedIndex = 0.obs;
   int? id;
+  String? role;
   @override
   void onInit() {
     super.onInit();
@@ -90,17 +91,17 @@ class HomeController extends GetxController {
 
   // Navigation
   void onItemTapped(int index) {
-    print("aaaa $id");
+    print(" nanes $id, $role");
     selectedIndex.value = index;
     switch (index) {
       case 0:
-        Get.to(() => SettingsView());
+        Get.off(() => SettingsView());
         break;
       case 1:
-        Get.to(() => HomeView());
+        Get.off(() => HomeView());
         break;
       case 2:
-        Get.to(() => ListViewPage());
+        Get.off(() => ListViewPage());
         break;
     }
   }

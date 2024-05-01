@@ -10,11 +10,12 @@ import '../controllers/niveau_controller.dart';
 class NiveauView extends GetView<NiveauController> {
   final String? imageUrl;
   final int? index;
-
-  NiveauView({Key? key, this.imageUrl, this.index}) : super(key: key);
+  String? role;
+  NiveauView({Key? key, this.imageUrl, this.index, this.role}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    controller.role = role;
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
       appBar: AppBar(
@@ -95,6 +96,7 @@ class NiveauView extends GetView<NiveauController> {
                   imageUrl: imageUrl,
                   niveau: niveau.idNiveau,
                   categorie: niveau.categorie!.idcategorie,
+                  role: role,
                 ));
               },
             ),

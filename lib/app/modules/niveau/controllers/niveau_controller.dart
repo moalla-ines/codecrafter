@@ -9,7 +9,7 @@ class NiveauController extends GetxController {
   final GlobalKey<NavigatorState> niveauViewKey = GlobalKey<NavigatorState>();
   final NiveauxService niveauxService = Get.find();
   var niveaux = [].obs;
-
+  String? role;
   @override
   void onInit() {
     super.onInit();

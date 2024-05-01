@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/model_questions.dart';
@@ -8,11 +6,6 @@ import 'package:codecrafter/app/modules/score/views/score_view.dart';
 
 class QuestionView extends GetView<QuestionController> {
   final int? quiz;
-
-  int ?score;
-
-  var globalScore;
-
 
   QuestionView({this.quiz}) {
     if (quiz != null) {
@@ -24,7 +17,6 @@ class QuestionView extends GetView<QuestionController> {
   Widget build(BuildContext context) {
     final PageController _controller = PageController();
     int _questionNumber = 1;
-
 
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
@@ -43,11 +35,34 @@ class QuestionView extends GetView<QuestionController> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            controller.questions=<Question>[].obs;
+            controller.questions = <Question>[].obs;
             controller.color.value = Colors.white;
             Get.back();
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              if (quiz != null) {
+                _showCreateQuestionDialog(context);
+              } else {
+                Get.snackbar('Erreur', 'quiz est null');
+              }
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+    final idquestion = controller.questions.isNotEmpty;
+                if (idquestion != null) {
+                  controller.onDeleteQuestions(idquestion as int?);
+                  Get.snackbar('Succès', 'Question supprimée avec succès !');
+                }
+              }
+
+          ),
+        ],
       ),
       body: Obx(() {
         if (controller.questions.isEmpty) {
@@ -97,11 +112,13 @@ class QuestionView extends GetView<QuestionController> {
                                 optionNumber,
                                 _controller,
                                 index + 1,
-                                controller.score.value, // Utilisez controller.score.value
+                                controller.score.value,
                                 optionIndex + 1,
                               );
                             },
-                            title: Text(question.getOption(optionNumber) ?? 'Missing option'),
+                            title: Text(
+                                question.getOption(optionNumber) ??
+                                    'Missing option'),
                           ),
                         );
                       },
@@ -116,21 +133,18 @@ class QuestionView extends GetView<QuestionController> {
     );
   }
 
-  void _answerQuestion(
-      QuestionController controller,
+  void _answerQuestion(QuestionController controller,
       Question question,
       int selectedOption,
       PageController _controller,
       int _questionNumber,
       int score,
-      int optionIndex,
-      ) {
+      int optionIndex) {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
         // Increment score if the selected option is correct
-        controller.score
-            .value++; // Utilisez controller.score.value pour incrémenter le score
+        controller.score.value++;
         print("score est ${controller.score.value}");
       }
 
@@ -142,29 +156,12 @@ class QuestionView extends GetView<QuestionController> {
         controller.color.value =
             Colors.red; // Update color to red for incorrect answer
       }
-
     }
-      _nextQuestion(controller, _controller, _questionNumber, score);
-
-    }
-  }
-
-
-
-  Color _getColor(int? selectedOption, int? correctOption, int optionIndex) {
-    if (selectedOption != null) {
-      if (selectedOption == correctOption) {
-        return Colors.green; // Correct answer
-      } else {
-        return Colors.red; // Incorrect answer
-      }
-    }
-    return Colors.white; // Default color
+    _nextQuestion(controller, _controller, _questionNumber, score);
   }
 
   void _nextQuestion(QuestionController controller, PageController _controller,
       int _questionNumber, int score) {
-
     Future.delayed(Duration(seconds: 1), () {
       if (_questionNumber < controller.questions.length) {
         _controller.nextPage(
@@ -174,9 +171,90 @@ class QuestionView extends GetView<QuestionController> {
         _questionNumber++;
         // Increment _questionNumber here
       } else {
-        Get.off(() => ScoreView(score: controller.score.value,
-          totalQuestions: controller.questions.length,
-        ));
+        Get.off(() =>
+            ScoreView(
+              score: controller.score.value,
+              totalQuestions: controller.questions.length,
+            ));
       }
     });
+
   }
+
+  void _showCreateQuestionDialog(BuildContext context) {
+    final TextEditingController textController = TextEditingController();
+    final TextEditingController option1Controller = TextEditingController();
+    final TextEditingController option2Controller = TextEditingController();
+    final TextEditingController option3Controller = TextEditingController();
+    final TextEditingController option4Controller = TextEditingController();
+    final TextEditingController indiceoptionCorrecteController =
+    TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            title: Text('Créer une nouvelle question'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: textController,
+                    decoration:
+                    InputDecoration(labelText: 'Texte de la question'),
+                  ),
+                  TextField(
+                    controller: option1Controller,
+                    decoration: InputDecoration(labelText: 'Option 1'),
+                  ),
+                  TextField(
+                    controller: option2Controller,
+                    decoration: InputDecoration(labelText: 'Option 2'),
+                  ),
+                  TextField(
+                    controller: option3Controller,
+                    decoration: InputDecoration(labelText: 'Option 3'),
+                  ),
+                  TextField(
+                    controller: option4Controller,
+                    decoration: InputDecoration(labelText: 'Option 4'),
+                  ),
+                  TextField(
+                    controller: indiceoptionCorrecteController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Indice de la réponse correcte'),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  int indiceOptionCorrecte = int.tryParse(
+                      indiceoptionCorrecteController.text) ??
+                      0;
+                  if (quiz != null) {
+                    controller.onCreateQuestion(
+                      textController.text,
+                      option1Controller.text,
+                      option2Controller.text,
+                      option3Controller.text,
+                      option4Controller.text,
+                      indiceOptionCorrecte,
+                      quiz,
+                    );
+                  } else {
+                    // Handle the case where quiz is null
+                    Get.snackbar('Erreur', 'quiz est null');
+                  }
+                  Navigator.pop(context);
+                },
+                child: Text('Créer'),
+              ),
+            ],
+          ),
+    );
+  }
+}

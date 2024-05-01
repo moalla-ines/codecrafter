@@ -8,7 +8,8 @@ import '../../niveau/controllers/niveau_controller.dart' as niveau_controller;
 
 class HomeView extends GetView<HomeController> {
   int? id;
-  HomeView({this.id});
+  String? role;
+  HomeView({this.id, this.role});
 
   final List<String> images = [
     "assets/images/Angular.png",
@@ -35,6 +36,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     controller.id = id;
+    controller.role = role;
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
@@ -70,7 +72,7 @@ class HomeView extends GetView<HomeController> {
         onTap: () {
           String imageUrl =
           images[index]; // Récupère l'URL de l'image sélectionnée
-          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1));
+          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role,));
         },
         child: Container(
           color: Color(0xFFFc19ee0),

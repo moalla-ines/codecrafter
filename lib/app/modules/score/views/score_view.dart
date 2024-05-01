@@ -31,7 +31,7 @@ int? idquestion;
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              controller.score = 0.obs;
+              controller.score.value = 0;
               Get.back();
               // Utilisez .value pour accéder à la variable observée
 

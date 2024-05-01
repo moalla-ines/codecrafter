@@ -10,11 +10,12 @@ class QuizView extends GetView<QuizController> {
   final int? niveau;
   final int? categorie;
   final int? idquiz;
-
-  QuizView({this.imageUrl, this.niveau, this.categorie, this.idquiz});
+  String? role;
+  QuizView({this.imageUrl, this.niveau, this.categorie, this.idquiz , this.role});
 
   @override
   Widget build(BuildContext context) {
+    controller.role;
     print(niveau);
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
@@ -49,8 +50,8 @@ class QuizView extends GetView<QuizController> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              for (var id in controller.selectedQuizzes) {
-                controller.onDeleteQuiz(id);
+              for (var idquiz in controller.selectedQuizzes) {
+                controller.onDeleteQuiz(idquiz);
               }
               controller.selectedQuizzes.clear();
               Get.snackbar('Succès', 'Quiz supprimé avec succès !');
