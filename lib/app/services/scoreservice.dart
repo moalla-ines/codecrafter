@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'package:codecrafter/app/model/model_score.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -64,4 +65,42 @@ class ScoreService extends GetxService {
       throw Exception('Failed to create score');
     }
   }
+
+  Future<void> createQuizHistory(int result, int? user, int? quiz) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz-history');
+
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode(<String, dynamic>{
+          'result': result,
+          'user': {'id_user': user},
+          'quiz': {'id_quiz': quiz},
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        print('History created successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to create history. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
+
 }

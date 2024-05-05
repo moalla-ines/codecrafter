@@ -1,13 +1,13 @@
-class UserEntity {
+class User {
   int? id;
   String? username;
   String? password;
   String? email;
 
-  UserEntity({this.id, this.username, this.password, this.email});
+  User({this.id, this.username, this.password, this.email});
 
-  factory UserEntity.fromJson(Map<String, dynamic> json) {
-    return UserEntity(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       id: json['id'],
       username: json['username'],
       password: json['password'],

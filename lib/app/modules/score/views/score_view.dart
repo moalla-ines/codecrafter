@@ -8,8 +8,12 @@ import '../controllers/score_controller.dart';
 class ScoreView extends GetView<ScoreController> {
   int? totalQuestions;
   int? score;
-int? idquestion;
-  ScoreView({this.score, this.totalQuestions, this.idquestion});
+  int? idquestion;
+  int? id;
+  int result = 0; // Ajout de l'attribut result
+  final int? quiz;
+  final int? user;
+  ScoreView({this.score, this.totalQuestions, this.idquestion, this.id,this.quiz, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +22,10 @@ int? idquestion;
     print(totalQuestions);
     final double percentageScore = (score! / totalQuestions!) * 100;
     print(score);
+    print(id);
     final int roundedPercentageScore = percentageScore.round();
     print(roundedPercentageScore);
-    const Color cardColor =Color(0xFFF732DA2);
+    const Color cardColor = Color(0xFFF732DA2);
     return WillPopScope(
       onWillPop: () {
         Navigator.popUntil(context, (route) => route.isFirst);
@@ -28,16 +33,6 @@ int? idquestion;
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              controller.score.value = 0;
-              Get.back();
-              // Utilisez .value pour accéder à la variable observée
-
-
-            },
-          ),
           automaticallyImplyLeading: false,
           backgroundColor: bgColor3,
           elevation: 0,
@@ -70,7 +65,6 @@ int? idquestion;
                       ),
                     ),
                     for (var i = 0; i < "Score!!!".length; i++) ...[
-
                       TextSpan(
                         text: "Score!!!"[i],
                         style: Theme.of(context).textTheme.headline6!.copyWith(
@@ -96,12 +90,10 @@ int? idquestion;
               ),
               Column(
                 children: [
-
                   ResultsCard(
                     roundedPercentageScore: roundedPercentageScore,
                     bgColor3: bgColor3,
                   ),
-
                   const SizedBox(
                     height: 25,
                   ),
@@ -114,10 +106,14 @@ int? idquestion;
                       elevation: MaterialStateProperty.all(4),
                     ),
                     onPressed: () {
-                      // Appeler createScoreForQuestion lorsque l'utilisateur appuie sur le bouton pour créer un score pour la question
-                      controller.onCreateScoreForQuestion(idquestion!, score as Score);
-                      controller.score = 0.obs;
-                      Get.back();
+                      result = roundedPercentageScore;
+                      if (user != null && quiz != null) {
+                        controller.onCreateHistory(result, user, quiz);
+                        Get.back();
+                      } else {
+                        print("User ID or quiz ID is null");
+                        // Gérer cette erreur de manière appropriée
+                      }
                     },
                     child: const Text(
                       "Take another test",

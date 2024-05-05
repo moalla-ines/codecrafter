@@ -9,6 +9,7 @@ import '../../niveau/controllers/niveau_controller.dart' as niveau_controller;
 class HomeView extends GetView<HomeController> {
   int? id;
   String? role;
+  int ? score;
   HomeView({this.id, this.role});
 
   final List<String> images = [
@@ -72,7 +73,7 @@ class HomeView extends GetView<HomeController> {
         onTap: () {
           String imageUrl =
           images[index]; // Récupère l'URL de l'image sélectionnée
-          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role,));
+          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role,id : id));
         },
         child: Container(
           color: Color(0xFFFc19ee0),

@@ -8,7 +8,7 @@ class QuizController extends GetxController {
   var quiz = [].obs;
   var selectedQuizzes = <int>{}.obs;
   String? role;
-
+int? id ;
   @override
   void onInit() {
     super.onInit();
@@ -22,6 +22,7 @@ class QuizController extends GetxController {
       quiz.assignAll(data);
       update();
       print(quiz);
+      print(role);
     } catch (e) {
       print('Failed to load quizzes: $e');
       // Gérer l'erreur comme vous le souhaitez

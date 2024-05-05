@@ -1,3 +1,5 @@
+
+
 import 'package:codecrafter/app/services/scoreservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,24 +9,22 @@ class ScoreController extends GetxController {
   final ScoreService scoreService = Get.find();
 
   var totalQuestions = 0.obs;
-  var score = 0.obs;
+  var score = 0;
 
   // Méthode pour mettre à jour le score et le nombre total de questions
   void updateScore(int newScore, int newTotalQuestions) {
-    score.value = newScore;
+    score = newScore;
     totalQuestions.value = newTotalQuestions;
   }
-  void resetQuiz() {
-    score.value = 0;
-    totalQuestions.value = 0;
-  }
+
+
 
   // Méthode pour calculer le pourcentage de score arrondi
   int calculateRoundedPercentageScore() {
     if (totalQuestions.value == 0) {
       return 0;
     }
-    double percentage = (score.value / totalQuestions.value) * 100;
+    double percentage = (score / totalQuestions.value) * 100;
     return percentage.round();
   }
 
@@ -94,24 +94,38 @@ class ScoreController extends GetxController {
   }
 
   // Méthode pour créer un score pour une question
-  Future<void> onCreateScoreForQuestion(int idquestion, Score score) async {
+  Future<void> onCreateHistory(int result, int? user, int? quiz) async {
     try {
-      // Appel à la méthode du service pour créer un score pour la question
-      Score createdScore = await scoreService.createScoreForQuestion(idquestion, score);
+      print(user);
+      print(quiz);
+      if (user == null || quiz == null) {
+        throw Exception('User ID or quiz ID is null');
+      }
 
-      // Faire quelque chose avec le score créé si nécessaire
-      print('Score created successfully: $createdScore');
+      // Appel à la méthode pour créer l'historique du quiz
+      await scoreService.createQuizHistory(result, user, quiz);
 
       // Par exemple, mettre à jour l'interface utilisateur ou afficher un message de succès
-      Get.snackbar('Success', 'Score created successfully');
+      Get.snackbar('Success', 'History created successfully');
 
     } catch (e) {
       // Gérer les erreurs ici
-      print('Failed to create score: $e');
+      print('Failed to create history: $e');
 
       // Afficher un message d'erreur à l'utilisateur
-      Get.snackbar('Error', 'Failed to create score: $e');
+      Get.snackbar('Error', 'Failed to create history: $e');
     }
   }
 
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+
+    super.onClose();
+  }
 }

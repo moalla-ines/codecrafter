@@ -11,11 +11,14 @@ class QuizView extends GetView<QuizController> {
   final int? categorie;
   final int? idquiz;
   String? role;
-  QuizView({this.imageUrl, this.niveau, this.categorie, this.idquiz , this.role});
+  int? id;
+  QuizView({this.imageUrl, this.niveau, this.categorie, this.idquiz , this.role, this.id});
 
   @override
   Widget build(BuildContext context) {
-    controller.role;
+    bool isVisible =false;
+    controller.role = role;
+    controller.id = id ;
     print(niveau);
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
@@ -36,7 +39,10 @@ class QuizView extends GetView<QuizController> {
             Get.back();
           },
         ),
-        actions: [
+
+        actions: controller.role =="admin"?
+        [
+
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
@@ -74,9 +80,7 @@ class QuizView extends GetView<QuizController> {
             },
           ),
 
-
-
-        ],
+        ] :null,
       ),
       body: Obx(() {
         if (controller.quiz.isEmpty) {
@@ -138,22 +142,23 @@ class QuizView extends GetView<QuizController> {
               subtitle: Text(subtitle),
               tileColor: tileColor,
               onTap: () {
-                Get.to(() => QuestionView(quiz: quiz.idquiz));
+                Get.to(() => QuestionView(quiz: quiz.idquiz, id : id));
               },
             ),
           ),
         ),
-        CheckboxListTile(
-          title: Text(title),
-          subtitle: Text(subtitle),
-          tileColor: tileColor,
-          value: controller.selectedQuizzes.contains(quiz.idquiz),
-          onChanged: (value) {
-            if (value != null && value) {
-              controller.toggleQuizSelection(quiz.idquiz ?? 0);
-            }
-          },
-        ),
+        if (controller.role == "admin")
+          CheckboxListTile(
+            title: Text(title),
+            subtitle: Text(subtitle),
+            tileColor: tileColor,
+            value: controller.selectedQuizzes.contains(quiz.idquiz),
+            onChanged: (value) {
+              if (value != null && value) {
+                controller.toggleQuizSelection(quiz.idquiz ?? 0);
+              }
+            },
+          ),
 
 
       ],

@@ -10,6 +10,8 @@ class NiveauController extends GetxController {
   final NiveauxService niveauxService = Get.find();
   var niveaux = [].obs;
   String? role;
+
+  int? id ;
   @override
   void onInit() {
     super.onInit();

@@ -13,6 +13,8 @@ class HomeController extends GetxController {
   var selectedIndex = 0.obs;
   int? id;
   String? role;
+  int? score;
+
   @override
   void onInit() {
     super.onInit();

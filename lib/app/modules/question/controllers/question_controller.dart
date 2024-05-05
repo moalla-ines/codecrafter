@@ -6,11 +6,11 @@ import 'package:codecrafter/app/services/questionservice.dart';
 class QuestionController extends GetxController {
   final QuestionsService questionsService = Get.find();
   var currentQuestionIndex = 0.obs;
-  var questions = <Question>[].obs;
+  var questions =[].obs;
   var selectedOption = 0.obs;
-var score = 0.obs;
+var score = 0;
   var color = Colors.white.obs;
-
+int? id ;
   var selectedQuestions = <int>{}.obs;
   @override
   void onInit() {
@@ -41,7 +41,7 @@ var score = 0.obs;
   }
 
   Question get currentQuestion => questions[currentQuestionIndex.value];
-
+int ? get idQuestion =>  questions[currentQuestionIndex.value].idquestion;
   void nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       currentQuestionIndex++;
@@ -97,4 +97,14 @@ var score = 0.obs;
     }
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+
+    super.onClose();
+  }
 }

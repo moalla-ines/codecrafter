@@ -6,8 +6,8 @@ import 'package:codecrafter/app/modules/score/views/score_view.dart';
 
 class QuestionView extends GetView<QuestionController> {
   final int? quiz;
-
-  QuestionView({this.quiz}) {
+  int? id;
+  QuestionView({this.quiz,this.id }) {
     if (quiz != null) {
       controller.fetchQuestionsByQuizzes(quiz!);
     }
@@ -17,7 +17,7 @@ class QuestionView extends GetView<QuestionController> {
   Widget build(BuildContext context) {
     final PageController _controller = PageController();
     int _questionNumber = 1;
-
+controller.id = id;
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
       appBar: AppBar(
@@ -35,8 +35,9 @@ class QuestionView extends GetView<QuestionController> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            controller.questions = <Question>[].obs;
+            controller.questions =[].obs;
             controller.color.value = Colors.white;
+            controller.score =0;
             Get.back();
           },
         ),
@@ -54,7 +55,7 @@ class QuestionView extends GetView<QuestionController> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-    final idquestion = controller.questions.isNotEmpty;
+    final idquestion = controller.idQuestion;
                 if (idquestion != null) {
                   controller.onDeleteQuestions(idquestion as int?);
                   Get.snackbar('Succès', 'Question supprimée avec succès !');
@@ -112,7 +113,7 @@ class QuestionView extends GetView<QuestionController> {
                                 optionNumber,
                                 _controller,
                                 index + 1,
-                                controller.score.value,
+                                controller.score,
                                 optionIndex + 1,
                               );
                             },
@@ -144,8 +145,8 @@ class QuestionView extends GetView<QuestionController> {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
         // Increment score if the selected option is correct
-        controller.score.value++;
-        print("score est ${controller.score.value}");
+        controller.score++;
+        print("score est ${controller.score}");
       }
 
       if (selectedOption != null &&
@@ -171,10 +172,12 @@ class QuestionView extends GetView<QuestionController> {
         _questionNumber++;
         // Increment _questionNumber here
       } else {
-        Get.off(() =>
+        Get.offAll(() =>
             ScoreView(
-              score: controller.score.value,
+              score: controller.score,
               totalQuestions: controller.questions.length,
+              id : id ,
+              quiz : quiz,
             ));
       }
     });
