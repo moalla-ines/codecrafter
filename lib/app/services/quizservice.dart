@@ -171,4 +171,35 @@ class QuizzesService extends GetxService {
     } catch (e) {
       print('Exception occurred: $e');
     }
-  }}
+  }
+  Future<List<Quiz>> getAllQuizzes() async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://localhost:8080/api/v1/quiz');
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body) as List<dynamic>;
+        return jsonData.map((json) => Quiz.fromJson(json)).toList();
+      } else {
+        print('Failed to load Quizzes. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to load Quizzes');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+      throw Exception('Failed to load Quizzes');
+    }
+  }
+}

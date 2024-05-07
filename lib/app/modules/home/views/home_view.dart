@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
 import 'package:codecrafter/app/modules/niveau/views/niveau_view.dart';
 import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class HomeView extends GetView<HomeController> {
             ListTile(
               title: Text('Gestion Quizs'),
               onTap: () {
-                // Action à effectuer lors du clic sur cet élément
+                Get.to(() =>(GestionsView( role: controller.role  )));
               },
             ),
             ListTile(

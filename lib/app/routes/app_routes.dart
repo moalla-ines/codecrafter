@@ -11,6 +11,7 @@ abstract class Routes {
   static const NIVEAU = _Paths.NIVEAU;
   static const QUESTION = _Paths.QUESTION;
   static const SCORE = _Paths.SCORE;
+  static const GESTIONS = _Paths.GESTIONS;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const NIVEAU = '/niveau';
   static const QUESTION = '/question';
   static const SCORE = '/score';
+  static const GESTIONS = '/gestions';
 }
