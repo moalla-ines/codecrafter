@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/profile/controllers/profile_controller.dart';
 import 'package:codecrafter/app/modules/question/controllers/question_controller.dart';
 import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 import 'package:codecrafter/app/modules/score/controllers/score_controller.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         Get.lazyPut(() => NiveauxService());
         Get.lazyPut(() => ScoreService());
         Get.put(ScoreController());
+        Get.put(ProfileController());
         Get.put(HomeController());
         Get.put(QuizController());
         Get.put(QuestionController());

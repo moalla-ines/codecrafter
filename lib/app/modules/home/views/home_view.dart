@@ -1,4 +1,5 @@
 import 'package:codecrafter/app/modules/niveau/views/niveau_view.dart';
+import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -48,31 +49,48 @@ class HomeView extends GetView<HomeController> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      drawer: Drawer(
+      drawer: controller.role == "admin"?
+      Drawer(
+        backgroundColor: Color(0xFFFc19ee0),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color(0xFFFe4c1f9),
               ),
-              child: Text('Drawer Header'),
+              child: SizedBox(                      // Utiliser SizedBox pour définir la hauteur de la boîte
+                height: 50.0,                      // Définir la hauteur souhaitée
+                child: Center(
+                  child: Text('Gestionnaire',
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold , fontSize: 20),
+                  ),
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Item 1'),
+
+              title: Text('Gestion utilisateur'),
+              onTap: () {
+                Get.to(() =>(ProfileView( role: controller.role  )));
+              },
+            ),
+            ListTile(
+              title: Text('Gestion Quizs'),
               onTap: () {
                 // Action à effectuer lors du clic sur cet élément
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Gestion Questions'),
               onTap: () {
                 // Action à effectuer lors du clic sur cet élément
               },
             ),
           ],
         ),
-      ),
+      ) : null ,
+
       body: _buildGridView(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );

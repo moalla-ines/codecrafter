@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:codecrafter/app/model/historiques.dart';
 import 'package:codecrafter/app/model/model_user.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -113,36 +114,34 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<User?> getUserById(int? id) async {
+  Future<List<User>> getAllUsers() async {
     try {
       final token = await getToken();
       if (token == null) {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
-
+      final url = Uri.parse('http://localhost:8080/api/v1/user');
       final response = await http.get(
         url,
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=utf-8',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
       );
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final user = User.fromJson(
-            responseData); // Supposons que vous ayez une méthode fromJson dans votre classe User
-        return user;
-      } else if (response.statusCode == 403) {
-        throw Exception('Unauthorized');
+        final jsonData = jsonDecode(response.body) as List<dynamic>;
+        return jsonData.map((json) => User.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to fetch user');
+        print('Failed to load users. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to load users');
       }
     } catch (e) {
-      print('Failed to fetch user: $e');
-      return null;
+      print('Exception occurred: $e');
+      throw Exception('Failed to load users');
     }
   }
 }
