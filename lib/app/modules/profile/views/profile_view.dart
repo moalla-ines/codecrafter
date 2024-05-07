@@ -83,14 +83,15 @@ class ProfileView extends GetView<ProfileController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(user.username ?? ''),
-                    Text('Role: ${user.roles ?? ''}'),
+                    Text('Roles: ${user.roles?.map((role) => role.name).join(
+                        ", ") ?? ''}'),
                   ],
                 ),
               );
             },
           );
         }
-      }),
+        }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           controller.fetchAllUsers();

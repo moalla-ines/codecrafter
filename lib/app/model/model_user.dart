@@ -45,7 +45,7 @@ class Users {
     data['password'] = this.password;
     data['email'] = this.email;
     if (this.roles != null) {
-      data['roles'] = this.roles!.map((role) => role.toJson()).toList();
+      data['roles'] = this.roles!.map((roles) => roles.toJson()).toList();
     }
     data['enabled'] = this.enabled;
     data['authorities'] = this.authorities;
