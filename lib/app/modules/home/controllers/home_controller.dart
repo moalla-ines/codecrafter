@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:codecrafter/app/services/quizhistoryService.dart';
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,10 +11,12 @@ import 'package:codecrafter/app/modules/home/views/list.dart';
 import 'package:codecrafter/app/modules/home/views/settings.dart';
 
 class HomeController extends GetxController {
+  final HistoriesService historiesService = Get.find();
   var selectedIndex = 0.obs;
   int? id;
   String? role;
   int? score;
+  var quizHistory = [].obs;
 
   @override
   void onInit() {
@@ -25,11 +28,13 @@ class HomeController extends GetxController {
     String newPassword = '';
 
     Get.defaultDialog(
+      backgroundColor: Colors.grey.shade100,
       title: 'Change Password',
       content: Column(
         children: [
           TextField(
-            decoration: InputDecoration(hintText: 'Enter new password'),
+            decoration
+                : InputDecoration(hintText: 'Enter new password'),
             obscureText: true,
             onChanged: (value) {
               newPassword = value;
@@ -90,26 +95,48 @@ class HomeController extends GetxController {
       Get.snackbar('Error', 'Failed to change password');
     }
   }
+  void fetchQuizHistoriesByUser(int? user) async {
+    try {
+      print('123 $user');
+      final token = historiesService.token.value;
+      final data = await historiesService.getQuizHistoryByUser(user!);
 
-  // Navigation
-  void onItemTapped(int index) {
-    print(" nanes $id, $role");
-    selectedIndex.value = index;
-    switch (index) {
-      case 0:
-        Get.off(() => SettingsView());
-        break;
-      case 1:
-        Get.off(() => HomeView());
-        break;
-      case 2:
-        Get.off(() => ListViewPage());
-        break;
+      print(data);
+      quizHistory.assignAll(data);
+      update();
+    } catch (e) {
+      print('Failed to load quizHistory: $e');
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void getAllQuizHistories() async {
+    try {
+      final token = historiesService.token.value;
+      final data = await historiesService.getAllQuizHistory();
+
+      print(data);
+      quizHistory.assignAll(data);
+      update();
+    } catch (e) {
+      print('Failed to load quizHistory: $e');
+    }
   }
-}
+
+
+    void onItemTapped(int index) {
+      print(" nanes $id, $role");
+      selectedIndex.value = index;
+      switch (index) {
+        case 0:
+          Get.off(() => SettingsView());
+          break;
+        case 1:
+          Get.to(() =>
+              HomeView()); // Utilise Get.to pour empiler la vue HomeView
+          break;
+        case 2:
+          Get.off(() => ListViewPage());
+          break;
+      }
+    }
+  }

@@ -1,5 +1,3 @@
-
-
 import 'package:codecrafter/app/services/scoreservice.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +14,6 @@ class ScoreController extends GetxController {
     score = newScore;
     totalQuestions.value = newTotalQuestions;
   }
-
-
 
   // Méthode pour calculer le pourcentage de score arrondi
   int calculateRoundedPercentageScore() {
@@ -107,7 +103,6 @@ class ScoreController extends GetxController {
 
       // Par exemple, mettre à jour l'interface utilisateur ou afficher un message de succès
       Get.snackbar('Success', 'History created successfully');
-
     } catch (e) {
       // Gérer les erreurs ici
       print('Failed to create history: $e');
@@ -117,7 +112,6 @@ class ScoreController extends GetxController {
     }
   }
 
-
   @override
   void onReady() {
     super.onReady();
@@ -125,7 +119,6 @@ class ScoreController extends GetxController {
 
   @override
   void onClose() {
-
     super.onClose();
   }
 }

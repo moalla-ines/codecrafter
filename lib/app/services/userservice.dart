@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:codecrafter/app/model/model_user.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService extends GetxService {
   String? _token;
+
   String? get token => _token;
+
   void setToken(String token) {
     _token = token;
   }
@@ -45,8 +48,8 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<String> register(
-      String username, String email, String password) async {
+  Future<String> register(String username, String email,
+      String password) async {
     final url = Uri.parse('http://localhost:8080/api/v1/auth/register');
 
     final response = await http.post(
@@ -107,6 +110,39 @@ class AuthService extends GetxService {
     } catch (e) {
       print('Failed to update password: $e');
       throw Exception('Failed to update password');
+    }
+  }
+
+  Future<User?> getUserById(int? id) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
+
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=utf-8',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final user = User.fromJson(
+            responseData); // Supposons que vous ayez une méthode fromJson dans votre classe User
+        return user;
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        throw Exception('Failed to fetch user');
+      }
+    } catch (e) {
+      print('Failed to fetch user: $e');
+      return null;
     }
   }
 }

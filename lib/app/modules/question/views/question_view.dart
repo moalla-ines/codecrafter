@@ -7,9 +7,11 @@ import 'package:codecrafter/app/modules/score/views/score_view.dart';
 class QuestionView extends GetView<QuestionController> {
   final int? quiz;
   int? id;
-  QuestionView({this.quiz,this.id }) {
+  String? role;
+  QuestionView({this.quiz, this.id, this.role}) {
     if (quiz != null) {
       controller.fetchQuestionsByQuizzes(quiz!);
+      print("role: $role");
     }
   }
 
@@ -17,7 +19,7 @@ class QuestionView extends GetView<QuestionController> {
   Widget build(BuildContext context) {
     final PageController _controller = PageController();
     int _questionNumber = 1;
-controller.id = id;
+    controller.id = id;
     return Scaffold(
       backgroundColor: const Color(0xFFF732DA2),
       appBar: AppBar(
@@ -35,13 +37,14 @@ controller.id = id;
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            controller.questions =[].obs;
+            controller.questions = [].obs;
             controller.color.value = Colors.white;
-            controller.score =0;
+            controller.score = 0;
             Get.back();
           },
         ),
-        actions: [
+        actions: role == "admin"
+            ? [
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
@@ -53,17 +56,17 @@ controller.id = id;
             },
           ),
           IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-    final idquestion = controller.idQuestion;
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                final idquestion = controller.idQuestion;
                 if (idquestion != null) {
                   controller.onDeleteQuestions(idquestion as int?);
-                  Get.snackbar('Succès', 'Question supprimée avec succès !');
+                  Get.snackbar(
+                      'Succès', 'Question supprimée avec succès !');
                 }
-              }
-
-          ),
-        ],
+              }),
+        ]
+            : null,
       ),
       body: Obx(() {
         if (controller.questions.isEmpty) {
@@ -117,9 +120,8 @@ controller.id = id;
                                 optionIndex + 1,
                               );
                             },
-                            title: Text(
-                                question.getOption(optionNumber) ??
-                                    'Missing option'),
+                            title: Text(question.getOption(optionNumber) ??
+                                'Missing option'),
                           ),
                         );
                       },
@@ -134,7 +136,8 @@ controller.id = id;
     );
   }
 
-  void _answerQuestion(QuestionController controller,
+  void _answerQuestion(
+      QuestionController controller,
       Question question,
       int selectedOption,
       PageController _controller,
@@ -172,16 +175,15 @@ controller.id = id;
         _questionNumber++;
         // Increment _questionNumber here
       } else {
-        Get.offAll(() =>
-            ScoreView(
-              score: controller.score,
-              totalQuestions: controller.questions.length,
-              id : id ,
-              quiz : quiz,
-            ));
+        Get.offAll(() => ScoreView(
+          score: controller.score,
+          totalQuestions: controller.questions.length,
+          id: id,
+          quiz: quiz,
+          role: role,
+        ));
       }
     });
-
   }
 
   void _showCreateQuestionDialog(BuildContext context) {
@@ -195,69 +197,66 @@ controller.id = id;
 
     showDialog(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: Text('Créer une nouvelle question'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: textController,
-                    decoration:
-                    InputDecoration(labelText: 'Texte de la question'),
-                  ),
-                  TextField(
-                    controller: option1Controller,
-                    decoration: InputDecoration(labelText: 'Option 1'),
-                  ),
-                  TextField(
-                    controller: option2Controller,
-                    decoration: InputDecoration(labelText: 'Option 2'),
-                  ),
-                  TextField(
-                    controller: option3Controller,
-                    decoration: InputDecoration(labelText: 'Option 3'),
-                  ),
-                  TextField(
-                    controller: option4Controller,
-                    decoration: InputDecoration(labelText: 'Option 4'),
-                  ),
-                  TextField(
-                    controller: indiceoptionCorrecteController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        labelText: 'Indice de la réponse correcte'),
-                  ),
-                ],
+      builder: (context) => AlertDialog(
+        title: Text('Créer une nouvelle question'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: textController,
+                decoration: InputDecoration(labelText: 'Texte de la question'),
               ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  int indiceOptionCorrecte = int.tryParse(
-                      indiceoptionCorrecteController.text) ??
-                      0;
-                  if (quiz != null) {
-                    controller.onCreateQuestion(
-                      textController.text,
-                      option1Controller.text,
-                      option2Controller.text,
-                      option3Controller.text,
-                      option4Controller.text,
-                      indiceOptionCorrecte,
-                      quiz,
-                    );
-                  } else {
-                    // Handle the case where quiz is null
-                    Get.snackbar('Erreur', 'quiz est null');
-                  }
-                  Navigator.pop(context);
-                },
-                child: Text('Créer'),
+              TextField(
+                controller: option1Controller,
+                decoration: InputDecoration(labelText: 'Option 1'),
+              ),
+              TextField(
+                controller: option2Controller,
+                decoration: InputDecoration(labelText: 'Option 2'),
+              ),
+              TextField(
+                controller: option3Controller,
+                decoration: InputDecoration(labelText: 'Option 3'),
+              ),
+              TextField(
+                controller: option4Controller,
+                decoration: InputDecoration(labelText: 'Option 4'),
+              ),
+              TextField(
+                controller: indiceoptionCorrecteController,
+                keyboardType: TextInputType.number,
+                decoration:
+                InputDecoration(labelText: 'Indice de la réponse correcte'),
               ),
             ],
           ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              int indiceOptionCorrecte =
+                  int.tryParse(indiceoptionCorrecteController.text) ?? 0;
+              if (quiz != null) {
+                controller.onCreateQuestion(
+                  textController.text,
+                  option1Controller.text,
+                  option2Controller.text,
+                  option3Controller.text,
+                  option4Controller.text,
+                  indiceOptionCorrecte,
+                  quiz,
+                );
+              } else {
+                // Handle the case where quiz is null
+                Get.snackbar('Erreur', 'quiz est null');
+              }
+              Navigator.pop(context);
+            },
+            child: Text('Créer'),
+          ),
+        ],
+      ),
     );
   }
 }

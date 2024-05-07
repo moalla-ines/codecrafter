@@ -6,18 +6,17 @@ import 'package:codecrafter/app/services/questionservice.dart';
 class QuestionController extends GetxController {
   final QuestionsService questionsService = Get.find();
   var currentQuestionIndex = 0.obs;
-  var questions =[].obs;
+  var questions = [].obs;
   var selectedOption = 0.obs;
-var score = 0;
+  var score = 0;
   var color = Colors.white.obs;
-int? id ;
+  int? id;
   var selectedQuestions = <int>{}.obs;
   @override
   void onInit() {
     color.value = Colors.white;
 
     super.onInit();
-
   }
 
   Future<void> fetchQuestionsByQuizzes(int? quiz) async {
@@ -35,17 +34,19 @@ int? id ;
         indiceoptionCorrecte: question.indiceoptionCorrecte,
       ))
           .toList());
+      score = 0;
+      color = Colors.white.obs;
     } catch (e) {
       print('Failed to fetch questions: $e');
     }
   }
 
   Question get currentQuestion => questions[currentQuestionIndex.value];
-int ? get idQuestion =>  questions[currentQuestionIndex.value].idquestion;
+  int? get idQuestion => questions[currentQuestionIndex.value].idquestion;
   void nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       currentQuestionIndex++;
-      selectedOption.value = 0;// Reset selected option
+      selectedOption.value = 0; // Reset selected option
       color = Colors.white.obs;
     }
   }
@@ -69,17 +70,25 @@ int ? get idQuestion =>  questions[currentQuestionIndex.value].idquestion;
       questions[index] = question;
     }
   }
-  Future<void> onCreateQuestion(String text, String option1, String option2, String option3, String option4, int indiceoptionCorrecte, int? quiz) async {
+
+  Future<void> onCreateQuestion(
+      String text,
+      String option1,
+      String option2,
+      String option3,
+      String option4,
+      int indiceoptionCorrecte,
+      int? quiz) async {
     print(quiz);
 
     try {
-      await questionsService.createQuestions(text, option1, option2, option3, option4, indiceoptionCorrecte, quiz!);
-
+      await questionsService.createQuestions(text, option1, option2, option3,
+          option4, indiceoptionCorrecte, quiz!);
     } catch (e) {
-
       print('Error creating question: $e');
     }
   }
+
   void onDeleteQuestions(int? idquestion) async {
     try {
       await questionsService.deleteQuestions(idquestion!);
@@ -89,6 +98,7 @@ int ? get idQuestion =>  questions[currentQuestionIndex.value].idquestion;
       Get.snackbar('Erreur', 'Échec de la suppression du question : $e');
     }
   }
+
   void toggleQuestionSelection(int idquestion) {
     if (selectedQuestions.contains(idquestion)) {
       selectedQuestions.remove(idquestion);
@@ -104,7 +114,6 @@ int ? get idQuestion =>  questions[currentQuestionIndex.value].idquestion;
 
   @override
   void onClose() {
-
     super.onClose();
   }
 }

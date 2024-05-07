@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:codecrafter/app/model/model_score.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -73,7 +72,8 @@ class ScoreService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz-history');
+      final url =
+      Uri.parse('http://localhost:8080/api/v1/quiz-history/$user/$quiz');
 
       final response = await http.post(
         url,
@@ -82,11 +82,7 @@ class ScoreService extends GetxService {
           'Content-Type': 'application/json; charset=utf-8',
           "Authorization": "Bearer $token",
         },
-        body: jsonEncode(<String, dynamic>{
-          'result': result,
-          'user': {'id_user': user},
-          'quiz': {'id_quiz': quiz},
-        }),
+        body: jsonEncode(result),
       );
 
       if (response.statusCode == 201) {
@@ -102,5 +98,4 @@ class ScoreService extends GetxService {
       print('Exception occurred: $e');
     }
   }
-
 }

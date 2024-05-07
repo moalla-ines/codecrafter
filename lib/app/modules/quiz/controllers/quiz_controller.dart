@@ -8,7 +8,7 @@ class QuizController extends GetxController {
   var quiz = [].obs;
   var selectedQuizzes = <int>{}.obs;
   String? role;
-int? id ;
+  int? id ;
   @override
   void onInit() {
     super.onInit();

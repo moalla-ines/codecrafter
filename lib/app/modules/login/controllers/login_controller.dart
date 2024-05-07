@@ -6,14 +6,27 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  late final TextEditingController emailController ;
+  late  final TextEditingController passwordController ;
+
+  @override
+  void onInit() {
+    super.onInit();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   @override
   void onClose() {
     emailController.dispose();
     passwordController.dispose();
     super.onClose();
+  }
+
+  void logout() {
+    emailController.text = '';
+    passwordController.text = '';
+    // Autres actions de déconnexion
   }
 
   void onSubmitLoginForm() async {

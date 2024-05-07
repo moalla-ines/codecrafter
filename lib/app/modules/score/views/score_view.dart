@@ -3,7 +3,10 @@ import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/modules/score/views/result_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import '../controllers/score_controller.dart';
+import '../../question/controllers/question_controller.dart '
+as question_controller;
 
 class ScoreView extends GetView<ScoreController> {
   int? totalQuestions;
@@ -13,16 +16,21 @@ class ScoreView extends GetView<ScoreController> {
   int result = 0; // Ajout de l'attribut result
   final int? quiz;
   final int? user;
-  ScoreView({this.score, this.totalQuestions, this.idquestion, this.id,this.quiz, this.user});
+  String? role;
+  ScoreView(
+      {this.score,
+        this.totalQuestions,
+        this.idquestion,
+        this.id,
+        this.quiz,
+        this.user,
+        this.role});
 
   @override
   Widget build(BuildContext context) {
     const Color bgColor3 = Color(0xFFF732DA2);
-    print("SCORE est  $score");
-    print(totalQuestions);
     final double percentageScore = (score! / totalQuestions!) * 100;
-    print(score);
-    print(id);
+
     final int roundedPercentageScore = percentageScore.round();
     print(roundedPercentageScore);
     const Color cardColor = Color(0xFFF732DA2);
@@ -107,9 +115,12 @@ class ScoreView extends GetView<ScoreController> {
                     ),
                     onPressed: () {
                       result = roundedPercentageScore;
-                      if (user != null && quiz != null) {
-                        controller.onCreateHistory(result, user, quiz);
-                        Get.back();
+                      if (id != null && quiz != null) {
+                        print("idUSER: $id");
+                        print("idQUIZ: $quiz");
+                        controller.onCreateHistory(result, id, quiz);
+                        score = 0;
+                        Get.to(HomeView(id: id, role: role));
                       } else {
                         print("User ID or quiz ID is null");
                         // Gérer cette erreur de manière appropriée

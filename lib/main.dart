@@ -3,6 +3,7 @@ import 'package:codecrafter/app/modules/quiz/controllers/quiz_controller.dart';
 import 'package:codecrafter/app/modules/score/controllers/score_controller.dart';
 import 'package:codecrafter/app/services/niveauxservice.dart';
 import 'package:codecrafter/app/services/questionservice.dart';
+import 'package:codecrafter/app/services/quizhistoryService.dart';
 import 'package:codecrafter/app/services/quizservice.dart';
 import 'package:codecrafter/app/services/scoreservice.dart';
 import 'package:codecrafter/app/services/userservice.dart';
@@ -29,13 +30,13 @@ class MyApp extends StatelessWidget {
       title: 'codecrafter',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Colors.white
+        colorScheme: ColorScheme.light()
+
         ),
-        useMaterial3: true,
-      ),
+
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => AuthService());
+        Get.lazyPut(() => HistoriesService());
         Get.lazyPut(() => QuizzesService());
         Get.lazyPut(() => QuestionsService());
         Get.lazyPut(() => NiveauxService());

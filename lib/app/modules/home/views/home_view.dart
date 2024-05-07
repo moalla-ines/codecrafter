@@ -39,12 +39,38 @@ class HomeView extends GetView<HomeController> {
     controller.id = id;
     controller.role = role;
     return Scaffold(
+
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
         backgroundColor: Color(0xFFF735DA5),
         title: Text(
           'Home',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Action à effectuer lors du clic sur cet élément
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Action à effectuer lors du clic sur cet élément
+              },
+            ),
+          ],
         ),
       ),
       body: _buildGridView(),

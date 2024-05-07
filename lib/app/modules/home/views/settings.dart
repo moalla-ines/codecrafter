@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -6,7 +7,7 @@ import '../controllers/home_controller.dart';
 
 class SettingsView extends GetView<HomeController> {
   SettingsView({Key? key}) : super(key: key);
-
+  final LoginController loginController = Get.find();
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.find();
@@ -33,8 +34,37 @@ class SettingsView extends GetView<HomeController> {
           _buildListTile("Notification Settings", null, () {}),
           _buildSwitchListTile("Received Notification", true),
           _buildSwitchListTile("Received offer Notification", true),
-          _buildSwitchListTile("Received Newsletter", false),
-          _buildSwitchListTile("Received App Updates", false),
+          const SizedBox(height: 230.0),
+          _buildListTile("Log out", Icons.logout, () {
+            showDialog(
+
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.grey.shade100,
+                  title: Text('Déconnexion'),
+                  content: Text('Voulez-vous vraiment vous déconnecter?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        // Action à effectuer lors de la déconnexion
+                        // Par exemple, vous pouvez appeler une méthode de déconnexion dans votre controller
+                        loginController.logout();
+                        Get.offAllNamed('/login');
+                      },
+                      child: Text('Déconnexion'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.back(); // Ferme la boîte de dialogue sans déconnecter
+                      },
+                      child: Text('Annuler'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
@@ -95,4 +125,5 @@ class SettingsView extends GetView<HomeController> {
       ),
     );
   }
+
 }
