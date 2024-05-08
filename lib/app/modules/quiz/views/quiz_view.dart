@@ -10,6 +10,7 @@ class QuizView extends GetView<QuizController> {
   final int? niveau;
   final int? categorie;
   final int? idquiz;
+  int get index => categorie! -1;
   String? role;
   int? id;
   QuizView(
@@ -18,7 +19,18 @@ class QuizView extends GetView<QuizController> {
         this.categorie,
         this.idquiz,
         this.role,
-        this.id});
+        this.id,});
+
+  final List<String> images = [
+    "assets/images/Angular.png",
+    "assets/images/C++.png",
+    "assets/images/Laravel.png",
+    "assets/images/flutter.png",
+    "assets/images/java.png",
+    "assets/images/js.png",
+    "assets/images/Python-logo.png",
+    "assets/images/react.png"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +126,11 @@ class QuizView extends GetView<QuizController> {
                         quiz.idquiz.toString(),
                         quiz.titreQuiz ?? '',
                         quiz.description ?? '',
+
                         Colors.grey.shade200,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
-                        imageUrl,
+                        images[index],
                         quiz,
                       ),
                   ],

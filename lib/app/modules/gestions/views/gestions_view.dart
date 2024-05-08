@@ -1,5 +1,6 @@
 import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
 import 'package:codecrafter/app/modules/question/views/question_view.dart';
+import 'package:codecrafter/app/modules/quiz/views/quiz_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/Quizzes.dart';
@@ -9,8 +10,9 @@ import '../controllers/gestions_controller.dart';
 class GestionsView extends GetView<GestionsController> {
   String? role;
   int? id;
-
-  GestionsView({this.role, this.id});
+  final String? imageUrl;
+  final int? index;
+  GestionsView({this.role, this.id , this.imageUrl,this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +62,7 @@ class GestionsView extends GetView<GestionsController> {
                 // Action à effectuer lors du clic sur cet élément
               },
             ),
-            ListTile(
-              title: Text('Gestion Questions'),
-              onTap: () {
-                // Action à effectuer lors du clic sur cet élément
-              },
-            ),
+
           ],
         ),
       )
@@ -105,6 +102,13 @@ class GestionsView extends GetView<GestionsController> {
       ),
       backgroundColor: Color(0xFFFe4c1f9),
       children: [
+        ListTile(
+          title: Text('Cliquez ici pour gérer les quizs'),
+          onTap: () {
+            Get.to(QuizView(niveau: quiz.niveau!.idNiveau,
+                categorie: quiz.niveau!.categorie!.idcategorie, id: id, role: role ,imageUrl: imageUrl,));
+          },
+        ),
         ListTile(
           title: Text(
             'Categorie: ${quiz.niveau?.categorie?.titreCategorie ?? "Unknown"}',

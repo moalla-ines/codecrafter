@@ -1,18 +1,20 @@
-import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
-import 'package:codecrafter/app/modules/niveau/views/niveau_view.dart';
-import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controllers/home_controller.dart';
 import '../../niveau/controllers/niveau_controller.dart' as niveau_controller;
+import '../../gestions/views/gestions_view.dart';
+import '../../niveau/views/niveau_view.dart';
+import '../../profile/views/profile_view.dart';
 
 class HomeView extends GetView<HomeController> {
-  int? id;
-  String? role;
-  int ? score;
-  HomeView({this.id, this.role});
+  final int? id;
+  final String? role;
+  final int? score;
+  final int? categorie;
+
+  HomeView({this.id, this.role, this.score, this.categorie});
 
   final List<String> images = [
     "assets/images/Angular.png",
@@ -41,7 +43,6 @@ class HomeView extends GetView<HomeController> {
     controller.id = id;
     controller.role = role;
     return Scaffold(
-
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
         backgroundColor: Color(0xFFF735DA5),
@@ -50,8 +51,8 @@ class HomeView extends GetView<HomeController> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      drawer: controller.role == "admin"?
-      Drawer(
+      drawer: controller.role == "admin"
+          ? Drawer(
         backgroundColor: Color(0xFFFc19ee0),
         child: ListView(
           padding: EdgeInsets.zero,
@@ -60,38 +61,36 @@ class HomeView extends GetView<HomeController> {
               decoration: BoxDecoration(
                 color: Color(0xFFFe4c1f9),
               ),
-              child: SizedBox(                      // Utiliser SizedBox pour définir la hauteur de la boîte
-                height: 50.0,                      // Définir la hauteur souhaitée
+              child: SizedBox(
+                height: 50.0,
                 child: Center(
-                  child: Text('Gestionnaire',
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold , fontSize: 20),
+                  child: Text(
+                    'Gestionnaire',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
             ),
             ListTile(
-
               title: Text('Gestion utilisateur'),
               onTap: () {
-                Get.to(() =>(ProfileView( role: role,id : id  )));
+                Get.to(() => ProfileView(role: role, id: id));
               },
             ),
             ListTile(
               title: Text('Gestion Quizs'),
               onTap: () {
-                Get.to(() =>(GestionsView( role: role,id : id )));
-              },
-            ),
-            ListTile(
-              title: Text('Gestion Questions'),
-              onTap: () {
-                // Action à effectuer lors du clic sur cet élément
+                Get.to(() => GestionsView(role: role, id: id));
               },
             ),
           ],
         ),
-      ) : null ,
-
+      )
+          : null,
       body: _buildGridView(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -116,9 +115,8 @@ class HomeView extends GetView<HomeController> {
     return GridTile(
       child: GestureDetector(
         onTap: () {
-          String imageUrl =
-          images[index]; // Récupère l'URL de l'image sélectionnée
-          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role,id : id));
+          String imageUrl = images[index];
+          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role, id: id));
         },
         child: Container(
           color: Color(0xFFFc19ee0),
@@ -149,20 +147,23 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildBottomNavigationBar() {
-    return Obx(() => GNav(
-      backgroundColor: Color(0xFFF735DA5),
-      color: Colors.white,
-      activeColor: Color(0xFFF735DA5),
-      tabBackgroundColor: Colors.grey.shade50,
-      padding: EdgeInsets.all(20),
-      gap: 8,
-      selectedIndex: controller.selectedIndex.value,
-      onTabChange: controller.onItemTapped,
-      tabs: [
-        GButton(icon: Icons.settings, text: 'Settings'),
-        GButton(icon: Icons.home, text: 'Home'),
-        GButton(icon: Icons.list, text: 'List'),
-      ],
-    ));
+    return Obx(
+          () => GNav(
+        backgroundColor: const Color(0xFFF735DA5),
+        color: Colors.white,
+        activeColor: const Color(0xFFF735DA5),
+        tabBackgroundColor: Colors.grey.shade50,
+        padding: const EdgeInsets.all(20),
+        gap: 8,
+        selectedIndex: controller.selectedIndex.value,
+        onTabChange: controller.onItemTapped,
+        tabs: const [
+          GButton(icon: Icons.settings, text: 'Settings'),
+          GButton(icon: Icons.home, text: 'Home'),
+          GButton(icon: Icons.list, text: 'List'),
+        ],
+      ),
+    );
   }
 }
+

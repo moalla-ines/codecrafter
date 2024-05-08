@@ -58,12 +58,6 @@ class ProfileView extends GetView<ProfileController> {
                 Get.to(() =>(GestionsView( role: role,id : id )));
               },
             ),
-            ListTile(
-              title: Text('Gestion Questions'),
-              onTap: () {
-                // Action à effectuer lors du clic sur cet élément
-              },
-            ),
           ],
         ),
       )

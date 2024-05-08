@@ -66,11 +66,13 @@ class InscriptionController extends GetxController {
         } else {
           Get.snackbar('Error', 'Invalid token');
         }
+      } else if (response.statusCode == 500) {
+        Get.snackbar('Error', 'Username or Email already exists');
       } else {
-        Get.snackbar('Connection Error', 'Incorrect email or password');
+        Get.snackbar('Connection Error', 'An error occurred while registering');
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred while logging in');
+      Get.snackbar('Error', 'An error occurred while registering');
       print(e);
     }
   }

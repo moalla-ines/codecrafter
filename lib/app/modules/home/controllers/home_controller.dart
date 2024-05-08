@@ -17,7 +17,7 @@ class HomeController extends GetxController {
   String? role;
   int? score;
   var quizHistory = [].obs;
-
+int? categorie ;
   @override
   void onInit() {
     super.onInit();

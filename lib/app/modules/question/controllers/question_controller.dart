@@ -13,10 +13,10 @@ class QuestionController extends GetxController {
   int? id;
   int? role;
   var selectedQuestions = <int>{}.obs;
+  int questionNumber=1;
   @override
   void onInit() {
     color.value = Colors.white;
-
     super.onInit();
   }
 

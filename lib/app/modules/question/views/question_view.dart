@@ -19,8 +19,10 @@ class QuestionView extends GetView<QuestionController> {
 
   @override
   Widget build(BuildContext context) {
+
     final PageController _controller = PageController();
-    int _questionNumber = 1;
+
+
     controller.id = id;
 
     return WillPopScope(
@@ -147,7 +149,7 @@ class QuestionView extends GetView<QuestionController> {
                                   question,
                                   optionNumber,
                                   _controller,
-                                  _questionNumber,
+                                  controller.questionNumber,
                                   controller.score,
                                   optionIndex + 1,
                                 );
@@ -158,12 +160,14 @@ class QuestionView extends GetView<QuestionController> {
                           );
                         },
                       ),
-                      if (controller.role == "admin")
+                     role == "admin"
+                         ?
                       Row(
 
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          if (_questionNumber > 1)
+                          if (controller.questionNumber > 1)
+
                             IconButton(
                               icon: Icon(Icons.arrow_back,color: Colors.white),
                               onPressed: () {
@@ -171,10 +175,10 @@ class QuestionView extends GetView<QuestionController> {
                                   duration: Duration(milliseconds: 300),
                                   curve: Curves.ease,
                                 );
-                                _questionNumber--;
+                                controller.questionNumber--;
                               },
                             ),
-                          if (_questionNumber < controller.questions.length)
+                          if (controller.questionNumber < controller.questions.length)
                             IconButton(
                               icon: Icon(Icons.arrow_forward ,color: Colors.white),
                               onPressed: () {
@@ -182,11 +186,13 @@ class QuestionView extends GetView<QuestionController> {
                                   duration: Duration(milliseconds: 300),
                                   curve: Curves.ease,
                                 );
-                                _questionNumber++;
+                                controller.questionNumber++;
+
                               },
                             ),
                         ],
-                      ),
+                      )
+                    : Container(),
                     ],
                   ),
                 );
@@ -238,34 +244,41 @@ class QuestionView extends GetView<QuestionController> {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
         controller.score++;
+
         print("score est ${controller.score}");
       }
 
       if (selectedOption != null &&
           selectedOption == question.indiceoptionCorrecte) {
         controller.color.value = Colors.green;
+
       } else {
         controller.color.value = Colors.red;
+
       }
     }
-    _nextQuestion(controller, _controller, _questionNumber, score);
+
+    _nextQuestion(controller, _controller, score);
   }
 
   void _nextQuestion(
       QuestionController controller,
       PageController _controller,
-      int _questionNumber,
       int score,
       ) {
     Future.delayed(Duration(seconds: 1), () {
-      if (_questionNumber < controller.questions.length) {
+      print( "numero : ${controller.questionNumber}"  );
+      print(controller.questionNumber < controller.questions.length);
+      if (controller.questionNumber < controller.questions.length) {
         _controller.nextPage(
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
         );
+        controller.questionNumber++;
         controller.nextQuestion();
-        _questionNumber++;
+
       } else {
+        print("Navigation vers ScoreView");
         Get.offAll(() => ScoreView(
           score: controller.score,
           totalQuestions: controller.questions.length,
@@ -276,6 +289,7 @@ class QuestionView extends GetView<QuestionController> {
       }
     });
   }
+
 
   void _showCreateQuestionDialog(BuildContext context) {
     final TextEditingController textController = TextEditingController();
