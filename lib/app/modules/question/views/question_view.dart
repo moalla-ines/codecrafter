@@ -158,7 +158,9 @@ class QuestionView extends GetView<QuestionController> {
                           );
                         },
                       ),
+                      if (controller.role == "admin")
                       Row(
+
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           if (_questionNumber > 1)

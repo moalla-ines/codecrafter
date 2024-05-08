@@ -11,6 +11,7 @@ class QuestionController extends GetxController {
   var score = 0;
   var color = Colors.white.obs;
   int? id;
+  int? role;
   var selectedQuestions = <int>{}.obs;
   @override
   void onInit() {
