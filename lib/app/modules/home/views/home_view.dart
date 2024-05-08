@@ -73,13 +73,13 @@ class HomeView extends GetView<HomeController> {
 
               title: Text('Gestion utilisateur'),
               onTap: () {
-                Get.to(() =>(ProfileView( role: controller.role  )));
+                Get.to(() =>(ProfileView( role: role,id : id  )));
               },
             ),
             ListTile(
               title: Text('Gestion Quizs'),
               onTap: () {
-                Get.to(() =>(GestionsView( role: controller.role  )));
+                Get.to(() =>(GestionsView( role: role,id : id )));
               },
             ),
             ListTile(

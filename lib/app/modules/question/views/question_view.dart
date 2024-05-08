@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/model_questions.dart';
@@ -20,42 +22,71 @@ class QuestionView extends GetView<QuestionController> {
     final PageController _controller = PageController();
     int _questionNumber = 1;
     controller.id = id;
-    return Scaffold(
-      backgroundColor: const Color(0xFFF732DA2),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF732DA2),
-        title: Text(
-          'Questions pour le quiz $quiz',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            controller.questions = [].obs;
-            controller.color.value = Colors.white;
-            controller.score = 0;
-            Get.back();
+
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Voulez-vous vraiment quitter ce quiz?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('oui'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text('Annuler'),
+                ),
+              ],
+            );
           },
-        ),
-        actions: role == "admin"
-            ? [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              if (quiz != null) {
-                _showCreateQuestionDialog(context);
-              } else {
-                Get.snackbar('Erreur', 'quiz est null');
+        ) ?? false;
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF732DA2),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFF732DA2),
+          title: Text(
+            'Questions pour le quiz $quiz',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              bool leaveQuiz = await onWillPop(context);
+              if (leaveQuiz) {
+                controller.questions = [].obs;
+                controller.color.value = Colors.white;
+                controller.score = 0;
+                Get.back();
               }
             },
           ),
-          IconButton(
+          actions: role == "admin"
+              ? [
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                if (quiz != null) {
+                  _showCreateQuestionDialog(context);
+                } else {
+                  Get.snackbar('Erreur', 'quiz est null');
+                }
+              },
+            ),
+            IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
                 final idquestion = controller.idQuestion;
@@ -64,77 +95,133 @@ class QuestionView extends GetView<QuestionController> {
                   Get.snackbar(
                       'Succès', 'Question supprimée avec succès !');
                 }
-              }),
-        ]
-            : null,
-      ),
-      body: Obx(() {
-        if (controller.questions.isEmpty) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          return PageView.builder(
-            controller: _controller,
-            itemCount: controller.questions.length,
-            itemBuilder: (context, index) {
-              final question = controller.questions[index];
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Question ${index + 1}/${controller.questions.length}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.grey.shade200,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+              },
+            ),
+          ]
+              : null,
+        ),
+        body: Obx(() {
+          if (controller.questions.isEmpty) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return PageView.builder(
+              controller: _controller,
+              itemCount: controller.questions.length,
+              itemBuilder: (context, index) {
+                final question = controller.questions[index];
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Question ${index + 1}/${controller.questions.length}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey.shade200,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        question.text ?? 'Missing question text',
-                        style: TextStyle(fontSize: 18),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          question.text ?? 'Missing question text',
+                          style: TextStyle(fontSize: 18),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, optionIndex) {
-                        int optionNumber = optionIndex + 1;
-                        return Card(
-                          color: controller.color.value,
-                          child: ListTile(
-                            onTap: () {
-                              _answerQuestion(
-                                controller,
-                                question,
-                                optionNumber,
-                                _controller,
-                                index + 1,
-                                controller.score,
-                                optionIndex + 1,
-                              );
-                            },
-                            title: Text(question.getOption(optionNumber) ??
-                                'Missing option'),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        }
-      }),
+                      SizedBox(height: 10),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 4,
+                        itemBuilder: (context, optionIndex) {
+                          int optionNumber = optionIndex + 1;
+                          return Card(
+                            color: controller.color.value,
+                            child: ListTile(
+                              onTap: () {
+                                _answerQuestion(
+                                  controller,
+                                  question,
+                                  optionNumber,
+                                  _controller,
+                                  _questionNumber,
+                                  controller.score,
+                                  optionIndex + 1,
+                                );
+                              },
+                              title: Text(question.getOption(optionNumber) ??
+                                  'Missing option'),
+                            ),
+                          );
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (_questionNumber > 1)
+                            IconButton(
+                              icon: Icon(Icons.arrow_back,color: Colors.white),
+                              onPressed: () {
+                                _controller.previousPage(
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.ease,
+                                );
+                                _questionNumber--;
+                              },
+                            ),
+                          if (_questionNumber < controller.questions.length)
+                            IconButton(
+                              icon: Icon(Icons.arrow_forward ,color: Colors.white),
+                              onPressed: () {
+                                _controller.nextPage(
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.ease,
+                                );
+                                _questionNumber++;
+                              },
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        }),
+      ),
     );
   }
+
+  Future<bool> onWillPop(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Voulez-vous vraiment quitter ce quiz?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text('oui'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text('Annuler'),
+            ),
+          ],
+        );
+      },
+    ) ??
+        false;
+  }
+
 
   void _answerQuestion(
       QuestionController controller,
@@ -143,37 +230,39 @@ class QuestionView extends GetView<QuestionController> {
       PageController _controller,
       int _questionNumber,
       int score,
-      int optionIndex) {
+      int optionIndex,
+      ) {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
-        // Increment score if the selected option is correct
         controller.score++;
         print("score est ${controller.score}");
       }
 
       if (selectedOption != null &&
           selectedOption == question.indiceoptionCorrecte) {
-        controller.color.value =
-            Colors.green; // Update color to green for correct answer
+        controller.color.value = Colors.green;
       } else {
-        controller.color.value =
-            Colors.red; // Update color to red for incorrect answer
+        controller.color.value = Colors.red;
       }
     }
     _nextQuestion(controller, _controller, _questionNumber, score);
   }
 
-  void _nextQuestion(QuestionController controller, PageController _controller,
-      int _questionNumber, int score) {
+  void _nextQuestion(
+      QuestionController controller,
+      PageController _controller,
+      int _questionNumber,
+      int score,
+      ) {
     Future.delayed(Duration(seconds: 1), () {
       if (_questionNumber < controller.questions.length) {
         _controller.nextPage(
-            duration: Duration(milliseconds: 300), curve: Curves.ease);
+          duration: Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
         controller.nextQuestion();
-
         _questionNumber++;
-        // Increment _questionNumber here
       } else {
         Get.offAll(() => ScoreView(
           score: controller.score,
@@ -226,8 +315,8 @@ class QuestionView extends GetView<QuestionController> {
               TextField(
                 controller: indiceoptionCorrecteController,
                 keyboardType: TextInputType.number,
-                decoration:
-                InputDecoration(labelText: 'Indice de la réponse correcte'),
+                decoration: InputDecoration(
+                    labelText: 'Indice de la réponse correcte'),
               ),
             ],
           ),
@@ -245,10 +334,9 @@ class QuestionView extends GetView<QuestionController> {
                   option3Controller.text,
                   option4Controller.text,
                   indiceOptionCorrecte,
-                  quiz,
+                  quiz!,
                 );
               } else {
-                // Handle the case where quiz is null
                 Get.snackbar('Erreur', 'quiz est null');
               }
               Navigator.pop(context);

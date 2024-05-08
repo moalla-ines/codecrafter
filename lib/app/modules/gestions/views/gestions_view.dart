@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
 import 'package:codecrafter/app/modules/question/views/question_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ class GestionsView extends GetView<GestionsController> {
   String? role;
   int? id;
 
-  GestionsView({String? role, this.id});
+  GestionsView({this.role, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class GestionsView extends GetView<GestionsController> {
             ListTile(
               title: Text('Gestion utilisateur'),
               onTap: () {
-                // Action à effectuer lors du clic sur cet élément
+                Get.to(() =>(ProfileView( role: role,id : id  )));
               },
             ),
             ListTile(

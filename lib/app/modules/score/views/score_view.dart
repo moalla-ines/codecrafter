@@ -120,7 +120,7 @@ class ScoreView extends GetView<ScoreController> {
                         print("idQUIZ: $quiz");
                         controller.onCreateHistory(result, id, quiz);
                         score = 0;
-                        Get.to(HomeView(id: id, role: role));
+                        Get.off(HomeView(id: id, role: role));
                       } else {
                         print("User ID or quiz ID is null");
                         // Gérer cette erreur de manière appropriée
