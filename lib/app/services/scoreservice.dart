@@ -30,7 +30,7 @@ class ScoreService extends GetxService {
 
       if (token != null) {
         // Construire l'URL pour l'API
-        String url = 'http://localhost:8080/api/v1/score/questions/$question';
+        String url = 'http://172.20.10.2:8080/api/v1/score/questions/$question';
 
         // Convertir l'objet Score en JSON
         String scoreJson = jsonEncode(score.toJson());
@@ -73,7 +73,7 @@ class ScoreService extends GetxService {
       }
 
       final url =
-      Uri.parse('http://localhost:8080/api/v1/quiz-history/$user/$quiz');
+      Uri.parse('http://172.20.10.2:8080/api/v1/quiz-history/$user/$quiz');
 
       final response = await http.post(
         url,

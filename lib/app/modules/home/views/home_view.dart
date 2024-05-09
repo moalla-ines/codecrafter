@@ -133,7 +133,7 @@ class HomeView extends GetView<HomeController> {
                 ),
                 SizedBox(height: 30.0),
                 Image.asset(
-                  images[index],
+                  images[index], // Use Image.asset to load images from assets
                   width: 150.0,
                   height: 150.0,
                   fit: BoxFit.cover,

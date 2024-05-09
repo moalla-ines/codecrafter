@@ -1,4 +1,5 @@
 import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -55,8 +56,19 @@ class ProfileView extends GetView<ProfileController> {
             ListTile(
               title: Text('Gestion Quizs'),
               onTap: () {
-                Get.to(() =>(GestionsView( role: role,id : id )));
+                Get.to(() => GestionsView(role: role, id: id));
               },
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.off(HomeView(role: role, id: id));
+                  },
+                  child: Icon(Icons.home),
+                ),
+              ),
             ),
           ],
         ),

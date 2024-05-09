@@ -6,10 +6,14 @@ import 'package:codecrafter/app/model/historiques.dart';
 import 'package:codecrafter/app/modules/home/controllers/home_controller.dart';
 
 class ListViewPage extends GetView<HomeController> {
-  ListViewPage({Key? key}) : super(key: key);
+  int ? id ;
+  String ? role ;
+  ListViewPage({Key? key, this.role,this.id});
 
   @override
   Widget build(BuildContext context) {
+    controller.role = role;
+    controller.id = id;
     if (controller.role == "admin") {
       controller.getAllQuizHistories();
     } else {

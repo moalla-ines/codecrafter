@@ -69,7 +69,7 @@ int? categorie ;
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id/password');
 
       final response = await http.put(
         url,
@@ -128,14 +128,14 @@ int? categorie ;
       selectedIndex.value = index;
       switch (index) {
         case 0:
-          Get.off(() => SettingsView());
+          Get.off(() => SettingsView(role:  role,id: id));
           break;
         case 1:
-          Get.to(() =>
-              HomeView()); // Utilise Get.to pour empiler la vue HomeView
+          Get.offAll(() =>
+              HomeView(role:  role,id: id)); // Utilise Get.to pour empiler la vue HomeView
           break;
         case 2:
-          Get.off(() => ListViewPage());
+          Get.off(() => ListViewPage(role:  role,id: id));
           break;
       }
     }

@@ -10,6 +10,7 @@ class QuestionView extends GetView<QuestionController> {
   final int? quiz;
   int? id;
   String? role;
+
   QuestionView({this.quiz, this.id, this.role}) {
     if (quiz != null) {
       controller.fetchQuestionsByQuizzes(quiz!);
@@ -19,7 +20,6 @@ class QuestionView extends GetView<QuestionController> {
 
   @override
   Widget build(BuildContext context) {
-
     final PageController _controller = PageController();
 
 
@@ -99,6 +99,14 @@ class QuestionView extends GetView<QuestionController> {
                 }
               },
             ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                _showCreateQuestionDialog(context, isUpdate: true, question: question);
+              },
+            ),
+
+
           ]
               : null,
         ),
@@ -117,7 +125,8 @@ class QuestionView extends GetView<QuestionController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Question ${index + 1}/${controller.questions.length}',
+                          'Question ${index + 1}/${controller.questions
+                              .length}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey.shade200,
@@ -160,8 +169,8 @@ class QuestionView extends GetView<QuestionController> {
                           );
                         },
                       ),
-                     role == "admin"
-                         ?
+                      role == "admin"
+                          ?
                       Row(
 
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,7 +178,7 @@ class QuestionView extends GetView<QuestionController> {
                           if (controller.questionNumber > 1)
 
                             IconButton(
-                              icon: Icon(Icons.arrow_back,color: Colors.white),
+                              icon: Icon(Icons.arrow_back, color: Colors.white),
                               onPressed: () {
                                 _controller.previousPage(
                                   duration: Duration(milliseconds: 300),
@@ -178,21 +187,22 @@ class QuestionView extends GetView<QuestionController> {
                                 controller.questionNumber--;
                               },
                             ),
-                          if (controller.questionNumber < controller.questions.length)
+                          if (controller.questionNumber <
+                              controller.questions.length)
                             IconButton(
-                              icon: Icon(Icons.arrow_forward ,color: Colors.white),
+                              icon: Icon(
+                                  Icons.arrow_forward, color: Colors.white),
                               onPressed: () {
                                 _controller.nextPage(
                                   duration: Duration(milliseconds: 300),
                                   curve: Curves.ease,
                                 );
                                 controller.questionNumber++;
-
                               },
                             ),
                         ],
                       )
-                    : Container(),
+                          : Container(),
                     ],
                   ),
                 );
@@ -231,15 +241,13 @@ class QuestionView extends GetView<QuestionController> {
   }
 
 
-  void _answerQuestion(
-      QuestionController controller,
+  void _answerQuestion(QuestionController controller,
       Question question,
       int selectedOption,
       PageController _controller,
       int _questionNumber,
       int score,
-      int optionIndex,
-      ) {
+      int optionIndex,) {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
@@ -251,23 +259,19 @@ class QuestionView extends GetView<QuestionController> {
       if (selectedOption != null &&
           selectedOption == question.indiceoptionCorrecte) {
         controller.color.value = Colors.green;
-
       } else {
         controller.color.value = Colors.red;
-
       }
     }
 
     _nextQuestion(controller, _controller, score);
   }
 
-  void _nextQuestion(
-      QuestionController controller,
+  void _nextQuestion(QuestionController controller,
       PageController _controller,
-      int score,
-      ) {
+      int score,) {
     Future.delayed(Duration(seconds: 1), () {
-      print( "numero : ${controller.questionNumber}"  );
+      print("numero : ${controller.questionNumber}");
       print(controller.questionNumber < controller.questions.length);
       if (controller.questionNumber < controller.questions.length) {
         _controller.nextPage(
@@ -276,91 +280,128 @@ class QuestionView extends GetView<QuestionController> {
         );
         controller.questionNumber++;
         controller.nextQuestion();
-
       } else {
         print("Navigation vers ScoreView");
-        Get.offAll(() => ScoreView(
-          score: controller.score,
-          totalQuestions: controller.questions.length,
-          id: id,
-          quiz: quiz,
-          role: role,
-        ));
+        Get.offAll(() =>
+            ScoreView(
+              score: controller.score,
+              totalQuestions: controller.questions.length,
+              id: id,
+              quiz: quiz,
+              role: role,
+            ));
       }
     });
   }
 
 
-  void _showCreateQuestionDialog(BuildContext context) {
+  void _showCreateQuestionDialog(BuildContext context,
+      {bool isUpdate = false, Question? question}) {
     final TextEditingController textController = TextEditingController();
     final TextEditingController option1Controller = TextEditingController();
     final TextEditingController option2Controller = TextEditingController();
     final TextEditingController option3Controller = TextEditingController();
     final TextEditingController option4Controller = TextEditingController();
-    final TextEditingController indiceoptionCorrecteController =
-    TextEditingController();
+    final TextEditingController indiceoptionCorrecteController = TextEditingController();
+
+    if (isUpdate && question != null) {
+      textController.text = question.text ?? '';
+      option1Controller.text = question.getOption(1) ?? '';
+      option2Controller.text = question.getOption(2) ?? '';
+      option3Controller.text = question.getOption(3) ?? '';
+      option4Controller.text = question.getOption(4) ?? '';
+      indiceoptionCorrecteController.text =
+          question.indiceoptionCorrecte?.toString() ?? '';
+    } else {
+      textController.text = '';
+      option1Controller.text = '';
+      option2Controller.text = '';
+      option3Controller.text = '';
+      option4Controller.text = '';
+      indiceoptionCorrecteController.text = '';
+    }
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Créer une nouvelle question'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: textController,
-                decoration: InputDecoration(labelText: 'Texte de la question'),
+      builder: (context) =>
+          AlertDialog(
+            title: Text(isUpdate
+                ? 'Modifier la question'
+                : 'Créer une nouvelle question'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: textController,
+                    decoration: InputDecoration(
+                        labelText: 'Texte de la question'),
+                  ),
+                  TextField(
+                    controller: option1Controller,
+                    decoration: InputDecoration(labelText: 'Option 1'),
+                  ),
+                  TextField(
+                    controller: option2Controller,
+                    decoration: InputDecoration(labelText: 'Option 2'),
+                  ),
+                  TextField(
+                    controller: option3Controller,
+                    decoration: InputDecoration(labelText: 'Option 3'),
+                  ),
+                  TextField(
+                    controller: option4Controller,
+                    decoration: InputDecoration(labelText: 'Option 4'),
+                  ),
+                  TextField(
+                    controller: indiceoptionCorrecteController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Indice de la réponse correcte'),
+                  ),
+                ],
               ),
-              TextField(
-                controller: option1Controller,
-                decoration: InputDecoration(labelText: 'Option 1'),
-              ),
-              TextField(
-                controller: option2Controller,
-                decoration: InputDecoration(labelText: 'Option 2'),
-              ),
-              TextField(
-                controller: option3Controller,
-                decoration: InputDecoration(labelText: 'Option 3'),
-              ),
-              TextField(
-                controller: option4Controller,
-                decoration: InputDecoration(labelText: 'Option 4'),
-              ),
-              TextField(
-                controller: indiceoptionCorrecteController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: 'Indice de la réponse correcte'),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  int indiceOptionCorrecte = int.tryParse(
+                      indiceoptionCorrecteController.text) ?? 0;
+                  if (quiz != null) {
+                    if (isUpdate) {
+                      // Mettre à jour la question existante
+                      controller.onUpdateQuestion(
+                        question!.idquestion,
+
+                        textController.text,
+                        option1Controller.text,
+                        option2Controller.text,
+                        option3Controller.text,
+                        option4Controller.text,
+                        indiceOptionCorrecte,
+                        quiz!,
+                      );
+                    } else {
+                      // Créer une nouvelle question
+                      controller.onCreateQuestion(
+                        textController.text,
+                        option1Controller.text,
+                        option2Controller.text,
+                        option3Controller.text,
+                        option4Controller.text,
+                        indiceOptionCorrecte,
+                        quiz!,
+                      );
+                    }
+                    Navigator.pop(context);
+                  } else {
+                    Get.snackbar('Erreur', 'quiz est null');
+                  }
+                },
+                child: Text(isUpdate ? 'Modifier' : 'Créer'),
               ),
             ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              int indiceOptionCorrecte =
-                  int.tryParse(indiceoptionCorrecteController.text) ?? 0;
-              if (quiz != null) {
-                controller.onCreateQuestion(
-                  textController.text,
-                  option1Controller.text,
-                  option2Controller.text,
-                  option3Controller.text,
-                  option4Controller.text,
-                  indiceOptionCorrecte,
-                  quiz!,
-                );
-              } else {
-                Get.snackbar('Erreur', 'quiz est null');
-              }
-              Navigator.pop(context);
-            },
-            child: Text('Créer'),
-          ),
-        ],
-      ),
     );
   }
 }

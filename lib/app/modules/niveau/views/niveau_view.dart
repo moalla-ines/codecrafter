@@ -88,8 +88,8 @@ class NiveauView extends GetView<NiveauController> {
           child: Material(
             child: ListTile(
               leading: imageUrl != null
-                  ? Image.network(imageUrl, width: 40, height: 40)
-                  : const Icon(Icons.image),
+                  ? Image.network(imageUrl)
+             : const Icon(Icons.image),
               title: Text(title),
               subtitle: Text(subtitle),
               tileColor: tileColor,

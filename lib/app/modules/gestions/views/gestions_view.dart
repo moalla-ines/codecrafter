@@ -1,18 +1,19 @@
-import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
-import 'package:codecrafter/app/modules/question/views/question_view.dart';
-import 'package:codecrafter/app/modules/quiz/views/quiz_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/Quizzes.dart';
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
+import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
+import 'package:codecrafter/app/modules/question/views/question_view.dart';
+import 'package:codecrafter/app/modules/quiz/views/quiz_view.dart';
 import '../controllers/gestions_controller.dart';
-
 
 class GestionsView extends GetView<GestionsController> {
   String? role;
   int? id;
   final String? imageUrl;
   final int? index;
-  GestionsView({this.role, this.id , this.imageUrl,this.index});
+
+  GestionsView({this.role, this.id, this.imageUrl, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,7 @@ class GestionsView extends GetView<GestionsController> {
       drawer: controller.role == "admin"
           ? Drawer(
         backgroundColor: Color(0xFFFc19ee0),
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
@@ -43,9 +43,10 @@ class GestionsView extends GetView<GestionsController> {
                   child: Text(
                     'Gestionnaire',
                     style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
@@ -53,7 +54,7 @@ class GestionsView extends GetView<GestionsController> {
             ListTile(
               title: Text('Gestion utilisateur'),
               onTap: () {
-                Get.to(() =>(ProfileView( role: role,id : id  )));
+                Get.to(() => ProfileView(role: role, id: id));
               },
             ),
             ListTile(
@@ -62,17 +63,32 @@ class GestionsView extends GetView<GestionsController> {
                 // Action à effectuer lors du clic sur cet élément
               },
             ),
-
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.off(HomeView(role: role, id: id));
+                  },
+                  child: Icon(Icons.home),
+                ),
+              ),
+            ),
           ],
         ),
       )
+
           : null,
+
+
       body: Obx(() {
         if (controller.quiz.isEmpty) {
           return Center(
             child: CircularProgressIndicator(),
+
           );
         } else {
+
           return ListView.builder(
             itemCount: controller.quiz.length,
             itemBuilder: (context, index) {
@@ -88,8 +104,10 @@ class GestionsView extends GetView<GestionsController> {
         },
         child: Icon(Icons.refresh),
       ),
+
     );
   }
+
 
   Widget _buildExpansionTile(BuildContext context, Quiz quiz) {
     return ExpansionTile(
@@ -105,8 +123,13 @@ class GestionsView extends GetView<GestionsController> {
         ListTile(
           title: Text('Cliquez ici pour gérer les quizs'),
           onTap: () {
-            Get.to(QuizView(niveau: quiz.niveau!.idNiveau,
-                categorie: quiz.niveau!.categorie!.idcategorie, id: id, role: role ,imageUrl: imageUrl,));
+            Get.to(QuizView(
+              niveau: quiz.niveau!.idNiveau,
+              categorie: quiz.niveau!.categorie!.idcategorie,
+              id: id,
+              role: role,
+              imageUrl: imageUrl,
+            ));
           },
         ),
         ListTile(
@@ -129,7 +152,9 @@ class GestionsView extends GetView<GestionsController> {
             Get.to(QuestionView(quiz: quiz.idquiz, id: id, role: role));
           },
         ),
+
       ],
     );
+
   }
 }

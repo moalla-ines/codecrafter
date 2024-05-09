@@ -177,8 +177,7 @@ class QuizView extends GetView<QuizController> {
         ),
         if (controller.role == "admin")
           CheckboxListTile(
-            title: Text(title),
-            subtitle: Text(subtitle),
+
             tileColor: tileColor,
             value: controller.selectedQuizzes.contains(quiz.idquiz),
             onChanged: (value) {

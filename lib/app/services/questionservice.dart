@@ -25,7 +25,7 @@ class QuestionsService extends GetxService{
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/questions/quiz/$quiz');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions/quiz/$quiz');
       print(quiz);
 
       final response = await http.get(url,
@@ -59,7 +59,7 @@ class QuestionsService extends GetxService{
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/questions');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions');
 
       final response = await http.post(
         url,
@@ -100,7 +100,7 @@ class QuestionsService extends GetxService{
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/questions/$idquestion');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions/$idquestion');
 
 
       final response = await http.delete(
@@ -126,14 +126,14 @@ class QuestionsService extends GetxService{
     }
   }
 
-  Future<void> updateQuiz(int idquiz, String titreQuiz, String description,
-      int nbQuestions, int niveau, int categorie) async {
+  Future<void> updateQuestion(int? idquestion ,String text, String option1,String option2,String option3,String option4,
+      int indiceoptionCorrecte, int quiz) async {
     try {
       final token = await getToken();
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz/$idquiz');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions/$idquestion');
 
       final response = await http.put(
         url,
@@ -143,24 +143,25 @@ class QuestionsService extends GetxService{
           "Authorization": "Bearer $token",
         },
         body: jsonEncode(<String, dynamic>{
-          'idquiz': idquiz,
-          'titre_quiz': titreQuiz,
-          'description': description,
-          'nb_questions': nbQuestions,
-          'niveau': {'idNiveau': niveau},
-          // Utiliser un objet JSON pour niveau
-          'categorie': {'idcategorie': categorie},
-          // Utiliser un objet JSON pour categorie
+          'idquestion': idquestion,
+          'text': text,
+          'option1': option1,
+          'option2': option2,
+          'option3': option3,
+          'option4': option4,
+          'indiceoptionCorrecte': indiceoptionCorrecte,
+          'quiz': {'idquiz': quiz},
         }),
+
       );
 
       if (response.statusCode == 200) {
-        // Quiz mis à jour avec succès
-        Get.snackbar('Succès', 'Quiz modifié avec succès !');
+
+        Get.snackbar('Succès', 'Question modifié avec succès !');
       } else if (response.statusCode == 403) {
         throw Exception('Unauthorized');
       } else {
-        print('Failed to update quiz. Status code: ${response.statusCode}');
+        print('Failed to update question. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
     } catch (e) {

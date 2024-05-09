@@ -107,7 +107,21 @@ class QuestionController extends GetxController {
       selectedQuestions.add(idquestion);
     }
   }
+  void onUpdateQuestion(int? idquestion ,String text, String option1,String option2,String option3,String option4,
+      int indiceoptionCorrecte, int quiz) async {
 
+    try {
+      if (quiz != null) {
+        await questionsService.updateQuestion(idquestion, text, option1, option2, option3, option4, indiceoptionCorrecte, quiz);
+        update();
+        Get.snackbar('Succès', 'question modifié avec succès !');
+      } else {
+        Get.snackbar('Erreur', 'quiz est null');
+      }
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de la modification du question : $e');
+    }
+  }
   @override
   void onReady() {
     super.onReady();
