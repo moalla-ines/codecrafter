@@ -127,7 +127,7 @@ class QuestionsService extends GetxService{
   }
 
   Future<void> updateQuestion(int? idquestion ,String text, String option1,String option2,String option3,String option4,
-      int indiceoptionCorrecte, int quiz) async {
+      int indiceoptionCorrecte, int? quiz) async {
     try {
       final token = await getToken();
       if (token == null) {
@@ -156,7 +156,8 @@ class QuestionsService extends GetxService{
       );
 
       if (response.statusCode == 200) {
-
+        print(' naness moalla ${response.statusCode}');
+        print('Question updated successfully');
         Get.snackbar('Succès', 'Question modifié avec succès !');
       } else if (response.statusCode == 403) {
         throw Exception('Unauthorized');

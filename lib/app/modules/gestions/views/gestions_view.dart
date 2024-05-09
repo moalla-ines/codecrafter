@@ -68,7 +68,7 @@ class GestionsView extends GetView<GestionsController> {
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.off(HomeView(role: role, id: id));
+                    Get.off(() => HomeView(role: role, id: id));
                   },
                   child: Icon(Icons.home),
                 ),
@@ -123,7 +123,7 @@ class GestionsView extends GetView<GestionsController> {
         ListTile(
           title: Text('Cliquez ici pour gérer les quizs'),
           onTap: () {
-            Get.to(QuizView(
+            Get.off(() =>QuizView(
               niveau: quiz.niveau!.idNiveau,
               categorie: quiz.niveau!.categorie!.idcategorie,
               id: id,
@@ -149,7 +149,7 @@ class GestionsView extends GetView<GestionsController> {
         ListTile(
           title: Text('Cliquez ici pour gérer les questions'),
           onTap: () {
-            Get.to(QuestionView(quiz: quiz.idquiz, id: id, role: role));
+            Get.off(() =>QuestionView(quiz: quiz.idquiz, id: id, role: role));
           },
         ),
 

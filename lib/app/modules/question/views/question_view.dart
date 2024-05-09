@@ -102,10 +102,19 @@ class QuestionView extends GetView<QuestionController> {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-                _showCreateQuestionDialog(context, isUpdate: true, question: question);
+                final idquestion = controller.idQuestion;
+                if (idquestion != null && idquestion < controller.questions.length) {
+                  var questionToUpdate = controller.questions[idquestion];
+                  if (questionToUpdate != null) {
+                    _showCreateQuestionDialog(
+                      context,
+                      isUpdate: true,
+                      question: questionToUpdate,
+                    );
+                  }
+                }
               },
             ),
-
 
           ]
               : null,
@@ -296,10 +305,10 @@ class QuestionView extends GetView<QuestionController> {
 
 
   void _showCreateQuestionDialog(BuildContext context,
-      {bool isUpdate = false, Question? question}) {
+      {bool isUpdate = false, Question? question){
     final TextEditingController textController = TextEditingController();
     final TextEditingController option1Controller = TextEditingController();
-    final TextEditingController option2Controller = TextEditingController();
+  final TextEditingController option2Controller = TextEditingController();
     final TextEditingController option3Controller = TextEditingController();
     final TextEditingController option4Controller = TextEditingController();
     final TextEditingController indiceoptionCorrecteController = TextEditingController();
@@ -370,7 +379,7 @@ class QuestionView extends GetView<QuestionController> {
                   if (quiz != null) {
                     if (isUpdate) {
                       // Mettre à jour la question existante
-                      controller.onUpdateQuestion(
+                      controller.questionUpdated(
                         question!.idquestion,
 
                         textController.text,
