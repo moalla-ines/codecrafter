@@ -131,7 +131,7 @@ int? categorie ;
           Get.off(() => SettingsView(role:  role,id: id));
           break;
         case 1:
-          Get.offAll(() =>
+          Get.off(() =>
               HomeView(role:  role,id: id)); // Utilise Get.to pour empiler la vue HomeView
           break;
         case 2:

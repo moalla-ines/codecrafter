@@ -22,7 +22,7 @@ class GestionsView extends GetView<GestionsController> {
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF735DA5),
+        backgroundColor:  Color(0xFFFc19ee0),
         title: Text(
           'Gestion Quiz',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -63,17 +63,17 @@ class GestionsView extends GetView<GestionsController> {
                 // Action à effectuer lors du clic sur cet élément
               },
             ),
-            Expanded(
-              child: Align(
+
+               Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                   onPressed: () {
                     Get.off(() => HomeView(role: role, id: id));
                   },
-                  child: Icon(Icons.home),
+                  child: Icon(Icons.home ,color:  Color(0xFFFc19ee0)) ,
                 ),
               ),
-            ),
+
           ],
         ),
       )
@@ -99,10 +99,11 @@ class GestionsView extends GetView<GestionsController> {
         }
       }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor:  Color(0xFFFc19ee0),
         onPressed: () {
           controller.fetchAllQuizzes();
         },
-        child: Icon(Icons.refresh),
+        child: Icon(Icons.refresh , color: Colors.white),
       ),
 
     );

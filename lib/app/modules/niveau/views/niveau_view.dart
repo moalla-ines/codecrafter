@@ -19,19 +19,19 @@ class NiveauView extends GetView<NiveauController> {
     controller.role = role;
     controller.id = id;
     return Scaffold(
-      backgroundColor: const Color(0xFFF732DA2),
+      backgroundColor: const Color(0xFFFe4c1f9),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF732DA2),
+        backgroundColor: const Color(0xFFFc19ee0),
         title: const Text(
           'Niveau',
           style: TextStyle(
-            color: Colors.grey,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back ,color: Colors.white),
           onPressed: () {
             controller.niveaux = [].obs;
             Get.back();
@@ -63,7 +63,7 @@ class NiveauView extends GetView<NiveauController> {
                           niveau.idNiveau.toString(),
                           niveau.name!,
                           niveau.categorie!.titreCategorie!,
-                          Colors.grey.shade200,
+                          Colors.grey.shade100,
                           imageUrl,
                           niveau, // Pass the niveau object to the method
                         ),

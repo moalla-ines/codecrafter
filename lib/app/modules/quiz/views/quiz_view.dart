@@ -39,10 +39,10 @@ class QuizView extends GetView<QuizController> {
     controller.id = id;
     print(niveau);
     return Scaffold(
-      backgroundColor: const Color(0xFFF732DA2),
+      backgroundColor: const Color(0xFFFe4c1f9),
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF732DA2),
+        backgroundColor: const Color(0xFFFc19ee0),
         title: const Text(
           'Quiz List',
           style: TextStyle(
@@ -52,7 +52,7 @@ class QuizView extends GetView<QuizController> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back ,color: Colors.white),
           onPressed: () {
             controller.quiz = [].obs;
             Get.back();
@@ -61,7 +61,7 @@ class QuizView extends GetView<QuizController> {
         actions: controller.role == "admin"
             ? [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add ,color: Colors.white),
             onPressed: () {
               if (niveau != null && categorie != null) {
                 _showCreateQuizDialog(context);
@@ -71,7 +71,7 @@ class QuizView extends GetView<QuizController> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.delete),
+            icon: const Icon(Icons.delete ,color: Colors.white),
             onPressed: () {
               for (var idquiz in controller.selectedQuizzes) {
                 controller.onDeleteQuiz(idquiz);
@@ -81,7 +81,7 @@ class QuizView extends GetView<QuizController> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.edit),
+            icon: const Icon(Icons.edit ,color: Colors.white),
             onPressed: () {
               if (controller.selectedQuizzes.isNotEmpty) {
                 var idquiz = controller.selectedQuizzes.first;
@@ -127,7 +127,7 @@ class QuizView extends GetView<QuizController> {
                         quiz.titreQuiz ?? '',
                         quiz.description ?? '',
 
-                        Colors.grey.shade200,
+                        Colors.grey.shade100,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
                         images[index],

@@ -14,7 +14,7 @@ class LoginView extends GetView<LoginController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF735DA5),
+        backgroundColor: const Color(0xFFFc19ee0),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -70,9 +70,9 @@ class LoginView extends GetView<LoginController> {
                     }
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Utilisation d'une couleur plus contrastée
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade200), // Utilisation d'une couleur plus contrastée
                   ),
-                  child: const Text('Send', style: TextStyle(color: Colors.black)),
+                  child: const Text('Send', style: TextStyle(color: Color(0xFFF735DA5))),
                 ),
 
                 // Utilisation de Get.toNamed pour la création de compte
@@ -83,7 +83,7 @@ class LoginView extends GetView<LoginController> {
                   child: Text(
                     'New User? Create Account',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: const Color(0xFFF735DA5),
                       decoration: TextDecoration.underline,
                     ),
                   ),

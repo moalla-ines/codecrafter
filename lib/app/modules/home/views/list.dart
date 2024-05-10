@@ -21,11 +21,11 @@ class ListViewPage extends GetView<HomeController> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFFD3C5E5),
+      backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
         title: Text('Historique',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFFF735DA5),
+        backgroundColor: Color(0xFFFc19ee0),
       ),
       body: Obx(() =>
           ListView.builder(
@@ -50,9 +50,9 @@ class ListViewPage extends GetView<HomeController> {
   Widget _buildBottomNavigationBar() {
     return Obx(() =>
         GNav(
-          backgroundColor: Color(0xFFF735DA5),
+          backgroundColor: Color(0xFFFc19ee0),
           color: Colors.white,
-          activeColor: Color(0xFFF735DA5),
+          activeColor: Color(0xFFFc19ee0),
           tabBackgroundColor: Colors.grey.shade50,
           padding: EdgeInsets.all(20),
           gap: 8,

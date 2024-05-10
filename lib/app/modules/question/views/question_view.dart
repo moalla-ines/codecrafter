@@ -51,9 +51,9 @@ class QuestionView extends GetView<QuestionController> {
         ) ?? false;
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFF732DA2),
+        backgroundColor: const Color(0xFFFe4c1f9),
         appBar: AppBar(
-          backgroundColor: const Color(0xFFF732DA2),
+          backgroundColor: const Color(0xFFFc19ee0),
           title: Text(
             'Questions pour le quiz $quiz',
             textAlign: TextAlign.center,
@@ -65,7 +65,7 @@ class QuestionView extends GetView<QuestionController> {
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back ,color: Colors.white),
             onPressed: () async {
               bool leaveQuiz = await onWillPop(context);
               if (leaveQuiz) {
@@ -79,7 +79,7 @@ class QuestionView extends GetView<QuestionController> {
           actions: role == "admin"
               ? [
             IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add ,color: Colors.white),
               onPressed: () {
                 if (quiz != null) {
                   _showCreateQuestionDialog(context);
@@ -89,7 +89,7 @@ class QuestionView extends GetView<QuestionController> {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.delete),
+              icon: const Icon(Icons.delete, color: Colors.white,),
               onPressed: () {
                 final idquestion = controller.idQuestion;
                 if (idquestion != null) {
@@ -100,18 +100,43 @@ class QuestionView extends GetView<QuestionController> {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.edit),
+              icon: const Icon(Icons.edit ,color: Colors.white,),
               onPressed: () {
-                final idquestion = controller.idQuestion;
-                if (idquestion != null && idquestion < controller.questions.length) {
-                  var questionToUpdate = controller.questions[idquestion];
-                  if (questionToUpdate != null) {
-                    _showCreateQuestionDialog(
-                      context,
-                      isUpdate: true,
-                      question: questionToUpdate,
+                if (controller.questions.isNotEmpty) {
+                  // Créer une liste de choix de questions
+                  List<DropdownMenuItem<int>> questionItems = [];
+                  for (int i = 0; i < controller.questions.length; i++) {
+                    questionItems.add(
+                      DropdownMenuItem(
+                        value: i,
+                        child: Text('Question ${i + 1}'),
+                      ),
                     );
                   }
+
+                  // Afficher une boîte de dialogue avec la liste des questions
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Sélectionner une question à éditer '),
+                      content: DropdownButton<int>(
+                        items: questionItems,
+                        onChanged: (value) {
+                          var questionToUpdate = controller.questions[value!];
+                          Navigator.pop(context); // Fermer la boîte de dialogue
+                          if (questionToUpdate != null) {
+                            _showCreateQuestionDialog(
+                              context,
+                              isUpdate: true,
+                              question: questionToUpdate,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  Get.snackbar('Erreur', 'Aucune question à éditer');
                 }
               },
             ),
@@ -138,9 +163,9 @@ class QuestionView extends GetView<QuestionController> {
                               .length}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.grey.shade200,
+                            color: Colors.black,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
+
                           ),
                         ),
                       ),
@@ -187,7 +212,7 @@ class QuestionView extends GetView<QuestionController> {
                           if (controller.questionNumber > 1)
 
                             IconButton(
-                              icon: Icon(Icons.arrow_back, color: Colors.white),
+                              icon: Icon(Icons.arrow_back, color: Colors.black),
                               onPressed: () {
                                 _controller.previousPage(
                                   duration: Duration(milliseconds: 300),
@@ -200,7 +225,7 @@ class QuestionView extends GetView<QuestionController> {
                               controller.questions.length)
                             IconButton(
                               icon: Icon(
-                                  Icons.arrow_forward, color: Colors.white),
+                                  Icons.arrow_forward, color: Colors.black),
                               onPressed: () {
                                 _controller.nextPage(
                                   duration: Duration(milliseconds: 300),
@@ -305,8 +330,8 @@ class QuestionView extends GetView<QuestionController> {
 
 
   void _showCreateQuestionDialog(BuildContext context,
-      {bool isUpdate = false, Question? question){
-    final TextEditingController textController = TextEditingController();
+      {bool isUpdate = false, Question? question})
+{   final TextEditingController textController = TextEditingController();
     final TextEditingController option1Controller = TextEditingController();
   final TextEditingController option2Controller = TextEditingController();
     final TextEditingController option3Controller = TextEditingController();

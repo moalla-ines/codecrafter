@@ -45,14 +45,15 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF735DA5),
+        backgroundColor: Color(0xFFFc19ee0),
         title: Text(
           'Home',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       drawer: controller.role == "admin"
-          ? Drawer(
+          ? Drawer
+        (
         backgroundColor: Color(0xFFFc19ee0),
         child: ListView(
           padding: EdgeInsets.zero,
@@ -119,7 +120,10 @@ class HomeView extends GetView<HomeController> {
           Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role, id: id));
         },
         child: Container(
-          color: Color(0xFFFc19ee0),
+          decoration: BoxDecoration(
+            color: Color(0xFFFe4c1f9),
+            border: Border.all(color: Colors.white, width: 2.0), // Bordure blanche
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -131,11 +135,11 @@ class HomeView extends GetView<HomeController> {
                     fontSize: 20.0,
                   ),
                 ),
-                SizedBox(height: 30.0),
+                SizedBox(height: 20.0),
                 Image.asset(
-                  images[index], // Use Image.asset to load images from assets
-                  width: 150.0,
-                  height: 150.0,
+                  images[index], // Utilisez Image.asset pour charger des images depuis les ressources
+                  width: 170.0,
+                  height: 170.0,
                   fit: BoxFit.cover,
                 ),
               ],
@@ -146,12 +150,14 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+
+
   Widget _buildBottomNavigationBar() {
     return Obx(
           () => GNav(
-        backgroundColor: const Color(0xFFF735DA5),
+        backgroundColor: const Color(0xFFFc19ee0),
         color: Colors.white,
-        activeColor: const Color(0xFFF735DA5),
+        activeColor: const Color(0xFFFc19ee0),
         tabBackgroundColor: Colors.grey.shade50,
         padding: const EdgeInsets.all(20),
         gap: 8,

@@ -8,17 +8,21 @@ class InscriptionView extends GetView<InscriptionController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF735DA5),
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+    child: Scaffold(
+      backgroundColor: const Color(0xFFFc19ee0),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 50),
+              SizedBox(height: 70),
               Container(
-                height: 50,
-                color: const Color(0xFFF735DA5),
+                height: 100,
+                color: const Color(0xFFFc19ee0),
+
                 child: Center(
                   child: Text(
                     "Signup",
@@ -30,11 +34,10 @@ class InscriptionView extends GetView<InscriptionController> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
               Container(
-                color: Colors.grey.shade200,
-                padding: const EdgeInsets.all(30),
-                margin: const EdgeInsets.all(50),
+                color: Color(0xFFFe4c1f9),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: Form(
                   key: controller.formKey,
                   child: Column(
@@ -48,7 +51,7 @@ class InscriptionView extends GetView<InscriptionController> {
                             border: OutlineInputBorder(),
                             labelText: "Username",
                             hintText: "Enter your username",
-                            hintStyle: const TextStyle(color: Colors.black, fontSize: 10),
+                            hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
                           ),
                           validator: controller.validateUsername,
                         ),
@@ -64,7 +67,7 @@ class InscriptionView extends GetView<InscriptionController> {
                             border: OutlineInputBorder(),
                             labelText: "Password",
                             hintText: "Enter your password",
-                            hintStyle: const TextStyle(color: Colors.black, fontSize: 10),
+                            hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
                           ),
                           validator: controller.validatePassword,
                         ),
@@ -79,7 +82,7 @@ class InscriptionView extends GetView<InscriptionController> {
                             border: OutlineInputBorder(),
                             labelText: "Email",
                             hintText: "Enter your Email",
-                            hintStyle: const TextStyle(color: Colors.black, fontSize: 10),
+                            hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
                           ),
                           validator: controller.validateEmail,
                         ),
@@ -87,14 +90,14 @@ class InscriptionView extends GetView<InscriptionController> {
                       SizedBox(height: 30),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade400,
+                          backgroundColor: Colors.grey.shade200,
                         ),
                         onPressed: () {
                           if (controller.formKey.currentState!.validate()) {
                             controller.onRegisterForm();
                           }
                         },
-                        child: const Text('Submit'),
+                        child: const Text('Submit' ,style: TextStyle(color: Color(0xFFF735DA5))),
                       ),
                       SizedBox(height: 20),
                       GestureDetector(
@@ -117,6 +120,7 @@ class InscriptionView extends GetView<InscriptionController> {
           ),
         ),
       ),
+    ),
     );
   }
 }

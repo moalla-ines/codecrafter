@@ -18,7 +18,7 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF735DA5),
+        backgroundColor:  Color(0xFFFc19ee0),
         title: Text(
           'Gestion Utilisateur',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -63,10 +63,11 @@ class ProfileView extends GetView<ProfileController> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
+
                   onPressed: () {
                     Get.off(HomeView(role: role, id: id));
                   },
-                  child: Icon(Icons.home),
+                  child: Icon(Icons.home ,color: Color(0xFFFc19ee0)),
                 ),
               ),
             ),
@@ -100,10 +101,11 @@ class ProfileView extends GetView<ProfileController> {
         }
         }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor:  Color(0xFFFc19ee0) ,
         onPressed: () {
           controller.fetchAllUsers();
         },
-        child: Icon(Icons.refresh),
+        child: Icon(Icons.refresh ,color: Colors.white) ,
       ),
     );
   }
