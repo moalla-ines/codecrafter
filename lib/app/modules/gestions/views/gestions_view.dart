@@ -122,7 +122,7 @@ class GestionsView extends GetView<GestionsController> {
       backgroundColor: Color(0xFFFe4c1f9),
       children: [
         ListTile(
-          title: Text('Cliquez ici pour gérer les quizs'),
+          title: Text('Cliquez ici pour gérer les quizs',style: TextStyle(color:Color(0xFFF735DA5), decoration: TextDecoration.underline), ),
           onTap: () {
             Get.off(() =>QuizView(
               niveau: quiz.niveau!.idNiveau,
@@ -148,7 +148,7 @@ class GestionsView extends GetView<GestionsController> {
           ),
         ),
         ListTile(
-          title: Text('Cliquez ici pour gérer les questions'),
+          title: Text('Cliquez ici pour gérer les questions',style: TextStyle(color:Color(0xFFF735DA5) , decoration: TextDecoration.underline)),
           onTap: () {
             Get.off(() =>QuestionView(quiz: quiz.idquiz, id: id, role: role));
           },
