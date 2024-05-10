@@ -163,8 +163,9 @@ class QuizView extends GetView<QuizController> {
           child: Material(
             child: ListTile(
               leading: imageUrl != null
-                  ? Image.network(imageUrl, width: 40, height: 40)
+                  ? Image.asset(imageUrl)
                   : const Icon(Icons.image),
+
               title: Text(title),
               subtitle: Text(subtitle),
               tileColor: tileColor,

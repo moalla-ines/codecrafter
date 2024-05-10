@@ -104,7 +104,7 @@ class ListViewPage extends GetView<HomeController> {
               Text('Email: ${history.user!.username}'),
               Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}'),
               Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}'),
-              Text('Score: ${history.result}'),
+              Text('Score: ${history.result} %'),
             ],
           ),
         ),

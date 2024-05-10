@@ -12,7 +12,9 @@ class NiveauView extends GetView<NiveauController> {
   final int? index;
   String? role;
   int? id;
-  NiveauView({Key? key, this.imageUrl, this.index, this.role,this.id}) : super(key: key);
+
+  NiveauView({Key? key, this.imageUrl, this.index, this.role, this.id})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class NiveauView extends GetView<NiveauController> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back ,color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             controller.niveaux = [].obs;
             Get.back();
@@ -86,22 +88,27 @@ class NiveauView extends GetView<NiveauController> {
         Hero(
           tag: tag,
           child: Material(
-            child: ListTile(
-              leading: imageUrl != null
-                  ? Image.network(imageUrl)
-             : const Icon(Icons.image),
-              title: Text(title),
-              subtitle: Text(subtitle),
-              tileColor: tileColor,
-              onTap: () {
-                Get.to(() => QuizView(
-                  imageUrl: imageUrl,
-                  niveau: niveau.idNiveau,
-                  categorie: niveau.categorie!.idcategorie,
-                  role: controller.role,
-                  id :id
-                ));
-              },
+            child: Container(
+              width: double.infinity, // Set width to match_parent
+              child: ListTile(
+                leading: imageUrl != null
+                    ? Image.asset(imageUrl)
+                    : const Icon(Icons.image),
+
+                title: Text(title),
+                subtitle: Text(subtitle),
+                tileColor: tileColor,
+                onTap: () {
+                  Get.to(() =>
+                      QuizView(
+                        imageUrl: imageUrl,
+                        niveau: niveau.idNiveau,
+                        categorie: niveau.categorie!.idcategorie,
+                        role: controller.role,
+                        id: id,
+                      ));
+                },
+              ),
             ),
           ),
         ),

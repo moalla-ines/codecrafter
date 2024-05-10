@@ -40,7 +40,7 @@ class SettingsView extends GetView<HomeController> {
           _buildListTile("Notification Settings", null, () {}),
           _buildSwitchListTile("Received Notification", true),
           _buildSwitchListTile("Received offer Notification", true),
-          const SizedBox(height: 250.0),
+          const SizedBox(height: 280),
           _buildListTile("Log out", Icons.logout, () {
             showDialog(
               context: context,

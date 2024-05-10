@@ -1,15 +1,13 @@
 import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/profile_controller.dart';
-
 class ProfileView extends GetView<ProfileController> {
   String? role;
   int? id;
-  ProfileView({this.role,this.id});
+  ProfileView({this.role, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +16,23 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       backgroundColor: Color(0xFFFe4c1f9),
       appBar: AppBar(
-        backgroundColor:  Color(0xFFFc19ee0),
+        backgroundColor: Color(0xFFFc19ee0),
         title: Text(
           'Gestion Utilisateur',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete, color: Colors.white),
+            onPressed: () {
+            for (var id in controller.selectedUser) {
+                controller.onDeleteUsers(id);
+              }
+              controller.selectedUser.clear();
+            Get.snackbar('Succès', 'user supprimé avec succès !');
+            },
+          ),
+        ],
       ),
       drawer: controller.role == "admin"
           ? Drawer(
@@ -63,11 +73,10 @@ class ProfileView extends GetView<ProfileController> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
-
                   onPressed: () {
                     Get.off(HomeView(role: role, id: id));
                   },
-                  child: Icon(Icons.home ,color: Color(0xFFFc19ee0)),
+                  child: Icon(Icons.home, color: Color(0xFFFc19ee0)),
                 ),
               ),
             ),
@@ -85,27 +94,32 @@ class ProfileView extends GetView<ProfileController> {
             itemCount: controller.users.length,
             itemBuilder: (context, index) {
               var user = controller.users[index];
-              return ListTile(
+              return CheckboxListTile(
                 title: Text(user.email ?? ''),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(user.username ?? ''),
-                    Text('Roles: ${user.roles?.map((role) => role.name).join(
-                        ", ") ?? ''}'),
+                    Text('Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}'),
                   ],
                 ),
+                value: controller.selectedUser.contains(user.id),
+                onChanged: (value) {
+                  if (value != null && value) {
+                    controller.toggleUserSelection(user.id ?? 0);
+                  }
+                },
               );
             },
           );
         }
-        }),
+      }),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:  Color(0xFFFc19ee0) ,
+        backgroundColor: Color(0xFFFc19ee0),
         onPressed: () {
           controller.fetchAllUsers();
         },
-        child: Icon(Icons.refresh ,color: Colors.white) ,
+        child: Icon(Icons.refresh, color: Colors.white),
       ),
     );
   }

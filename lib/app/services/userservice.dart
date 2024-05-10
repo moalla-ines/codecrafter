@@ -144,4 +144,73 @@ class AuthService extends GetxService {
       throw Exception('Failed to load users');
     }
   }
+
+  Future<void> deleteUsers(int id) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id');
+
+      final response = await http.delete(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 204) {
+        print('User deleted successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to delete user. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
+
+  Future<void> updateUsers(int id, int idrole ,String name) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id');
+
+      final response = await http.put(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode(<String, dynamic>{
+          "roles": [
+            {"name": name}
+          ]
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'User role updated successfully!');
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print(
+            'Failed to update user role. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
 }
