@@ -43,11 +43,11 @@ class HomeView extends GetView<HomeController> {
     controller.id = id;
     controller.role = role;
     return Scaffold(
-      backgroundColor: Color(0xFFFe4c1f9),
+      backgroundColor: Color(0xFFF31363F),
       appBar: AppBar(
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor: Color(0xFF7D0A0A),
         title: Text(
-          'Home',
+          'Categories',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
@@ -60,7 +60,7 @@ class HomeView extends GetView<HomeController> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFFFe4c1f9),
+                color: Color(0xFFF2C4E80),
               ),
               child: SizedBox(
                 height: 50.0,
@@ -121,8 +121,8 @@ class HomeView extends GetView<HomeController> {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Color(0xFFFe4c1f9),
-            border: Border.all(color: Colors.white, width: 2.0), // Bordure blanche
+            color: Color(0xFFF31363F),
+
           ),
           child: Center(
             child: Column(
@@ -155,9 +155,9 @@ class HomeView extends GetView<HomeController> {
   Widget _buildBottomNavigationBar() {
     return Obx(
           () => GNav(
-        backgroundColor: const Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFF7D0A0A),
         color: Colors.white,
-        activeColor: const Color(0xFFFc19ee0),
+        activeColor: const Color(0xFF7D0A0A),
         tabBackgroundColor: Colors.grey.shade50,
         padding: const EdgeInsets.all(20),
         gap: 8,

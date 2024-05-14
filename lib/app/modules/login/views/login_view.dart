@@ -14,7 +14,7 @@ class LoginView extends GetView<LoginController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Scaffold(
-        backgroundColor: const Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -34,11 +34,14 @@ class LoginView extends GetView<LoginController> {
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), // Utilisation d'une couleur de bordure
+
+                      ),
                       labelText: "Email",
                       labelStyle: const TextStyle(color: Colors.white),
                       hintText: "Enter your email",
-                      hintStyle: const TextStyle(color: Colors.grey, fontSize: 10),
+                      hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
                     ),
                     controller: controller.emailController,
                   ),
@@ -51,39 +54,44 @@ class LoginView extends GetView<LoginController> {
                     keyboardType: TextInputType.text,
                     obscureText: true,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white), // Utilisation d'une couleur de bordure
+                      ),
                       labelText: "Password",
                       labelStyle: const TextStyle(color: Colors.white),
                       hintText: "Enter your password",
-                      hintStyle: const TextStyle(color: Colors.grey, fontSize: 10),
+                      hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    if (controller.emailController.text.isNotEmpty &&
-                        controller.passwordController.text.isNotEmpty) {
-                      controller.onSubmitLoginForm();
-                    } else {
-                      Get.snackbar('Error', 'Please fill in all fields');
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade200), // Utilisation d'une couleur plus contrastée
-                  ),
-                  child: const Text('Send', style: TextStyle(color: Color(0xFFF735DA5))),
-                ),
 
-                // Utilisation de Get.toNamed pour la création de compte
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/inscription'); // Assurez-vous d'avoir configuré cette route dans votre application
-                  },
-                  child: Text(
+                const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                if (controller.emailController.text.isNotEmpty &&
+                    controller.passwordController.text.isNotEmpty) {
+                  controller.onSubmitLoginForm();
+                } else {
+                  Get.snackbar('Error', 'Please fill in all fields');
+                }
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Utilisation d'une couleur plus contrastée
+              ),
+              child: Text('Send', style: TextStyle(color: Color(0xFFF2C4E80))),
+            ),
+
+// Utilisation de Get.toNamed pour la création de compte
+            GestureDetector(
+              onTap: () {
+                Get.toNamed('/inscription'); // Assurez-vous d'avoir configuré cette route dans votre application
+              },
+
+
+            child: Text(
                     'New User? Create Account',
                     style: const TextStyle(
-                      color: const Color(0xFFF735DA5),
+                      color:  Colors.white,
                       decoration: TextDecoration.underline,
                     ),
                   ),

@@ -32,9 +32,27 @@ class MyApp extends StatelessWidget {
       title: 'codecrafter',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.light()
-
+        // Définir les couleurs de texte par défaut
+        textTheme: TextTheme(
+          // Utiliser une couleur de texte blanche
+          bodyText1: TextStyle(color: Colors.white),
         ),
+        // Définir le thème des champs de texte
+        inputDecorationTheme: InputDecorationTheme(
+          // Utiliser une bordure blanche pour les champs de texte
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          // Définir le style des étiquettes
+          labelStyle: TextStyle(color: Colors.white),
+          // Définir le style des astuces
+          hintStyle: TextStyle(color: Colors.white),
+        ),
+      ),
+
 
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => AuthService());

@@ -36,7 +36,7 @@ class ListViewPage extends GetView<HomeController> {
                 context,
                 controller.role == "admin"
                     ? "QuizHistory of ${history.user!.email}"
-                    : "My Quizzes",
+                    : "My Quizzes ${index}",
                 Colors.grey.shade100,
                 history,
               );
@@ -76,7 +76,7 @@ class ListViewPage extends GetView<HomeController> {
             color: Color(0xFFF735DA5),
             fontWeight: FontWeight.w500),
       ),
-      backgroundColor: color,
+      backgroundColor: Color(0xFFFe4c1f9),
       children: controller.role == "user"
           ? [
         ListTile(
