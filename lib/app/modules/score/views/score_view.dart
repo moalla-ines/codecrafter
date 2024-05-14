@@ -28,12 +28,12 @@ class ScoreView extends GetView<ScoreController> {
 
   @override
   Widget build(BuildContext context) {
-    const Color bgColor3 = Color(0xFFFe4c1f9);
+    const Color bgColor3 = Color(0xFFF2C4E80);
     final double percentageScore = (score! / totalQuestions!) * 100;
 
     final int roundedPercentageScore = percentageScore.round();
     print(roundedPercentageScore);
-    const Color cardColor = Color(0xFFFe4c1f9);
+    const Color cardColor = Color(0xFFF2C4E80);
     return WillPopScope(
       onWillPop: () {
         Navigator.popUntil(context, (route) => route.isFirst);

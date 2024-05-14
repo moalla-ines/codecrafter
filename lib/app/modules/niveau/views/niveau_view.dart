@@ -21,9 +21,9 @@ class NiveauView extends GetView<NiveauController> {
     controller.role = role;
     controller.id = id;
     return Scaffold(
-      backgroundColor: const Color(0xFFFe4c1f9),
+      backgroundColor: const Color(0xFFFF1F1F2),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         title: const Text(
           'Niveau',
           style: TextStyle(
@@ -51,7 +51,7 @@ class NiveauView extends GetView<NiveauController> {
                   // Fetch data if niveaux is empty
                   controller.fetchNiveaux(index);
 
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator(color: const Color(0xFFFC9D7DD)));
                 } else if (controller.niveaux.isEmpty) {
                   // If niveaux is still empty, return a message or placeholder widget
                   return const Center(child: Text('No data available'));
@@ -65,7 +65,7 @@ class NiveauView extends GetView<NiveauController> {
                           niveau.idNiveau.toString(),
                           niveau.name!,
                           niveau.categorie!.titreCategorie!,
-                          Colors.grey.shade100,
+                          Colors.grey.shade50,
                           imageUrl,
                           niveau, // Pass the niveau object to the method
                         ),

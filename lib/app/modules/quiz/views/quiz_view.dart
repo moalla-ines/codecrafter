@@ -39,10 +39,10 @@ class QuizView extends GetView<QuizController> {
     controller.id = id;
     print(niveau);
     return Scaffold(
-      backgroundColor: const Color(0xFFFe4c1f9),
+      backgroundColor: const Color(0xFFFF1F1F2),
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         title: const Text(
           'Quiz List',
           style: TextStyle(
@@ -111,7 +111,7 @@ class QuizView extends GetView<QuizController> {
           if (niveau != null) {
             controller.fetchQuizzesByNiveau(niveau!);
           }
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: const Color(0xFFFC9D7DD)));
         } else {
           return SingleChildScrollView(
             child: Center(
@@ -127,7 +127,7 @@ class QuizView extends GetView<QuizController> {
                         quiz.titreQuiz ?? '',
                         quiz.description ?? '',
 
-                        Colors.grey.shade100,
+                        Colors.grey.shade50,
                         SizedBox(height: 2),
                         Container(padding: const EdgeInsets.all(3)),
                         images[index],
@@ -210,25 +210,32 @@ class QuizView extends GetView<QuizController> {
     }
 
     showDialog(
+
       context: context,
+
       builder: (context) => AlertDialog(
-        title: Text(isUpdate ? 'Modifier le quiz' : 'Créer un nouveau quiz'),
+
+        backgroundColor: Colors.white,
+        title: Text(isUpdate ? 'Modifier le quiz' : 'Créer un nouveau quiz',style:TextStyle(color: Color(0xFFF2C4E80))),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: titleQuizController,
-              decoration: InputDecoration(labelText: 'Titre'),
+              decoration: InputDecoration(labelText: 'Titre', labelStyle: TextStyle(color: Color(0xFFF2C4E80))),
             ),
+            SizedBox(height: 10.0),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: InputDecoration(labelText: 'Description',labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
             ),
+            SizedBox(height: 10.0),
             TextField(
               controller: nbQuestionsController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Nombre de questions'),
+              decoration: InputDecoration(labelText: 'Nombre de questions',    labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
             ),
+            SizedBox(height: 10.0),
           ],
         ),
         actions: [
@@ -263,7 +270,7 @@ class QuizView extends GetView<QuizController> {
                 }
               }
             },
-            child: Text(isUpdate ? 'Modifier' : 'Créer'),
+            child: Text(isUpdate ? 'Modifier' : 'Créer',style:TextStyle(color: Color(0xFFF2C4E80)),),
           ),
         ],
       ),

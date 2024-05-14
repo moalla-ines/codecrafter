@@ -43,9 +43,9 @@ class HomeView extends GetView<HomeController> {
     controller.id = id;
     controller.role = role;
     return Scaffold(
-      backgroundColor: Color(0xFFF31363F),
+      backgroundColor: Color(0xFFFF1F1F2),
       appBar: AppBar(
-        backgroundColor: Color(0xFF7D0A0A),
+        backgroundColor: Color(0xFFF2C4E80),
         title: Text(
           'Categories',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -54,13 +54,13 @@ class HomeView extends GetView<HomeController> {
       drawer: controller.role == "admin"
           ? Drawer
         (
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor:Color(0xFFFF1F1F2),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFFF2C4E80),
+                color: Color(0xFFFF1F1F2),
               ),
               child: SizedBox(
                 height: 50.0,
@@ -101,9 +101,9 @@ class HomeView extends GetView<HomeController> {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 10.0,
-        mainAxisSpacing: 10.0,
-        childAspectRatio: 0.75,
+        crossAxisSpacing: 9.0,
+        mainAxisSpacing: 9.0,
+        childAspectRatio: 0.8,
       ),
       itemCount: images.length,
       itemBuilder: (BuildContext context, int index) {
@@ -121,8 +121,11 @@ class HomeView extends GetView<HomeController> {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Color(0xFFF31363F),
-
+            color: Color(0xFFFF1F1F2),
+            border: Border.all(
+              color: Colors.white, // Couleur de la bordure blanche
+              width: 0.0, // Épaisseur de la bordure
+            ),
           ),
           child: Center(
             child: Column(
@@ -131,7 +134,7 @@ class HomeView extends GetView<HomeController> {
                 Text(
                   languages[index],
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xFFF2C4E80),
                     fontSize: 20.0,
                   ),
                 ),
@@ -155,9 +158,8 @@ class HomeView extends GetView<HomeController> {
   Widget _buildBottomNavigationBar() {
     return Obx(
           () => GNav(
-        backgroundColor: const Color(0xFF7D0A0A),
-        color: Colors.white,
-        activeColor: const Color(0xFF7D0A0A),
+        backgroundColor: const Color(0xFFF2C4E80),
+        activeColor: const Color(0xFFF2C4E80),
         tabBackgroundColor: Colors.grey.shade50,
         padding: const EdgeInsets.all(20),
         gap: 8,

@@ -21,11 +21,11 @@ class ListViewPage extends GetView<HomeController> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFFe4c1f9),
+      backgroundColor: Color(0xFFFF1F1F2),
       appBar: AppBar(
         title: Text('Historique',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor: Color(0xFFF2C4E80),
       ),
       body: Obx(() =>
           ListView.builder(
@@ -37,7 +37,7 @@ class ListViewPage extends GetView<HomeController> {
                 controller.role == "admin"
                     ? "QuizHistory of ${history.user!.email}"
                     : "My Quizzes ${index}",
-                Colors.grey.shade100,
+                Color(0xFFF2C4E80),
                 history,
               );
             },
@@ -50,9 +50,9 @@ class ListViewPage extends GetView<HomeController> {
   Widget _buildBottomNavigationBar() {
     return Obx(() =>
         GNav(
-          backgroundColor: Color(0xFFFc19ee0),
+          backgroundColor: Color(0xFFF2C4E80),
           color: Colors.white,
-          activeColor: Color(0xFFFc19ee0),
+          activeColor: Color(0xFFF2C4E80),
           tabBackgroundColor: Colors.grey.shade50,
           padding: EdgeInsets.all(20),
           gap: 8,
@@ -72,11 +72,11 @@ class ListViewPage extends GetView<HomeController> {
       title: Text(
         title,
         style: TextStyle(
-            fontSize: 22,
-            color: Color(0xFFF735DA5),
-            fontWeight: FontWeight.w500),
+            fontSize: 20,
+            color: Color(0xFFF2C4E80),
+            ),
       ),
-      backgroundColor: Color(0xFFFe4c1f9),
+      backgroundColor:Colors.grey.shade100,
       children: controller.role == "user"
           ? [
         ListTile(

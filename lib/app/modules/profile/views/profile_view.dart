@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/profile_controller.dart';
+
 class ProfileView extends GetView<ProfileController> {
-  String? role;
-  int? id;
+  final String? role;
+  final int? id;
+
   ProfileView({this.role, this.id});
 
   @override
@@ -14,9 +16,9 @@ class ProfileView extends GetView<ProfileController> {
     controller.id = id;
     controller.role = role;
     return Scaffold(
-      backgroundColor: Color(0xFFFe4c1f9),
+      backgroundColor: const Color(0xFFFF1F1F2),
       appBar: AppBar(
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         title: Text(
           'Gestion Utilisateur',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -25,24 +27,24 @@ class ProfileView extends GetView<ProfileController> {
           IconButton(
             icon: Icon(Icons.delete, color: Colors.white),
             onPressed: () {
-            for (var id in controller.selectedUser) {
+              for (var id in controller.selectedUser) {
                 controller.onDeleteUsers(id);
               }
               controller.selectedUser.clear();
-            Get.snackbar('Succès', 'user supprimé avec succès !');
+              Get.snackbar('Succès', 'Utilisateur supprimé avec succès !');
             },
           ),
         ],
       ),
       drawer: controller.role == "admin"
           ? Drawer(
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor: Color(0xFFFF1F1F2),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFFFe4c1f9),
+                color: Color(0xFFFF1F1F2),
               ),
               child: SizedBox(
                 height: 50.0,
@@ -50,9 +52,10 @@ class ProfileView extends GetView<ProfileController> {
                   child: Text(
                     'Gestionnaire',
                     style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
@@ -74,9 +77,9 @@ class ProfileView extends GetView<ProfileController> {
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.off(HomeView(role: role, id: id));
+                    Get.off(() => HomeView(role: role, id: id));
                   },
-                  child: Icon(Icons.home, color: Color(0xFFFc19ee0)),
+                  child: Icon(Icons.home, color: Color(0xFFF2C4E80)),
                 ),
               ),
             ),
@@ -87,7 +90,7 @@ class ProfileView extends GetView<ProfileController> {
       body: Obx(() {
         if (controller.users.isEmpty) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: Color(0xFFFF1F1F2)),
           );
         } else {
           return ListView.builder(
@@ -95,12 +98,13 @@ class ProfileView extends GetView<ProfileController> {
             itemBuilder: (context, index) {
               var user = controller.users[index];
               return CheckboxListTile(
-                title: Text(user.email ?? ''),
+                checkColor: Color(0xFFF2C4E80),
+                title: Text(user.email ?? '',style: TextStyle(color:Colors.black,fontSize: 18, fontWeight: FontWeight.w500)),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(user.username ?? ''),
-                    Text('Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}'),
+                    Text(user.username ?? '', style: TextStyle(color:Colors.black)),
+                    Text('Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}', style: TextStyle(color:Colors.black)),
                   ],
                 ),
                 value: controller.selectedUser.contains(user.id),
@@ -115,7 +119,7 @@ class ProfileView extends GetView<ProfileController> {
         }
       }),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         onPressed: () {
           controller.fetchAllUsers();
         },

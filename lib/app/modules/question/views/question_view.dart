@@ -31,19 +31,20 @@ class QuestionView extends GetView<QuestionController> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Text('Voulez-vous vraiment quitter ce quiz?'),
+              backgroundColor: Colors.white,
+              content: Text('Voulez-vous vraiment quitter ce quiz?',style:TextStyle(color: Color(0xFFF2C4E80))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('oui'),
+                  child: Text('oui',style:TextStyle(color: Color(0xFFF2C4E80))),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
-                  child: Text('Annuler'),
+                  child: Text('Annuler',style:TextStyle(color: Color(0xFFF2C4E80))),
                 ),
               ],
             );
@@ -51,9 +52,9 @@ class QuestionView extends GetView<QuestionController> {
         ) ?? false;
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFFe4c1f9),
+        backgroundColor: const Color(0xFFFF1F1F2),
         appBar: AppBar(
-          backgroundColor: const Color(0xFFFc19ee0),
+          backgroundColor: const Color(0xFFF2C4E80),
           title: Text(
             'Questions pour le quiz $quiz',
             textAlign: TextAlign.center,
@@ -118,6 +119,7 @@ class QuestionView extends GetView<QuestionController> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
+                      backgroundColor: Colors.white,
                       title: Text('Sélectionner une question à éditer '),
                       content: DropdownButton<int>(
                         items: questionItems,
@@ -146,7 +148,7 @@ class QuestionView extends GetView<QuestionController> {
         ),
         body: Obx(() {
           if (controller.questions.isEmpty) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator(color: const Color(0xFFFC9D7DD)));
           } else {
             return PageView.builder(
               controller: _controller,
@@ -356,42 +358,50 @@ class QuestionView extends GetView<QuestionController> {
     }
 
     showDialog(
+
       context: context,
       builder: (context) =>
           AlertDialog(
+            backgroundColor: Colors.white,
             title: Text(isUpdate
                 ? 'Modifier la question'
-                : 'Créer une nouvelle question'),
+                : 'Créer une nouvelle question', style: TextStyle(color: Color(0xFFF2C4E80)),),
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  SizedBox(height: 10.0),
                   TextField(
                     controller: textController,
                     decoration: InputDecoration(
-                        labelText: 'Texte de la question'),
+                        labelText: 'Texte de la question'    ,labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
                   ),
+                  SizedBox(height: 10.0),
                   TextField(
                     controller: option1Controller,
-                    decoration: InputDecoration(labelText: 'Option 1'),
+                    decoration: InputDecoration(labelText: 'Option 1',    labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
                   ),
+                  SizedBox(height: 10.0),
                   TextField(
                     controller: option2Controller,
-                    decoration: InputDecoration(labelText: 'Option 2'),
+                    decoration: InputDecoration(labelText: 'Option 2',    labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
                   ),
+                  SizedBox(height: 10.0),
                   TextField(
                     controller: option3Controller,
-                    decoration: InputDecoration(labelText: 'Option 3'),
+                    decoration: InputDecoration(labelText: 'Option 3',     labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
                   ),
+                  SizedBox(height: 10.0),
                   TextField(
                     controller: option4Controller,
-                    decoration: InputDecoration(labelText: 'Option 4'),
+                    decoration: InputDecoration(labelText: 'Option 4',    labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
                   ),
+                  SizedBox(height: 10.0),
                   TextField(
                     controller: indiceoptionCorrecteController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        labelText: 'Indice de la réponse correcte'),
+                        labelText: 'Indice de la réponse correcte',    labelStyle: TextStyle(color: Color(0xFFF2C4E80)),),
                   ),
                 ],
               ),
@@ -432,7 +442,7 @@ class QuestionView extends GetView<QuestionController> {
                     Get.snackbar('Erreur', 'quiz est null');
                   }
                 },
-                child: Text(isUpdate ? 'Modifier' : 'Créer'),
+                child: Text(isUpdate ? 'Modifier' : 'Créer',style:TextStyle(color: Color(0xFFF2C4E80))),
               ),
             ],
           ),

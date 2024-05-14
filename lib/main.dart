@@ -35,19 +35,19 @@ class MyApp extends StatelessWidget {
         // Définir les couleurs de texte par défaut
         textTheme: TextTheme(
           // Utiliser une couleur de texte blanche
-          bodyText1: TextStyle(color: Colors.white),
+          bodyText1: TextStyle(color: Colors.black),
         ),
         // Définir le thème des champs de texte
         inputDecorationTheme: InputDecorationTheme(
           // Utiliser une bordure blanche pour les champs de texte
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: Colors.black),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: Colors.black),
           ),
           // Définir le style des étiquettes
-          labelStyle: TextStyle(color: Colors.white),
+          labelStyle: TextStyle(color: Colors.black),
           // Définir le style des astuces
           hintStyle: TextStyle(color: Colors.white),
         ),

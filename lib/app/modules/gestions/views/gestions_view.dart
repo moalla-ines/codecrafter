@@ -20,9 +20,9 @@ class GestionsView extends GetView<GestionsController> {
     controller.id = id;
     controller.role = role;
     return Scaffold(
-      backgroundColor: Color(0xFFFe4c1f9),
+      backgroundColor: Color(0xFFFF1F1F2),
       appBar: AppBar(
-        backgroundColor:  Color(0xFFFc19ee0),
+        backgroundColor: Color(0xFFF2C4E80),
         title: Text(
           'Gestion Quiz',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -30,12 +30,12 @@ class GestionsView extends GetView<GestionsController> {
       ),
       drawer: controller.role == "admin"
           ? Drawer(
-        backgroundColor: Color(0xFFFc19ee0),
+        backgroundColor: Color(0xFFFF1F1F2),
         child: Column(
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFFFe4c1f9),
+                color: Color(0xFFFF1F1F2),
               ),
               child: SizedBox(
                 height: 50.0,
@@ -70,7 +70,7 @@ class GestionsView extends GetView<GestionsController> {
                   onPressed: () {
                     Get.off(() => HomeView(role: role, id: id));
                   },
-                  child: Icon(Icons.home ,color:  Color(0xFFFc19ee0)) ,
+                  child: Icon(Icons.home ,color: Color(0xFFF2C4E80)) ,
                 ),
               ),
 
@@ -84,7 +84,7 @@ class GestionsView extends GetView<GestionsController> {
       body: Obx(() {
         if (controller.quiz.isEmpty) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: const Color(0xFFF2C4E80)),
 
           );
         } else {
@@ -99,7 +99,7 @@ class GestionsView extends GetView<GestionsController> {
         }
       }),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:  Color(0xFFFc19ee0),
+        backgroundColor:  Color(0xFFF2C4E80),
         onPressed: () {
           controller.fetchAllQuizzes();
         },
@@ -116,13 +116,13 @@ class GestionsView extends GetView<GestionsController> {
         quiz.titreQuiz ?? 'Unknown',
         style: TextStyle(
             fontSize: 22,
-            color: Color(0xFFF735DA5),
-            fontWeight: FontWeight.w500),
+            color: Color(0xFFF2C4E80),
+        ),
       ),
-      backgroundColor: Color(0xFFFe4c1f9),
+      backgroundColor: Color(0xFFFF1F1F2),
       children: [
         ListTile(
-          title: Text('Cliquez ici pour gérer les quizs',style: TextStyle(color:Color(0xFFF735DA5), decoration: TextDecoration.underline), ),
+          title: Text('Cliquez ici pour gérer les quizs',style: TextStyle(color:Color(0xFFF2C4E80), fontWeight: FontWeight.w500, decoration: TextDecoration.underline), ),
           onTap: () {
             Get.off(() =>QuizView(
               niveau: quiz.niveau!.idNiveau,
@@ -136,19 +136,20 @@ class GestionsView extends GetView<GestionsController> {
         ListTile(
           title: Text(
             'Categorie: ${quiz.niveau?.categorie?.titreCategorie ?? "Unknown"}',
+            style: TextStyle(color: Colors.black , fontSize: 18),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${quiz.niveau?.name ?? "Unknown"}'),
-              Text('Quiz: ${quiz.titreQuiz ?? "Unknown"}'),
-              Text('Description: ${quiz.description ?? "Unknown"}'),
-              Text('Nombre de questions: ${quiz.nbQuestions ?? "Unknown"}'),
+              Text('Niveau: ${quiz.niveau?.name ?? "Unknown"  }',style: TextStyle(color: Colors.black ,fontSize: 18)),
+              Text('Quiz: ${quiz.titreQuiz ?? "Unknown"}',style: TextStyle(color: Colors.black  ,fontSize: 18)),
+              Text('Description: ${quiz.description ?? "Unknown"}',style: TextStyle(color: Colors.black  ,fontSize: 18)),
+              Text('Nombre de questions: ${quiz.nbQuestions ?? "Unknown"}',style: TextStyle(color: Colors.black  ,fontSize: 18)),
             ],
           ),
         ),
         ListTile(
-          title: Text('Cliquez ici pour gérer les questions',style: TextStyle(color:Color(0xFFF735DA5) , decoration: TextDecoration.underline)),
+          title: Text('Cliquez ici pour gérer les questions',style: TextStyle(color:Color(0xFFF2C4E80) , fontWeight: FontWeight.bold, decoration: TextDecoration.underline)),
           onTap: () {
             Get.off(() =>QuestionView(quiz: quiz.idquiz, id: id, role: role));
           },

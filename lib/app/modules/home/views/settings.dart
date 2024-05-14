@@ -19,9 +19,9 @@ class SettingsView extends GetView<HomeController> {
     controller.id = id;
     print(role);
     return Scaffold(
-      backgroundColor: const Color(0xFFFe4c1f9),
+      backgroundColor: const Color(0xFFFF1F1F2),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         title: const Text(
           "Settings",
           style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
@@ -32,7 +32,7 @@ class SettingsView extends GetView<HomeController> {
           _buildListTile("Account", Icons.person, () {}),
           const SizedBox(height: 10.0),
           _buildCard(ListTile(
-            leading: const Icon(Icons.lock_clock_outlined, color: Color(0xFFFc19ee0)),
+            leading: const Icon(Icons.lock_clock_outlined, color: Color(0xFFF2C4E80)),
             title: const Text("Change Password"),
             trailing: const Icon(Icons.keyboard_arrow_right),
             onTap: controller.changePassword,
@@ -46,7 +46,7 @@ class SettingsView extends GetView<HomeController> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  backgroundColor: Colors.grey.shade100,
+                  backgroundColor: Colors.grey.shade50,
                   title: Text('Déconnexion'),
                   content: Text('Voulez-vous vraiment vous déconnecter?'),
                   actions: <Widget>[
@@ -57,13 +57,13 @@ class SettingsView extends GetView<HomeController> {
                         loginController.logout();
                         Get.offAllNamed('/login');
                       },
-                      child: Text('Déconnexion'),
+                      child: Text('Déconnexion',style:TextStyle(color: Color(0xFFF2C4E80))),
                     ),
                     TextButton(
                       onPressed: () {
                         Get.back(); // Ferme la boîte de dialogue sans déconnecter
                       },
-                      child: Text('Annuler'),
+                      child: Text('Annuler',style:TextStyle(color: Color(0xFFF2C4E80))),
                     ),
                   ],
                 );
@@ -84,9 +84,9 @@ class SettingsView extends GetView<HomeController> {
         child: ListTile(
           title: Text(
             title,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFFFc19ee0)),
+            style: const TextStyle(fontSize: 20, color: Color(0xFFF2C4E80)),
           ),
-          trailing: icon != null ? Icon(icon, color: const Color(0xFFFc19ee0)) : null,
+          trailing: icon != null ? Icon(icon, color: const Color(0xFFF2C4E80)) : null,
         ),
       ),
     );
@@ -101,7 +101,7 @@ class SettingsView extends GetView<HomeController> {
 
   Widget _buildSwitchListTile(String title, bool value) {
     return SwitchListTile(
-      activeColor: const Color(0xFFFc19ee0),
+      activeColor: const Color(0xFFF2C4E80),
       contentPadding: const EdgeInsets.all(5),
       value: value,
       title: Text(title),
@@ -114,9 +114,9 @@ class SettingsView extends GetView<HomeController> {
   Widget _buildBottomNavigationBar() {
     return Obx(
           () => GNav(
-        backgroundColor: const Color(0xFFFc19ee0),
+        backgroundColor: const Color(0xFFF2C4E80),
         color: Colors.white,
-        activeColor: const Color(0xFFFc19ee0),
+        activeColor: const Color(0xFFF2C4E80),
         tabBackgroundColor: Colors.grey.shade50,
         padding: const EdgeInsets.all(20),
         gap: 8,
