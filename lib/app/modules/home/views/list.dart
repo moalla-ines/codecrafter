@@ -82,13 +82,13 @@ class ListViewPage extends GetView<HomeController> {
         ListTile(
           title: Text(
               'Categorie: ${history.quiz?.niveau?.categorie?.titreCategorie ??
-                  "Unknown"}'),
+                  "Unknown"}',style:TextStyle(color: Colors.black)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}'),
-              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}'),
-              Text('Score: ${history.result} %'),
+              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],
           ),
         ),
@@ -97,14 +97,14 @@ class ListViewPage extends GetView<HomeController> {
         ListTile(
           title: Text(
               'Categorie: ${history.quiz?.niveau?.categorie?.titreCategorie ??
-                  "Unknown"}'),
+                  "Unknown"}',style:TextStyle(color: Colors.black)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Email: ${history.user!.username}'),
-              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}'),
-              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}'),
-              Text('Score: ${history.result} %'),
+              Text('Email: ${history.user!.username}',style:TextStyle(color: Colors.black)),
+              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],
           ),
         ),

@@ -90,7 +90,7 @@ class ProfileView extends GetView<ProfileController> {
       body: Obx(() {
         if (controller.users.isEmpty) {
           return Center(
-            child: CircularProgressIndicator(color: Color(0xFFFF1F1F2)),
+            child: CircularProgressIndicator(color: Color(0xFFF2C4E80)),
           );
         } else {
           return ListView.builder(

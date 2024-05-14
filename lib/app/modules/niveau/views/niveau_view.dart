@@ -51,7 +51,7 @@ class NiveauView extends GetView<NiveauController> {
                   // Fetch data if niveaux is empty
                   controller.fetchNiveaux(index);
 
-                  return const Center(child: CircularProgressIndicator(color: const Color(0xFFFC9D7DD)));
+                  return const Center(child: CircularProgressIndicator(color: const Color(0xFFF2C4E80)));
                 } else if (controller.niveaux.isEmpty) {
                   // If niveaux is still empty, return a message or placeholder widget
                   return const Center(child: Text('No data available'));

@@ -156,22 +156,22 @@ class HomeView extends GetView<HomeController> {
 
 
   Widget _buildBottomNavigationBar() {
-    return Obx(
-          () => GNav(
-        backgroundColor: const Color(0xFFF2C4E80),
-        activeColor: const Color(0xFFF2C4E80),
-        tabBackgroundColor: Colors.grey.shade50,
-        padding: const EdgeInsets.all(20),
-        gap: 8,
-        selectedIndex: controller.selectedIndex.value,
-        onTabChange: controller.onItemTapped,
-        tabs: const [
-          GButton(icon: Icons.settings, text: 'Settings'),
-          GButton(icon: Icons.home, text: 'Home'),
-          GButton(icon: Icons.list, text: 'List'),
-        ],
-      ),
-    );
+    return Obx(() =>
+        GNav(
+          backgroundColor: Color(0xFFF2C4E80),
+          color: Colors.white,
+          activeColor: Color(0xFFF2C4E80),
+          tabBackgroundColor: Colors.grey.shade50,
+          padding: EdgeInsets.all(20),
+          gap: 8,
+          selectedIndex: controller.selectedIndex.value,
+          onTabChange: controller.onItemTapped,
+          tabs: [
+            GButton(icon: Icons.settings, text: 'Settings'),
+            GButton(icon: Icons.home, text: 'Home'),
+            GButton(icon: Icons.list, text: 'List'),
+          ],
+        ));
   }
 }
 

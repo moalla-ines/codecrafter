@@ -111,7 +111,7 @@ class QuizView extends GetView<QuizController> {
           if (niveau != null) {
             controller.fetchQuizzesByNiveau(niveau!);
           }
-          return const Center(child: CircularProgressIndicator(color: const Color(0xFFFC9D7DD)));
+          return const Center(child: CircularProgressIndicator(color: const Color(0xFFF2C4E80)));
         } else {
           return SingleChildScrollView(
             child: Center(

@@ -148,7 +148,7 @@ class QuestionView extends GetView<QuestionController> {
         ),
         body: Obx(() {
           if (controller.questions.isEmpty) {
-            return Center(child: CircularProgressIndicator(color: const Color(0xFFFC9D7DD)));
+            return Center(child: CircularProgressIndicator(color: const Color(0xFFF2C4E80)));
           } else {
             return PageView.builder(
               controller: _controller,
