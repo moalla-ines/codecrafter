@@ -36,7 +36,7 @@ class ListViewPage extends GetView<HomeController> {
                 context,
                 controller.role == "admin"
                     ? "QuizHistory of ${history.user!.email}"
-                    : "My Quizzes ${index}",
+                    : "My Quizzes ${index }+1",
                 Color(0xFFF2C4E80),
                 history,
               );

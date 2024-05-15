@@ -13,6 +13,7 @@ abstract class Routes {
   static const SCORE = _Paths.SCORE;
   static const GESTIONS = _Paths.GESTIONS;
   static const HISTORIQUE = _Paths.HISTORIQUE;
+  static const ADMIN_GESTIONS = _Paths.ADMIN_GESTIONS;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const SCORE = '/score';
   static const GESTIONS = '/gestions';
   static const HISTORIQUE = '/historique';
+  static const ADMIN_GESTIONS = '/admin-gestions';
 }

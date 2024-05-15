@@ -66,6 +66,7 @@ class LoginView extends GetView<LoginController> {
                 ),
 
                 const SizedBox(height: 30),
+
             ElevatedButton(
               onPressed: () {
                 if (controller.emailController.text.isNotEmpty &&

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/admin_gestions/bindings/admin_gestions_binding.dart';
+import '../modules/admin_gestions/views/admin_gestions_view.dart';
 import '../modules/gestions/bindings/gestions_binding.dart';
 import '../modules/gestions/views/gestions_view.dart';
 import '../modules/historique/bindings/historique_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.HISTORIQUE,
       page: () => HistoriqueView(),
       binding: HistoriqueBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADMIN_GESTIONS,
+      page: () =>  AdminGestionsView(),
+      binding: AdminGestionsBinding(),
     ),
   ];
 }

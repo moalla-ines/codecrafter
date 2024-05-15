@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:codecrafter/app/modules/admin_gestions/views/admin_gestions_view.dart';
 import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
+
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +10,9 @@ import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   late final TextEditingController emailController ;
-  late  final TextEditingController passwordController ;
+  late final TextEditingController passwordController ;
+  int? id;
+  String? role;
 
   @override
   void onInit() {
@@ -63,8 +67,11 @@ class LoginController extends GetxController {
         if (token != null) {
           final AuthService authService = Get.find<AuthService>();
           authService.setToken(token);
-         Get.offAll (() =>HistoriqueView(id: id, role :role));
-        //  Get.offAll(() => HomeView(id: id, role :role));
+          if (role == "admin") {
+            Get.offAll(() => AdminGestionsView(id: id, role: role));
+          } else {
+            Get.offAll(() => HistoriqueView(id: id, role: role));
+          }
         } else {
           Get.snackbar('Error', 'Invalid token');
         }
