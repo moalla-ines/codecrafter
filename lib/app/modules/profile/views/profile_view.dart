@@ -72,16 +72,11 @@ class ProfileView extends GetView<ProfileController> {
                 Get.to(() => GestionsView(role: role, id: id));
               },
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.off(() => HomeView(role: role, id: id));
-                  },
-                  child: Icon(Icons.home, color: Color(0xFFF2C4E80)),
-                ),
-              ),
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                Get.off(() => HomeView(role: role, id: id));
+              },
             ),
           ],
         ),
@@ -128,3 +123,4 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 }
+

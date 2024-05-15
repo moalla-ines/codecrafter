@@ -246,6 +246,17 @@ class QuestionView extends GetView<QuestionController> {
             );
           }
         }),
+
+        floatingActionButton:
+        role == "admin"
+            ?
+        FloatingActionButton(
+          backgroundColor: const Color(0xFFF2C4E80),
+          onPressed: () {
+            controller.fetchQuestionsByQuizzes(quiz!);
+          },
+          child: Icon(Icons.refresh, color: Colors.white),
+        ): null ,
       ),
     );
   }

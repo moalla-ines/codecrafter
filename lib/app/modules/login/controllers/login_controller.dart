@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:codecrafter/app/services/userservice.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class LoginController extends GetxController {
       }
 
       final response = await http.post(
-        Uri.parse('http://172.20.10.2:8080/api/v1/auth/authenticate'),
+        Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
@@ -62,7 +63,8 @@ class LoginController extends GetxController {
         if (token != null) {
           final AuthService authService = Get.find<AuthService>();
           authService.setToken(token);
-          Get.offAll(() => HomeView(id: id, role :role));
+         Get.offAll (() =>HistoriqueView(id: id, role :role));
+        //  Get.offAll(() => HomeView(id: id, role :role));
         } else {
           Get.snackbar('Error', 'Invalid token');
         }

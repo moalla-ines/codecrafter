@@ -10,8 +10,8 @@ import '../controllers/niveau_controller.dart';
 class NiveauView extends GetView<NiveauController> {
   final String? imageUrl;
   final int? index;
-  String? role;
-  int? id;
+  final String? role;
+  final int? id;
 
   NiveauView({Key? key, this.imageUrl, this.index, this.role, this.id})
       : super(key: key);
@@ -51,7 +51,7 @@ class NiveauView extends GetView<NiveauController> {
                   // Fetch data if niveaux is empty
                   controller.fetchNiveaux(index);
 
-                  return const Center(child: CircularProgressIndicator(color: const Color(0xFFF2C4E80)));
+                  return const Center(child: CircularProgressIndicator(color: Color(0xFFF2C4E80)));
                 } else if (controller.niveaux.isEmpty) {
                   // If niveaux is still empty, return a message or placeholder widget
                   return const Center(child: Text('No data available'));
@@ -77,6 +77,7 @@ class NiveauView extends GetView<NiveauController> {
           ),
         ),
       ),
+
     );
   }
 

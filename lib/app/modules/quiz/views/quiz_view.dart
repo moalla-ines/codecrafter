@@ -138,8 +138,18 @@ class QuizView extends GetView<QuizController> {
               ),
             ),
           );
+
         }
       }),
+      floatingActionButton: controller.role == "admin"
+          ?
+      FloatingActionButton(
+        backgroundColor: const Color(0xFFF2C4E80),
+        onPressed: () {
+          controller.fetchQuizzesByNiveau(niveau!) ;
+        },
+        child: Icon(Icons.refresh, color: Colors.white),
+      ): null,
     );
   }
 

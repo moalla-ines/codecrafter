@@ -12,6 +12,7 @@ abstract class Routes {
   static const QUESTION = _Paths.QUESTION;
   static const SCORE = _Paths.SCORE;
   static const GESTIONS = _Paths.GESTIONS;
+  static const HISTORIQUE = _Paths.HISTORIQUE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const QUESTION = '/question';
   static const SCORE = '/score';
   static const GESTIONS = '/gestions';
+  static const HISTORIQUE = '/historique';
 }

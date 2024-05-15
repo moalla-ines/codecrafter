@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/gestions/bindings/gestions_binding.dart';
 import '../modules/gestions/views/gestions_view.dart';
+import '../modules/historique/bindings/historique_binding.dart';
+import '../modules/historique/views/historique_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/inscription/bindings/inscription_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.GESTIONS,
       page: () => GestionsView(),
       binding: GestionsBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORIQUE,
+      page: () => HistoriqueView(),
+      binding: HistoriqueBinding(),
     ),
   ];
 }
