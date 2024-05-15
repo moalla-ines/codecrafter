@@ -31,7 +31,7 @@ class HistoriesService extends GetxService {
       }
 
       final url = Uri.parse(
-          'http://localhost:8080/api/v1/quiz-history/user/$user');
+          'http://172.20.10.2:8080/api/v1/quiz-history/user/$user');
       final response = await http.get(
         url,
         headers: <String, String>{
@@ -63,7 +63,7 @@ class HistoriesService extends GetxService {
       }
 
       final url = Uri.parse(
-          'http://localhost:8080/api/v1/quiz-history');
+          'http://172.20.10.2:8080/api/v1/quiz-history');
       final response = await http.get(
         url,
         headers: <String, String>{

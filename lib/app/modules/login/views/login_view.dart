@@ -14,90 +14,95 @@ class LoginView extends GetView<LoginController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF2C4E80),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const SizedBox(height: 150),
-                const Icon(Icons.lock, size: 150, color: Colors.white),
-                const SizedBox(height: 70),
-                Text(
-                  "Welcome back you've been missed",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white), // Utilisation d'une couleur de bordure
-
-                      ),
-                      labelText: "Email",
-                      labelStyle: const TextStyle(color: Colors.white),
-                      hintText: "Enter your email",
-                      hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                    controller: controller.emailController,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: TextFormField(
-                    controller: controller.passwordController,
-                    keyboardType: TextInputType.text,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white), // Utilisation d'une couleur de bordure
-                      ),
-                      labelText: "Password",
-                      labelStyle: const TextStyle(color: Colors.white),
-                      hintText: "Enter your password",
-                      hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-            ElevatedButton(
-              onPressed: () {
-                if (controller.emailController.text.isNotEmpty &&
-                    controller.passwordController.text.isNotEmpty) {
-                  controller.onSubmitLoginForm();
-                } else {
-                  Get.snackbar('Error', 'Please fill in all fields');
-                }
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Utilisation d'une couleur plus contrastée
-              ),
-              child: Text('Send', style: TextStyle(color: Color(0xFFF2C4E80))),
-            ),
-
-// Utilisation de Get.toNamed pour la création de compte
-            GestureDetector(
-              onTap: () {
-                Get.toNamed('/inscription'); // Assurez-vous d'avoir configuré cette route dans votre application
-              },
-
-
-            child: Text(
-                    'New User? Create Account',
+        backgroundColor: const Color(0xFFF2C4E80) ,
+        body: Container(
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
+          color: Color(0xFFF2C4E80),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 150),
+                  const Icon(Icons.lock, size: 150, color: Colors.white),
+                  const SizedBox(height: 70),
+                  Text(
+                    "Welcome back you've been missed",
                     style: const TextStyle(
-                      color:  Colors.white,
-                      decoration: TextDecoration.underline,
+                      color: Colors.white,
+                      fontSize: 16,
                     ),
                   ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white), // Utilisation d'une couleur de bordure
+
+                        ),
+                        labelText: "Email",
+                        labelStyle: const TextStyle(color: Colors.white),
+                        hintText: "Enter your email",
+                        hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                      controller: controller.emailController,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: TextFormField(
+                      controller: controller.passwordController,
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white), // Utilisation d'une couleur de bordure
+                        ),
+                        labelText: "Password",
+                        labelStyle: const TextStyle(color: Colors.white),
+                        hintText: "Enter your password",
+                        hintStyle: const TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+              ElevatedButton(
+                onPressed: () {
+                  if (controller.emailController.text.isNotEmpty &&
+                      controller.passwordController.text.isNotEmpty) {
+                    controller.onSubmitLoginForm();
+                  } else {
+                    Get.snackbar('Error', 'Please fill in all fields');
+                  }
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white), // Utilisation d'une couleur plus contrastée
                 ),
-              ],
+                child: Text('Send', style: TextStyle(color: Color(0xFFF2C4E80))),
+              ),
+
+          // Utilisation de Get.toNamed pour la création de compte
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/inscription'); // Assurez-vous d'avoir configuré cette route dans votre application
+                },
+
+
+              child: Text(
+                      'New User? Create Account',
+                      style: const TextStyle(
+                        color:  Colors.white,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

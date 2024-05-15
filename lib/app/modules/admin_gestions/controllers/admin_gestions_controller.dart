@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
 class AdminGestionsController extends GetxController {
-  //TODO: Implement AdminGestionsController
 
-  final count = 0.obs;
+
+
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +19,4 @@ class AdminGestionsController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }

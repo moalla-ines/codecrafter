@@ -27,7 +27,7 @@ class NiveauxService extends GetxService{
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/niveau/categorie/$categorie');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/niveau/categorie/$categorie');
       final response = await http.get(
         url,
         headers: <String, String>{

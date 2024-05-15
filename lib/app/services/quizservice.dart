@@ -29,7 +29,7 @@ class QuizzesService extends GetxService {
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz/niveau/$niveau');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/quiz/niveau/$niveau');
 
       final response = await http.get(
         url,
@@ -64,7 +64,7 @@ class QuizzesService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz/create');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/quiz/create');
 
       final response = await http.post(
         url,
@@ -106,7 +106,7 @@ class QuizzesService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz/$idquiz');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/quiz/$idquiz');
 
       final response = await http.delete(
         url,
@@ -138,7 +138,7 @@ class QuizzesService extends GetxService {
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz/$idquiz');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/quiz/$idquiz');
 
       final response = await http.put(
         url,
@@ -179,7 +179,7 @@ class QuizzesService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/quiz');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/quiz');
       final response = await http.get(
         url,
         headers: <String, String>{

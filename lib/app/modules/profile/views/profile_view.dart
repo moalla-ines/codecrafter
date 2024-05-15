@@ -1,5 +1,9 @@
+import 'package:codecrafter/app/modules/admin_gestions/views/admin_gestions_view.dart';
+import 'package:codecrafter/app/modules/gestions/views/gestion_categorie.dart';
 import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
+import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
+import 'package:codecrafter/app/modules/home/views/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,8 +40,7 @@ class ProfileView extends GetView<ProfileController> {
           ),
         ],
       ),
-      drawer: controller.role == "admin"
-          ? Drawer(
+      drawer: Drawer(
         backgroundColor: Color(0xFFFF1F1F2),
         child: ListView(
           padding: EdgeInsets.zero,
@@ -60,28 +63,72 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ),
             ),
-            ListTile(
-              title: Text('Gestion utilisateur'),
-              onTap: () {
-                // Action à effectuer lors du clic sur cet élément
-              },
-            ),
-            ListTile(
-              title: Text('Gestion Quizs'),
-              onTap: () {
-                Get.to(() => GestionsView(role: role, id: id));
-              },
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                Get.off(() => HomeView(role: role, id: id));
-              },
-            ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion utilisateur'),
+                onTap: () {
+                  Get.to(() => ProfileView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Quizs'),
+                onTap: () {
+                  Get.to(() => GestionsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion categorie'),
+                onTap: () {
+                  Get.to(() => GestionCategorieView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
           ],
         ),
-      )
-          : null,
+      ),
       body: Obx(() {
         if (controller.users.isEmpty) {
           return Center(
@@ -94,12 +141,12 @@ class ProfileView extends GetView<ProfileController> {
               var user = controller.users[index];
               return CheckboxListTile(
                 checkColor: Color(0xFFF2C4E80),
-                title: Text(user.email ?? '',style: TextStyle(color:Colors.black,fontSize: 18, fontWeight: FontWeight.w500)),
+                title: Text(user.email ?? '', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500)),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(user.username ?? '', style: TextStyle(color:Colors.black)),
-                    Text('Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}', style: TextStyle(color:Colors.black)),
+                    Text(user.username ?? '', style: TextStyle(color: Colors.black)),
+                    Text('Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}', style: TextStyle(color: Colors.black)),
                   ],
                 ),
                 value: controller.selectedUser.contains(user.id),
@@ -123,4 +170,3 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 }
-

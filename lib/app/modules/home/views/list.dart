@@ -1,9 +1,13 @@
+import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
+import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:codecrafter/app/model/historiques.dart';
 import 'package:codecrafter/app/modules/home/controllers/home_controller.dart';
+
+import 'settings.dart';
 
 class ListViewPage extends GetView<HomeController> {
   int ? id ;
@@ -27,21 +31,72 @@ class ListViewPage extends GetView<HomeController> {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFFF2C4E80),
       ),
-      body: Obx(() =>
-          ListView.builder(
-            itemCount: controller.quizHistory.length,
-            itemBuilder: (context, index) {
-              final history = controller.quizHistory[index];
-              return _buildExpansionTile(
-                context,
-                controller.role == "admin"
-                    ? "QuizHistory of ${history.user!.email}"
-                    : "My Quizzes ${index }+1",
-                Color(0xFFF2C4E80),
-                history,
-              );
-            },
-          )),
+      drawer:
+      Drawer
+        (
+        backgroundColor:Color(0xFFFF1F1F2),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFFFF1F1F2),
+              ),
+              child: SizedBox(
+                height: 50.0,
+                child: Center(
+                  child: Text(
+                    'Gestionnaire',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Gestion profil'),
+              onTap: () {
+                Get.to(() => SettingsView(role: role, id: id));
+              },
+            ),
+            ListTile(
+              title: Text('prondre quiz'),
+              onTap: () {
+                Get.to(() => HomeView(role: role, id: id));
+              },
+            ),
+            ListTile(
+              title: Text('Historique '),
+              onTap: () {
+                Get.to(() => HistoriqueView(role: role, id: id));
+              },
+            ),
+
+          ],
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(30),
+        margin: const EdgeInsets.all(30),
+        child: Obx(() =>
+            ListView.builder(
+              itemCount: controller.quizHistory.length,
+              itemBuilder: (context, index) {
+                final history = controller.quizHistory[index];
+                return _buildExpansionTile(
+                  context,
+                  controller.role == "admin"
+                      ? "Historique du quiz de ${history.user!.email}"
+                      : "mon quiz numéro ${index +1 }",
+                  Color(0xFFF2C4E80),
+                  history,
+                );
+              },
+            )),
+      ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
@@ -59,7 +114,7 @@ class ListViewPage extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex.value,
           onTabChange: controller.onItemTapped,
           tabs: [
-            GButton(icon: Icons.settings, text: 'Settings'),
+            GButton(icon: Icons.person, text: 'Profil'),
             GButton(icon: Icons.home, text: 'Home'),
             GButton(icon: Icons.list, text: 'List'),
           ],

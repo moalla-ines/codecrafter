@@ -1,3 +1,7 @@
+import 'package:codecrafter/app/modules/admin_gestions/views/admin_gestions_view.dart';
+import 'package:codecrafter/app/modules/gestions/views/gestion_categorie.dart';
+import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
+import 'package:codecrafter/app/modules/home/views/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/Quizzes.dart';
@@ -28,8 +32,7 @@ class GestionsView extends GetView<GestionsController> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      drawer: controller.role == "admin"
-          ? Drawer(
+      drawer: Drawer(
         backgroundColor: Color(0xFFFF1F1F2),
         child: Column(
           children: <Widget>[
@@ -51,44 +54,78 @@ class GestionsView extends GetView<GestionsController> {
                 ),
               ),
             ),
-            ListTile(
-              title: Text('Gestion utilisateur'),
-              onTap: () {
-                Get.to(() => ProfileView(role: role, id: id));
-              },
-            ),
-            ListTile(
-              title: Text('Gestion Quizs'),
-              onTap: () {
-                // Action à effectuer lors du clic sur cet élément
-              },
-            ),
-
-               Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.off(() => HomeView(role: role, id: id));
-                  },
-                  child: Icon(Icons.home ,color: Color(0xFFF2C4E80)) ,
-                ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion utilisateur'),
+                onTap: () {
+                  Get.to(() => ProfileView(role: role, id: id));
+                },
               ),
-
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Quizs'),
+                onTap: () {
+                  Get.to(() => GestionsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion categorie'),
+                onTap: () {
+                  Get.to(() => GestionCategorieView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
           ],
         ),
-      )
-
-          : null,
-
-
+      ),
       body: Obx(() {
         if (controller.quiz.isEmpty) {
           return Center(
             child: CircularProgressIndicator(color: const Color(0xFFF2C4E80)),
-
           );
         } else {
-
           return ListView.builder(
             itemCount: controller.quiz.length,
             itemBuilder: (context, index) {
@@ -99,32 +136,37 @@ class GestionsView extends GetView<GestionsController> {
         }
       }),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:  Color(0xFFF2C4E80),
+        backgroundColor: Color(0xFFF2C4E80),
         onPressed: () {
           controller.fetchAllQuizzes();
         },
-        child: Icon(Icons.refresh , color: Colors.white),
+        child: Icon(Icons.refresh, color: Colors.white),
       ),
-
     );
   }
-
 
   Widget _buildExpansionTile(BuildContext context, Quiz quiz) {
     return ExpansionTile(
       title: Text(
         quiz.titreQuiz ?? 'Unknown',
         style: TextStyle(
-            fontSize: 22,
-            color: Color(0xFFF2C4E80),
+          fontSize: 22,
+          color: Color(0xFFF2C4E80),
         ),
       ),
       backgroundColor: Color(0xFFFF1F1F2),
       children: [
         ListTile(
-          title: Text('Cliquez ici pour gérer les quizs',style: TextStyle(color:Color(0xFFF2C4E80), fontWeight: FontWeight.w500, decoration: TextDecoration.underline), ),
+          title: Text(
+            'Cliquez ici pour gérer les quizs',
+            style: TextStyle(
+              color: Color(0xFFF2C4E80),
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
+            ),
+          ),
           onTap: () {
-            Get.off(() =>QuizView(
+            Get.off(() => QuizView(
               niveau: quiz.niveau!.idNiveau,
               categorie: quiz.niveau!.categorie!.idcategorie,
               id: id,
@@ -136,27 +178,40 @@ class GestionsView extends GetView<GestionsController> {
         ListTile(
           title: Text(
             'Categorie: ${quiz.niveau?.categorie?.titreCategorie ?? "Unknown"}',
-            style: TextStyle(color: Colors.black , fontSize: 18),
+            style: TextStyle(color: Colors.black, fontSize: 18),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${quiz.niveau?.name ?? "Unknown"  }',style: TextStyle(color: Colors.black ,fontSize: 18)),
-              Text('Quiz: ${quiz.titreQuiz ?? "Unknown"}',style: TextStyle(color: Colors.black  ,fontSize: 18)),
-              Text('Description: ${quiz.description ?? "Unknown"}',style: TextStyle(color: Colors.black  ,fontSize: 18)),
-              Text('Nombre de questions: ${quiz.nbQuestions ?? "Unknown"}',style: TextStyle(color: Colors.black  ,fontSize: 18)),
+              Text('Niveau: ${quiz.niveau?.name ?? "Unknown"}',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+              Text('Quiz: ${quiz.titreQuiz ?? "Unknown"}',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+              Text('Description: ${quiz.description ?? "Unknown"}',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+              Text('Nombre de questions: ${quiz.nbQuestions ?? "Unknown"}',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
             ],
           ),
         ),
         ListTile(
-          title: Text('Cliquez ici pour gérer les questions',style: TextStyle(color:Color(0xFFF2C4E80) , fontWeight: FontWeight.bold, decoration: TextDecoration.underline)),
+          title: Text(
+            'Cliquez ici pour gérer les questions',
+            style: TextStyle(
+              color: Color(0xFFF2C4E80),
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
+            ),
+          ),
           onTap: () {
-            Get.off(() =>QuestionView(quiz: quiz.idquiz, id: id, role: role));
+            Get.off(() => QuestionView(
+              quiz: quiz.idquiz,
+              id: id,
+              role: role,
+            ));
           },
         ),
-
       ],
     );
-
   }
 }

@@ -25,7 +25,7 @@ class QuestionsService extends GetxService{
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/questions/quiz/$quiz');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions/quiz/$quiz');
       print(quiz);
 
       final response = await http.get(url,
@@ -59,7 +59,7 @@ class QuestionsService extends GetxService{
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/questions');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions');
 
       final response = await http.post(
         url,
@@ -100,7 +100,7 @@ class QuestionsService extends GetxService{
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/questions/$idquestion');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions/$idquestion');
 
 
       final response = await http.delete(
@@ -133,7 +133,7 @@ class QuestionsService extends GetxService{
       if (token == null) {
         throw Exception('Token not found');
       }
-      final url = Uri.parse('http://localhost:8080/api/v1/questions/$idquestion');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/questions/$idquestion');
 
       final response = await http.put(
         url,

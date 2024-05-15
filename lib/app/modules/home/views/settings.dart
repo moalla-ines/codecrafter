@@ -23,54 +23,57 @@ class SettingsView extends GetView<HomeController> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF2C4E80),
         title: const Text(
-          "Settings",
+          "Profile",
           style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          _buildListTile("Account", Icons.person, () {}),
-          const SizedBox(height: 10.0),
-          _buildCard(ListTile(
-            leading: const Icon(Icons.lock_clock_outlined, color: Color(0xFFF2C4E80)),
-            title: const Text("Change Password"),
-            trailing: const Icon(Icons.keyboard_arrow_right),
-            onTap: controller.changePassword,
-          )),
-          _buildListTile("Notification Settings", null, () {}),
-          _buildSwitchListTile("Received Notification", true),
-          _buildSwitchListTile("Received offer Notification", true),
-          const SizedBox(height: 280),
-          _buildListTile("Log out", Icons.logout, () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Colors.grey.shade50,
-                  title: Text('Déconnexion'),
-                  content: Text('Voulez-vous vraiment vous déconnecter?'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        // Action à effectuer lors de la déconnexion
-                        // Par exemple, vous pouvez appeler une méthode de déconnexion dans votre controller
-                        loginController.logout();
-                        Get.offAllNamed('/login');
-                      },
-                      child: Text('Déconnexion',style:TextStyle(color: Color(0xFFF2C4E80))),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Get.back(); // Ferme la boîte de dialogue sans déconnecter
-                      },
-                      child: Text('Annuler',style:TextStyle(color: Color(0xFFF2C4E80))),
-                    ),
-                  ],
-                );
-              },
-            );
-          }),
-        ],
+      body: Container(
+
+        child: ListView(
+          children: <Widget>[
+            _buildListTile("Account", Icons.person, () {}),
+            const SizedBox(height: 10.0),
+            _buildCard(ListTile(
+              leading: const Icon(Icons.lock_clock_outlined, color: Color(0xFFF2C4E80)),
+              title: const Text("Change Password"),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              onTap: controller.changePassword,
+            )),
+            _buildListTile("Notification Settings", null, () {}),
+            _buildSwitchListTile("Received Notification", true),
+            _buildSwitchListTile("Received offer Notification", true),
+            const SizedBox(height: 280),
+            _buildListTile("Log out", Icons.logout, () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: Colors.grey.shade50,
+                    title: Text('Déconnexion'),
+                    content: Text('Voulez-vous vraiment vous déconnecter?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          // Action à effectuer lors de la déconnexion
+                          // Par exemple, vous pouvez appeler une méthode de déconnexion dans votre controller
+                          loginController.logout();
+                          Get.offAllNamed('/login');
+                        },
+                        child: Text('Déconnexion',style:TextStyle(color: Color(0xFFF2C4E80))),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.back(); // Ferme la boîte de dialogue sans déconnecter
+                        },
+                        child: Text('Annuler',style:TextStyle(color: Color(0xFFF2C4E80))),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }),
+          ],
+        ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -123,7 +126,7 @@ class SettingsView extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex.value,
           onTabChange: controller.onItemTapped,
           tabs: [
-            GButton(icon: Icons.settings, text: 'Settings'),
+            GButton(icon: Icons.person, text: 'Profil'),
             GButton(icon: Icons.home, text: 'Home'),
             GButton(icon: Icons.list, text: 'List'),
           ],

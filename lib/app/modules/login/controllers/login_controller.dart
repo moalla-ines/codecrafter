@@ -42,7 +42,7 @@ class LoginController extends GetxController {
       }
 
       final response = await http.post(
-        Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
+        Uri.parse('http://172.20.10.2:8080/api/v1/auth/authenticate'),
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
@@ -69,9 +69,12 @@ class LoginController extends GetxController {
           authService.setToken(token);
           if (role == "admin") {
             Get.offAll(() => AdminGestionsView(id: id, role: role));
+            Get.snackbar('Accès réussi', 'Bienvenue, administrateur!');
           } else {
             Get.offAll(() => HistoriqueView(id: id, role: role));
+            Get.snackbar('Accès réussi', 'Bienvenue!');
           }
+
         } else {
           Get.snackbar('Error', 'Invalid token');
         }

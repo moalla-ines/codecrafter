@@ -1,3 +1,6 @@
+import 'package:codecrafter/app/modules/gestions/views/gestion_categorie.dart';
+import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
+import 'package:codecrafter/app/modules/home/views/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -51,10 +54,8 @@ class HomeView extends GetView<HomeController> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      drawer: controller.role == "admin"
-          ? Drawer
-        (
-        backgroundColor:Color(0xFFFF1F1F2),
+      drawer: Drawer(
+        backgroundColor: Color(0xFFFF1F1F2),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -76,22 +77,72 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            ListTile(
-              title: Text('Gestion utilisateur'),
-              onTap: () {
-                Get.to(() => ProfileView(role: role, id: id));
-              },
-            ),
-            ListTile(
-              title: Text('Gestion Quizs'),
-              onTap: () {
-                Get.to(() => GestionsView(role: role, id: id));
-              },
-            ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion utilisateur'),
+                onTap: () {
+                  Get.to(() => ProfileView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Quizs'),
+                onTap: () {
+                  Get.to(() => GestionsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion categorie'),
+                onTap: () {
+                  Get.to(() => GestionCategorieView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
           ],
         ),
-      )
-          : null,
+      ),
       body: _buildGridView(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -167,7 +218,7 @@ class HomeView extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex.value,
           onTabChange: controller.onItemTapped,
           tabs: [
-            GButton(icon: Icons.settings, text: 'Settings'),
+            GButton(icon: Icons.person, text: 'Profil'),
             GButton(icon: Icons.home, text: 'Home'),
             GButton(icon: Icons.list, text: 'List'),
           ],

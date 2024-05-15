@@ -69,7 +69,7 @@ int? categorie ;
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id/password');
 
       final response = await http.put(
         url,
