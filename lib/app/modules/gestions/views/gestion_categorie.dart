@@ -51,6 +51,13 @@ class GestionCategorieView extends GetView<GestionsController> {
           'Gestion Categorie',
           style: TextStyle(color: Color(0xFFFF1F1F2), fontWeight: FontWeight.bold),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+
+          },
+        ),
+
       ),
       drawer: Drawer(
         backgroundColor: Color(0xFFFF1F1F2),
@@ -157,15 +164,9 @@ class GestionCategorieView extends GetView<GestionsController> {
                 ),
                 title: Text(languages[index]),
                 trailing: Wrap(
-                  spacing: 12, // Espace entre les icônes
+                  spacing: 10, // Espace entre les icônes
                   children: [
-                    IconButton(
-                      iconSize: 18, // Taille réduite des icônes
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        // Action à effectuer lorsque l'utilisateur appuie sur l'icône "add"
-                      },
-                    ),
+
                     IconButton(
                       iconSize: 18, // Taille réduite des icônes
                       icon: Icon(Icons.edit),
