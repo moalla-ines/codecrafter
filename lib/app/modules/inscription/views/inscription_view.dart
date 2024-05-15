@@ -12,7 +12,7 @@ class InscriptionView extends GetView<InscriptionController> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
     child: Scaffold(
-      backgroundColor: const Color(0xFFFc19ee0),
+      backgroundColor: const Color(0xFFF2C4E80),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -21,7 +21,7 @@ class InscriptionView extends GetView<InscriptionController> {
               SizedBox(height: 70),
               Container(
                 height: 100,
-                color: const Color(0xFFFc19ee0),
+                color: const Color(0xFFFF1F1F2),
 
                 child: Center(
                   child: Text(
@@ -35,7 +35,7 @@ class InscriptionView extends GetView<InscriptionController> {
                 ),
               ),
               Container(
-                color: Color(0xFFFe4c1f9),
+                color: Color(0xFFFF1F1F2),
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
                 child: Form(
@@ -90,14 +90,14 @@ class InscriptionView extends GetView<InscriptionController> {
                       SizedBox(height: 30),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade200,
+                          backgroundColor: Colors.grey.shade100,
                         ),
                         onPressed: () {
                           if (controller.formKey.currentState!.validate()) {
                             controller.onRegisterForm();
                           }
                         },
-                        child: const Text('Submit' ,style: TextStyle(color: Color(0xFFF735DA5))),
+                        child: const Text('Submit' ,style: TextStyle(color: Color(0xFFF2C4E80))),
                       ),
                       SizedBox(height: 20),
                       GestureDetector(
@@ -107,7 +107,7 @@ class InscriptionView extends GetView<InscriptionController> {
                         child: Text(
                           'You already have an account? Click here',
                           style: TextStyle(
-                            color: const Color(0xFFF735DA5),
+                            color: const Color(0xFFF2C4E80),
                             decoration: TextDecoration.underline,
                           ),
                         ),
