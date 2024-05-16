@@ -1,4 +1,3 @@
-
 import 'package:codecrafter/app/modules/admin_gestions/views/admin_gestions_view.dart';
 import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
 import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
@@ -43,6 +42,8 @@ class GestionCategorieView extends GetView<GestionsController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.id = id;
+    controller.role = role;
     return Scaffold(
       backgroundColor: Color(0xFFFF1F1F2),
       appBar: AppBar(
@@ -51,13 +52,14 @@ class GestionCategorieView extends GetView<GestionsController> {
           'Gestion Categorie',
           style: TextStyle(color: Color(0xFFFF1F1F2), fontWeight: FontWeight.bold),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () {
-
-          },
-        ),
-
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add, color: Colors.white,),
+            onPressed: () {
+              // Action à effectuer lorsque l'utilisateur appuie sur l'icône "add"
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         backgroundColor: Color(0xFFFF1F1F2),
@@ -89,40 +91,40 @@ class GestionCategorieView extends GetView<GestionsController> {
                 },
               ),
             if (controller.role == "admin")
-            ListTile(
-              title: Text('Gestion Quizs'),
-              onTap: () {
-                Get.to(() => GestionsView(role: role, id: id));
-              },
-            ),
+              ListTile(
+                title: Text('Gestion Quizs'),
+                onTap: () {
+                  Get.to(() => GestionsView(role: role, id: id));
+                },
+              ),
             if (controller.role == "admin")
-            ListTile(
-              title: Text('Gestion categorie'),
-              onTap: () {
-                Get.to(() => GestionCategorieView(role: role, id: id));
-              },
-            ),
+              ListTile(
+                title: Text('Gestion categorie'),
+                onTap: () {
+                  Get.to(() => GestionCategorieView(role: role, id: id));
+                },
+              ),
             if (controller.role == "admin")
-            ListTile(
-              title: Text('Prendre quiz'),
-              onTap: () {
-                Get.to(() => HomeView(role: role, id: id));
-              },
-            ),
+              ListTile(
+                title: Text('Prendre quiz'),
+                onTap: () {
+                  Get.to(() => HomeView(role: role, id: id));
+                },
+              ),
             if (controller.role == "admin")
-            ListTile(
-              title: Text('Gestion profil'),
-              onTap: () {
-                Get.to(() => SettingsView(role: role, id: id));
-              },
-            ),
+              ListTile(
+                title: Text('Gestion profil'),
+                onTap: () {
+                  Get.to(() => SettingsView(role: role, id: id));
+                },
+              ),
             if (controller.role == "admin")
-            ListTile(
-              title: Text('Historique'),
-              onTap: () {
-                Get.to(() => HistoriqueView(role: role, id: id));
-              },
-            ),
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.to(() => HistoriqueView(role: role, id: id));
+                },
+              ),
             if (controller.role != "admin")
               ListTile(
                 title: Text('Gestion profil'),
@@ -166,7 +168,6 @@ class GestionCategorieView extends GetView<GestionsController> {
                 trailing: Wrap(
                   spacing: 10, // Espace entre les icônes
                   children: [
-
                     IconButton(
                       iconSize: 18, // Taille réduite des icônes
                       icon: Icon(Icons.edit),
@@ -191,9 +192,6 @@ class GestionCategorieView extends GetView<GestionsController> {
           },
         ),
       ),
-
-
     );
   }
 }
-

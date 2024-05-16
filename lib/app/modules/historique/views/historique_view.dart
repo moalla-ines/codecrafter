@@ -29,6 +29,7 @@ class HistoriqueView extends GetView<HistoriqueController> {
     }
 
     return Scaffold(
+
       backgroundColor: Color(0xFFFF1F1F2),
       appBar: AppBar(
         title: Text('Historique',

@@ -43,19 +43,19 @@ class MyApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           // Utiliser une bordure blanche pour les champs de texte
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
+            borderSide: BorderSide(color: Colors.white),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
+            borderSide: BorderSide(color: Colors.white),
           ),
           // Définir le style des étiquettes
-          labelStyle: TextStyle(color: Colors.black),
+          labelStyle: TextStyle(color: Colors.white),
           // Définir le style des astuces
           hintStyle: TextStyle(color: Colors.white),
         ),
+
+
       ),
-
-
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => AuthService());
         Get.lazyPut(() => HistoriesService());

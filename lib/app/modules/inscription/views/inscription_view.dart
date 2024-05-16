@@ -18,10 +18,10 @@ class InscriptionView extends GetView<InscriptionController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 70),
+              SizedBox(height: 150),
               Container(
                 height: 100,
-                color: const Color(0xFFFF1F1F2),
+                color: const Color(0xFFF2C4E80),
 
                 child: Center(
                   child: Text(
@@ -35,7 +35,7 @@ class InscriptionView extends GetView<InscriptionController> {
                 ),
               ),
               Container(
-                color: Color(0xFFFF1F1F2),
+                color: Color(0xFFF2C4E80),
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
                 child: Form(
@@ -107,7 +107,7 @@ class InscriptionView extends GetView<InscriptionController> {
                         child: Text(
                           'You already have an account? Click here',
                           style: TextStyle(
-                            color: const Color(0xFFF2C4E80),
+                            color: const  Color(0xFFFF1F1F2),
                             decoration: TextDecoration.underline,
                           ),
                         ),

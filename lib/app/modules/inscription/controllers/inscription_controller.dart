@@ -10,7 +10,8 @@ class InscriptionController extends GetxController {
   final password = RxString('');
   final confirmPassword = RxString('');
   final email = RxString('');
-
+  int? id;
+  String? role;
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
       return 'Veuillez entrer un nom d\'utilisateur';
@@ -61,7 +62,7 @@ class InscriptionController extends GetxController {
         final token = responseData['token'] as String?;
         final id = responseData['id'] as int?;
         if (token != null) {
-          Get.to(() => HomeView());
+          Get.to(() => HomeView(id: id, role: role));
           Get.snackbar('Success', 'Form submitted successfully');
         } else {
           Get.snackbar('Error', 'Invalid token');
