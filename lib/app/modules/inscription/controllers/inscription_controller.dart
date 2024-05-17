@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class InscriptionController extends GetxController {
         final token = responseData['token'] as String?;
         final id = responseData['id'] as int?;
         if (token != null) {
-          Get.to(() => HomeView(id: id, role: role));
+          Get.to(() => HistoriqueView(id: id, role: role));
           Get.snackbar('Success', 'Form submitted successfully');
         } else {
           Get.snackbar('Error', 'Invalid token');

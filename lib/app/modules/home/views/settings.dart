@@ -35,15 +35,15 @@ class SettingsView extends GetView<HomeController> {
             const SizedBox(height: 10.0),
             _buildCard(ListTile(
               leading: const Icon(Icons.lock_clock_outlined, color: Color(0xFFF2C4E80)),
-              title: const Text("Change Password"),
+              title: const Text("Changer mot de passe"),
               trailing: const Icon(Icons.keyboard_arrow_right),
               onTap: controller.changePassword,
             )),
             _buildListTile("Notification Settings", null, () {}),
-            _buildSwitchListTile("Received Notification", true),
-            _buildSwitchListTile("Received offer Notification", true),
+            _buildSwitchListTile("Réception Notification", true),
+            _buildSwitchListTile("Réception offer Notification", true),
             const SizedBox(height: 280),
-            _buildListTile("Log out", Icons.logout, () {
+            _buildListTile("Déconnexion", Icons.logout, () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -126,9 +126,9 @@ class SettingsView extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex.value,
           onTabChange: controller.onItemTapped,
           tabs: [
-            GButton(icon: Icons.person, text: 'Profil'),
-            GButton(icon: Icons.home, text: 'Home'),
-            GButton(icon: Icons.list, text: 'List'),
+            GButton(icon: Icons.person, text: 'Profile'),
+            GButton(icon: Icons.quiz, text: 'Prendre Quiz'),
+            GButton(icon: Icons.list, text: 'Liste'),
           ],
         ));
   }

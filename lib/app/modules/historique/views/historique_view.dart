@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +38,7 @@ class HistoriqueView extends GetView<HistoriqueController> {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFFF2C4E80),
       ),
+
       drawer: Drawer(
         backgroundColor: Color(0xFFFF1F1F2),
         child: ListView(
@@ -61,65 +64,67 @@ class HistoriqueView extends GetView<HistoriqueController> {
             ),
             if (controller.role == "admin")
               ListTile(
-                title: Text('Gestion utilisateur'),
+                title: Text('Gestion Utilisateur'),
                 onTap: () {
-                  Get.to(() => ProfileView(role: role, id: id));
+                  Get.off(() => ProfileView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
                 title: Text('Gestion Quizs'),
                 onTap: () {
-                  Get.to(() => GestionsView(role: role, id: id));
+                  Get.off(() => GestionsView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
-                title: Text('Gestion categorie'),
+                title: Text('Gestion Categorie'),
                 onTap: () {
-                  Get.to(() => GestionCategorieView(role: role, id: id));
+                  Get.off(() => GestionCategorieView(role: role, id: id));
                 },
               ),
+
             if (controller.role == "admin")
               ListTile(
-                title: Text('Prendre quiz'),
+                title: Text('Gestion Profile'),
                 onTap: () {
-                  Get.to(() => HomeView(role: role, id: id));
-                },
-              ),
-            if (controller.role == "admin")
-              ListTile(
-                title: Text('Gestion profil'),
-                onTap: () {
-                  Get.to(() => SettingsView(role: role, id: id));
+                  Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
                 title: Text('Historique'),
                 onTap: () {
-                  Get.to(() => HistoriqueView(role: role, id: id));
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
                 },
               ),
             if (controller.role != "admin")
               ListTile(
-                title: Text('Gestion profil'),
+                title: Text('Gestion Profile'),
                 onTap: () {
-                  Get.to(() => SettingsView(role: role, id: id));
+                  Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
-            if (controller.role != "admin")
-              ListTile(
-                title: Text('Prendre quiz'),
-                onTap: () {
-                  Get.to(() => HomeView(role: role, id: id));
-                },
-              ),
+
             if (controller.role != "admin")
               ListTile(
                 title: Text('Historique'),
                 onTap: () {
-                  Get.to(() => HistoriqueView(role: role, id: id));
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
                 },
               ),
           ],
@@ -133,7 +138,7 @@ class HistoriqueView extends GetView<HistoriqueController> {
             return Center(
               child: Text(
                 'Aucun historique',
-                style: TextStyle(color: Color(0xFFFF1F1F2)),
+                style: TextStyle(color: Color(0xFFF2C4E80), fontSize: 30 ),
               ),
             );
           } else {
@@ -144,7 +149,7 @@ class HistoriqueView extends GetView<HistoriqueController> {
                 return _buildExpansionTile(
                   context,
                   controller.role == "admin"
-                      ? "Historique du quiz de ${history.user!.username}"
+                      ? "Historique du quiz de ${history.user!.email}"
                       : "Mon quiz numéro ${index + 1}",
                   Color(0xFFFF1F1F2),
                   history,
@@ -190,7 +195,7 @@ class HistoriqueView extends GetView<HistoriqueController> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Niveau: ${history.quiz?.niveau?.name != null ? utf8.decode(history.quiz!.niveau!.name!.codeUnits) : "Unknown"}', style: TextStyle(color: Colors.black)),
               Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
               Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],

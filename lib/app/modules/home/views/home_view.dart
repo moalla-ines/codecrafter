@@ -79,65 +79,67 @@ class HomeView extends GetView<HomeController> {
             ),
             if (controller.role == "admin")
               ListTile(
-                title: Text('Gestion utilisateur'),
+                title: Text('Gestion Utilisateur'),
                 onTap: () {
-                  Get.to(() => ProfileView(role: role, id: id));
+                  Get.off(() => ProfileView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
                 title: Text('Gestion Quizs'),
                 onTap: () {
-                  Get.to(() => GestionsView(role: role, id: id));
+                  Get.off(() => GestionsView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
-                title: Text('Gestion categorie'),
+                title: Text('Gestion Categorie'),
                 onTap: () {
-                  Get.to(() => GestionCategorieView(role: role, id: id));
+                  Get.off(() => GestionCategorieView(role: role, id: id));
                 },
               ),
+
             if (controller.role == "admin")
               ListTile(
-                title: Text('Prendre quiz'),
+                title: Text('Gestion Profile'),
                 onTap: () {
-                  Get.to(() => HomeView(role: role, id: id));
-                },
-              ),
-            if (controller.role == "admin")
-              ListTile(
-                title: Text('Gestion profil'),
-                onTap: () {
-                  Get.to(() => SettingsView(role: role, id: id));
+                  Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
                 title: Text('Historique'),
                 onTap: () {
-                  Get.to(() => HistoriqueView(role: role, id: id));
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
                 },
               ),
             if (controller.role != "admin")
               ListTile(
-                title: Text('Gestion profil'),
+                title: Text('Gestion Profile'),
                 onTap: () {
-                  Get.to(() => SettingsView(role: role, id: id));
+                  Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
-            if (controller.role != "admin")
-              ListTile(
-                title: Text('Prendre quiz'),
-                onTap: () {
-                  Get.to(() => HomeView(role: role, id: id));
-                },
-              ),
+
             if (controller.role != "admin")
               ListTile(
                 title: Text('Historique'),
                 onTap: () {
-                  Get.to(() => HistoriqueView(role: role, id: id));
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
                 },
               ),
           ],
@@ -168,7 +170,7 @@ class HomeView extends GetView<HomeController> {
       child: GestureDetector(
         onTap: () {
           String imageUrl = images[index];
-          Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role, id: id));
+         Get.off(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role, id: id));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -218,9 +220,9 @@ class HomeView extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex.value,
           onTabChange: controller.onItemTapped,
           tabs: [
-            GButton(icon: Icons.person, text: 'Profil'),
-            GButton(icon: Icons.home, text: 'Home'),
-            GButton(icon: Icons.list, text: 'List'),
+            GButton(icon: Icons.person, text: 'Profile'),
+            GButton(icon: Icons.quiz, text: 'Prendre Quiz'),
+            GButton(icon: Icons.list, text: 'Liste'),
           ],
         ));
   }

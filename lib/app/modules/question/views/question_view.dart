@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:codecrafter/app/model/model_questions.dart';
@@ -175,7 +177,7 @@ class QuestionView extends GetView<QuestionController> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          question.text ?? 'Missing question text',
+                          utf8.decode(question.text.codeUnits)  ?? 'Missing question text',
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
@@ -199,7 +201,7 @@ class QuestionView extends GetView<QuestionController> {
                                   optionIndex + 1,
                                 );
                               },
-                              title: Text(question.getOption(optionNumber) ??
+                              title: Text(utf8.decode(question.getOption(optionNumber).codeUnits ) ??
                                   'Missing option'),
                             ),
                           );

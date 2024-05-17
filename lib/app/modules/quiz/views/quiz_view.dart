@@ -147,6 +147,7 @@ class QuizView extends GetView<QuizController> {
         backgroundColor: const Color(0xFFF2C4E80),
         onPressed: () {
           controller.fetchQuizzesByNiveau(niveau!) ;
+          controller.selectedQuizzes.value = {};
         },
         child: Icon(Icons.refresh, color: Colors.white),
       ): null,

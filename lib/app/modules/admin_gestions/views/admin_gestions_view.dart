@@ -35,7 +35,7 @@ class AdminGestionsView extends GetView<AdminGestionsController> {
           SizedBox(height: 70,),
             ListTile(
               tileColor: Color(0xFFF2C4E80),
-              title: Text('Gestion de catégorie',style: TextStyle(color: Color(0xFFFF1F1F2)),),
+              title: Text('Gestion de Catégorie',style: TextStyle(color: Color(0xFFFF1F1F2)),),
               onTap: () {
                 Get.to(() => GestionCategorieView(role: role, id: id));
               },
@@ -43,7 +43,7 @@ class AdminGestionsView extends GetView<AdminGestionsController> {
             SizedBox(height: 20),
             ListTile(
               tileColor: Color(0xFFF2C4E80),
-              title: Text('Gestion de l\'historique',style: TextStyle(color: Color(0xFFFF1F1F2)),),
+              title: Text('Gestion de L\'historique',style: TextStyle(color: Color(0xFFFF1F1F2)),),
               onTap: () {
                 Get.to(() => HistoriqueView(id: id, role: role));
               },
@@ -51,7 +51,7 @@ class AdminGestionsView extends GetView<AdminGestionsController> {
             SizedBox(height: 20),
             ListTile(
               tileColor: Color(0xFFF2C4E80),
-              title: Text('Gestion des utilisateurs',style: TextStyle(color: Color(0xFFFF1F1F2)),),
+              title: Text('Gestion des Utilisateurs',style: TextStyle(color: Color(0xFFFF1F1F2)),),
               onTap: () {
                 Get.to(() => ProfileView(id: id, role: role));
               },
@@ -59,11 +59,27 @@ class AdminGestionsView extends GetView<AdminGestionsController> {
             SizedBox(height: 20),
             ListTile(
               tileColor: Color(0xFFF2C4E80),
-              title: Text('Gestion des quizs',style: TextStyle(color: Color(0xFFFF1F1F2)),),
+              title: Text('Gestion des Quizs',style: TextStyle(color: Color(0xFFFF1F1F2)),),
               onTap: () {
                 Get.to(() => GestionsView(id: id, role: role));
               },
             ),
+            SizedBox(height: 250),
+            ElevatedButton(
+              onPressed: () {
+                Get.to(() => HomeView(id: id, role: role));
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFF1F1F2)), // Utilisation d'une couleur plus contrastée
+              ),
+              child: Text(
+                'Prendre Quiz',
+                style: TextStyle(color: Color(0xFFF2C4E80), // Correction de la couleur du texte
+              ),
+            ),
+
+            ),
+
           ],
         ),
       ),

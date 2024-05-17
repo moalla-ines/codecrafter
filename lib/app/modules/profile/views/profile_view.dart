@@ -65,65 +65,67 @@ class ProfileView extends GetView<ProfileController> {
             ),
             if (controller.role == "admin")
               ListTile(
-                title: Text('Gestion utilisateur'),
+                title: Text('Gestion Utilisateur'),
                 onTap: () {
-                  Get.to(() => ProfileView(role: role, id: id));
+                  Get.off(() => ProfileView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
                 title: Text('Gestion Quizs'),
                 onTap: () {
-                  Get.to(() => GestionsView(role: role, id: id));
+                  Get.off(() => GestionsView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
-                title: Text('Gestion categorie'),
+                title: Text('Gestion Categorie'),
                 onTap: () {
-                  Get.to(() => GestionCategorieView(role: role, id: id));
+                  Get.off(() => GestionCategorieView(role: role, id: id));
                 },
               ),
+
             if (controller.role == "admin")
               ListTile(
-                title: Text('Prendre quiz'),
+                title: Text('Gestion Profile'),
                 onTap: () {
-                  Get.to(() => HomeView(role: role, id: id));
-                },
-              ),
-            if (controller.role == "admin")
-              ListTile(
-                title: Text('Gestion profil'),
-                onTap: () {
-                  Get.to(() => SettingsView(role: role, id: id));
+                  Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
             if (controller.role == "admin")
               ListTile(
                 title: Text('Historique'),
                 onTap: () {
-                  Get.to(() => HistoriqueView(role: role, id: id));
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
                 },
               ),
             if (controller.role != "admin")
               ListTile(
-                title: Text('Gestion profil'),
+                title: Text('Gestion Profile'),
                 onTap: () {
-                  Get.to(() => SettingsView(role: role, id: id));
+                  Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
-            if (controller.role != "admin")
-              ListTile(
-                title: Text('Prendre quiz'),
-                onTap: () {
-                  Get.to(() => HomeView(role: role, id: id));
-                },
-              ),
+
             if (controller.role != "admin")
               ListTile(
                 title: Text('Historique'),
                 onTap: () {
-                  Get.to(() => HistoriqueView(role: role, id: id));
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
                 },
               ),
           ],
@@ -140,6 +142,7 @@ class ProfileView extends GetView<ProfileController> {
             itemBuilder: (context, index) {
               var user = controller.users[index];
               return CheckboxListTile(
+                key: UniqueKey(), // Ajoutez cette ligne
                 checkColor: Color(0xFFF2C4E80),
                 title: Text(user.email ?? '', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500)),
                 subtitle: Column(
@@ -158,12 +161,14 @@ class ProfileView extends GetView<ProfileController> {
               );
             },
           );
+
         }
       }),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFF2C4E80),
         onPressed: () {
           controller.fetchAllUsers();
+          controller.selectedUser.value =[];
         },
         child: Icon(Icons.refresh, color: Colors.white),
       ),

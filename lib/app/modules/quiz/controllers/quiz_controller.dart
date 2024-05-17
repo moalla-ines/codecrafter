@@ -11,6 +11,7 @@ class QuizController extends GetxController {
   int? id ;
   @override
   void onInit() {
+    var selectedQuizzes = 0.obs;
     super.onInit();
   }
 

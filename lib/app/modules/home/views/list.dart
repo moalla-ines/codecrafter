@@ -1,5 +1,8 @@
+import 'package:codecrafter/app/modules/gestions/views/gestion_categorie.dart';
+import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
 import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
 import 'package:codecrafter/app/modules/home/views/home_view.dart';
+import 'package:codecrafter/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -56,25 +59,71 @@ class ListViewPage extends GetView<HomeController> {
                 ),
               ),
             ),
-            ListTile(
-              title: Text('Gestion profil'),
-              onTap: () {
-                Get.to(() => SettingsView(role: role, id: id));
-              },
-            ),
-            ListTile(
-              title: Text('prondre quiz'),
-              onTap: () {
-                Get.to(() => HomeView(role: role, id: id));
-              },
-            ),
-            ListTile(
-              title: Text('Historique '),
-              onTap: () {
-                Get.to(() => HistoriqueView(role: role, id: id));
-              },
-            ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Utilisateur'),
+                onTap: () {
+                  Get.off(() => ProfileView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Quizs'),
+                onTap: () {
+                  Get.off(() => GestionsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Categorie'),
+                onTap: () {
+                  Get.off(() => GestionCategorieView(role: role, id: id));
+                },
+              ),
 
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Gestion Profil'),
+                onTap: () {
+                  Get.off(() => SettingsView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role == "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Gestion Profil'),
+                onTap: () {
+                  Get.off(() => SettingsView(role: role, id: id));
+                },
+              ),
+
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Historique'),
+                onTap: () {
+                  Get.off(() => HistoriqueView(role: role, id: id));
+                },
+              ),
+            if (controller.role != "admin")
+              ListTile(
+                title: Text('Prendre Quiz'),
+                onTap: () {
+                  Get.off(() => HomeView(role: role, id: id));
+                },
+              ),
           ],
         ),
       ),
@@ -114,9 +163,9 @@ class ListViewPage extends GetView<HomeController> {
           selectedIndex: controller.selectedIndex.value,
           onTabChange: controller.onItemTapped,
           tabs: [
-            GButton(icon: Icons.person, text: 'Profil'),
-            GButton(icon: Icons.home, text: 'Home'),
-            GButton(icon: Icons.list, text: 'List'),
+            GButton(icon: Icons.person, text: 'Profile'),
+            GButton(icon: Icons.quiz, text: 'Prendre Quiz'),
+            GButton(icon: Icons.list, text: 'Liste'),
           ],
         ));
   }

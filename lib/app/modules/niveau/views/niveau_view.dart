@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -63,11 +65,11 @@ class NiveauView extends GetView<NiveauController> {
                         _buildNiveauTile(
                           context,
                           niveau.idNiveau.toString(),
-                          niveau.name!,
+                          utf8.decode(niveau.name!.codeUnits),
                           niveau.categorie!.titreCategorie!,
                           Colors.grey.shade50,
                           imageUrl,
-                          niveau, // Pass the niveau object to the method
+                          niveau,
                         ),
                     ],
                   );
