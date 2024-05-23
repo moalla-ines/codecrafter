@@ -9,10 +9,11 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  late final TextEditingController emailController ;
-  late final TextEditingController passwordController ;
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
   int? id;
   String? role;
+  var isPasswordVisible = false.obs;
 
   @override
   void onInit() {
@@ -42,7 +43,7 @@ class LoginController extends GetxController {
       }
 
       final response = await http.post(
-        Uri.parse('http://172.20.10.2:8080/api/v1/auth/authenticate'),
+        Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
@@ -74,7 +75,6 @@ class LoginController extends GetxController {
             Get.offAll(() => HistoriqueView(id: id, role: role));
             Get.snackbar('Accès réussi', 'Bienvenue!');
           }
-
         } else {
           Get.snackbar('Error', 'Invalid token');
         }

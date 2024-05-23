@@ -170,7 +170,7 @@ class HomeView extends GetView<HomeController> {
       child: GestureDetector(
         onTap: () {
           String imageUrl = images[index];
-         Get.off(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role, id: id));
+         Get.to(() => NiveauView(imageUrl: imageUrl, index: index + 1, role: role, id: id));
         },
         child: Container(
           decoration: BoxDecoration(

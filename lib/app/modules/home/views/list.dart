@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:codecrafter/app/modules/gestions/views/gestion_categorie.dart';
 import 'package:codecrafter/app/modules/gestions/views/gestions_view.dart';
 import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
@@ -190,8 +192,8 @@ class ListViewPage extends GetView<HomeController> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}',style:TextStyle(color: Colors.black)),
-              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Niveau: ${ utf8.decode(history.quiz!.niveau!.name!.codeUnits)?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Quiz: ${utf8.decode(history.quiz!.titreQuiz!.codeUnits) ?? "Unknown"}',style:TextStyle(color: Colors.black)),
               Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],
           ),
@@ -206,8 +208,8 @@ class ListViewPage extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Email: ${history.user!.username}',style:TextStyle(color: Colors.black)),
-              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}',style:TextStyle(color: Colors.black)),
-              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Niveau: ${ utf8.decode(history.quiz!.niveau!.name!.codeUnits)?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Quiz: ${utf8.decode(history.quiz!.titreQuiz!.codeUnits) ?? "Unknown"}',style:TextStyle(color: Colors.black)),
               Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],
           ),

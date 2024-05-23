@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:codecrafter/app/modules/admin_gestions/views/admin_gestions_view.dart';
 import 'package:codecrafter/app/modules/gestions/views/gestion_categorie.dart';
 import 'package:codecrafter/app/modules/historique/views/historique_view.dart';
@@ -150,9 +152,9 @@ class GestionsView extends GetView<GestionsController> {
   Widget _buildExpansionTile(BuildContext context, Quiz quiz) {
     return ExpansionTile(
       title: Text(
-        quiz.titreQuiz ?? 'Unknown',
+       utf8.decode(quiz.titreQuiz!.codeUnits) ?? 'Unknown',
         style: TextStyle(
-          fontSize: 22,
+          fontSize: 19,
           color: Color(0xFFF2C4E80),
         ),
       ),
@@ -180,19 +182,19 @@ class GestionsView extends GetView<GestionsController> {
         ListTile(
           title: Text(
             'Categorie: ${quiz.niveau?.categorie?.titreCategorie ?? "Unknown"}',
-            style: TextStyle(color: Colors.black, fontSize: 18),
+            style: TextStyle(color: Colors.black, fontSize: 16),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${quiz.niveau?.name ?? "Unknown"}',
-                  style: TextStyle(color: Colors.black, fontSize: 18)),
-              Text('Quiz: ${quiz.titreQuiz ?? "Unknown"}',
-                  style: TextStyle(color: Colors.black, fontSize: 18)),
+              Text('Niveau: ${ utf8.decode(quiz.niveau!.name!.codeUnits)   ?? "Unknown"}',
+                  style: TextStyle(color: Colors.black, fontSize: 15)),
+              Text('Quiz: ${ utf8.decode(quiz.titreQuiz!.codeUnits)   ?? "Unknown"}',
+                  style: TextStyle(color: Colors.black, fontSize: 15)),
               Text('Description: ${quiz.description ?? "Unknown"}',
-                  style: TextStyle(color: Colors.black, fontSize: 18)),
+                  style: TextStyle(color: Colors.black, fontSize: 15)),
               Text('Nombre de questions: ${quiz.nbQuestions ?? "Unknown"}',
-                  style: TextStyle(color: Colors.black, fontSize: 18)),
+                  style: TextStyle(color: Colors.black, fontSize: 15)),
             ],
           ),
         ),

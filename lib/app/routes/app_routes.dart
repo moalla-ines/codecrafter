@@ -14,6 +14,8 @@ abstract class Routes {
   static const GESTIONS = _Paths.GESTIONS;
   static const HISTORIQUE = _Paths.HISTORIQUE;
   static const ADMIN_GESTIONS = _Paths.ADMIN_GESTIONS;
+  static const FORGET_PASSWORD = _Paths.FORGET_PASSWORD;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -29,4 +31,6 @@ abstract class _Paths {
   static const GESTIONS = '/gestions';
   static const HISTORIQUE = '/historique';
   static const ADMIN_GESTIONS = '/admin-gestions';
+  static const FORGET_PASSWORD = '/forgotPassword';
+  static const CHANGE_PASSWORD = '/change-password';
 }

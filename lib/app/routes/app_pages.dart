@@ -1,3 +1,4 @@
+import 'package:codecrafter/app/modules/resetPassword/views/changePassword_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/admin_gestions/bindings/admin_gestions_binding.dart';
@@ -22,6 +23,10 @@ import '../modules/quiz/bindings/quiz_binding.dart';
 import '../modules/quiz/views/quiz_view.dart';
 import '../modules/score/bindings/score_binding.dart';
 import '../modules/score/views/score_view.dart';
+import '../modules/resetPassword/bindings/forgetPassword_binding.dart';
+import '../modules/resetPassword/views/forgetPassword_view.dart';
+import '../modules/resetPassword/controllers/forgetPassword_controller.dart';
+import '../modules/resetPassword/views/changePassword_view.dart';
 
 part 'app_routes.dart';
 
@@ -83,8 +88,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADMIN_GESTIONS,
-      page: () =>  AdminGestionsView(),
+      page: () => AdminGestionsView(),
       binding: AdminGestionsBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGET_PASSWORD,
+      page: () => ForgotPasswordView(),
+      binding: ForgetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => ChangePasswordView(),
+      binding: ForgetPasswordBinding(),
     ),
   ];
 }

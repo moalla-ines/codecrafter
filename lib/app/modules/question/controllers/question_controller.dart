@@ -56,6 +56,7 @@ class QuestionController extends GetxController {
     final question = currentQuestion;
     if (question.selectedOption == null) {
       if (selectedOption == question.indiceoptionCorrecte) {
+
         score++;
       }
       question.selectedOption = selectedOption;

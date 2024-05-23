@@ -11,6 +11,10 @@ class InscriptionController extends GetxController {
   final password = RxString('');
   final confirmPassword = RxString('');
   final email = RxString('');
+  var isPasswordVisible = false.obs;
+  var isConfirmPasswordVisible = false.obs;
+  var isLoading = false.obs;
+
   int? id;
   String? role;
   String? validateUsername(String? value) {
@@ -29,6 +33,17 @@ class InscriptionController extends GetxController {
     return null;
   }
 
+  String? validateVerPassword(String? confirmPassword, String? password) {
+    if (confirmPassword == null || confirmPassword.isEmpty) {
+      return 'Veuillez entrer un mot de passe';
+    } else if (confirmPassword.length < 8) {
+      return 'Le mot de passe doit contenir au moins 8 caractères';
+    } else if (confirmPassword != password) {
+      return 'Les mots de passe ne correspondent pas';
+    }
+    return null;
+  }
+
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Veuillez entrer une adresse e-mail';
@@ -39,9 +54,10 @@ class InscriptionController extends GetxController {
   }
 
   void onRegisterForm() async {
+    isLoading.value = true;
     try {
       final response = await http.post(
-        Uri.parse('http://172.20.10.2:8080/api/v1/auth/register'),
+        Uri.parse('http://localhost:8080/api/v1/auth/register'),
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
@@ -54,21 +70,12 @@ class InscriptionController extends GetxController {
           'password': password.value,
         }),
       );
-
-      print(response.statusCode);
-      print(json.decode(response.body));
-
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        final token = responseData['token'] as String?;
-        final id = responseData['id'] as int?;
-        if (token != null) {
-          Get.to(() => HistoriqueView(id: id, role: role));
-          Get.snackbar('Success', 'Form submitted successfully');
-        } else {
-          Get.snackbar('Error', 'Invalid token');
-        }
+        isLoading.value = false;
+        Get.snackbar('Success',
+            'Inscription réussie. Veuillez vérifier votre e-mail pour la confirmation.');
       } else if (response.statusCode == 500) {
+        isLoading.value = false;
         Get.snackbar('Error', 'Username or Email already exists');
       } else {
         Get.snackbar('Connection Error', 'An error occurred while registering');

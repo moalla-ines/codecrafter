@@ -24,7 +24,7 @@ class AuthService extends GetxService {
   }
 
   Future<String> authenticate(String email, String password) async {
-    final url = Uri.parse('http://172.20.10.2:8080/api/v1/auth/authenticate');
+    final url = Uri.parse('http://localhost:8080/api/v1/auth/authenticate');
 
     final response = await http.post(
       url,
@@ -49,10 +49,10 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<String> register(String username, String email,
-      String password) async {
-    final url = Uri.parse('http://172.20.10.2:8080/api/v1/auth/register');
-
+  Future<String> register(
+      String username, String email, String password) async {
+    final url = Uri.parse('http://localhost:8080/api/v1/auth/register');
+    print(username);
     final response = await http.post(
       url,
       headers: <String, String>{
@@ -65,15 +65,27 @@ class AuthService extends GetxService {
       }),
     );
 
-    if (response.statusCode == 201) {
-      final responseData = jsonDecode(response.body);
-      final token = responseData['token'];
-      setToken(token);
-      return token;
+    if (response.statusCode == 200) {
+      print(
+          'Registration successful. Please check your email for verification.');
+
+      return 'Inscription réussie. Veuillez vérifier votre e-mail pour la confirmation.';
     } else if (response.statusCode == 403) {
       throw Exception('Unauthorized');
     } else {
       throw Exception('Failed to register');
+    }
+  }
+
+  Future<void> verifyEmail(String token) async {
+    final url =
+    Uri.parse('http://localhost:8080/api/v1/auth/verify?token=$token');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      print('Email verified successfully.');
+    } else {
+      throw Exception('Failed to verify email');
     }
   }
 
@@ -84,7 +96,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id/password');
+      final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
 
       final response = await http.put(
         url,
@@ -121,7 +133,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user');
+      final url = Uri.parse('http://localhost:8080/api/v1/user');
       final response = await http.get(
         url,
         headers: <String, String>{
@@ -152,7 +164,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id');
+      final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
 
       final response = await http.delete(
         url,
@@ -177,14 +189,14 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<void> updateUsers(int id, int idrole ,String name) async {
+  Future<void> updateUsers(int id, int idrole, String name) async {
     try {
       final token = await getToken();
       if (token == null) {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id');
+      final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
 
       final response = await http.put(
         url,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -124,7 +126,7 @@ class QuizView extends GetView<QuizController> {
                       buildQuizTile(
                         context,
                         quiz.idquiz.toString(),
-                        quiz.titreQuiz ?? '',
+                        utf8.decode(quiz.titreQuiz.codeUnits) ?? '',
                         quiz.description ?? '',
 
                         Colors.grey.shade50,

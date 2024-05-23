@@ -195,8 +195,8 @@ class HistoriqueView extends GetView<HistoriqueController> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Niveau: ${history.quiz?.niveau?.name != null ? utf8.decode(history.quiz!.niveau!.name!.codeUnits) : "Unknown"}', style: TextStyle(color: Colors.black)),
-              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Niveau: ${ utf8.decode(history.quiz!.niveau!.name!.codeUnits)  ?? "Unknown"}', style: TextStyle(color: Colors.black)),
+              Text('Quiz: ${ utf8.decode(history.quiz!.titreQuiz!.codeUnits)   ?? "Unknown"}',style:TextStyle(color: Colors.black)),
               Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],
           ),
@@ -211,8 +211,8 @@ class HistoriqueView extends GetView<HistoriqueController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Email: ${history.user!.username}',style:TextStyle(color: Colors.black)),
-              Text('Niveau: ${history.quiz?.niveau?.name ?? "Unknown"}',style:TextStyle(color: Colors.black)),
-              Text('Quiz: ${history.quiz?.titreQuiz ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Niveau: ${ utf8.decode(history.quiz!.niveau!.name!.codeUnits)   ?? "Unknown"}',style:TextStyle(color: Colors.black)),
+              Text('Quiz: ${utf8.decode(history.quiz!.titreQuiz!.codeUnits) ?? "Unknown"}',style:TextStyle(color: Colors.black)),
               Text('Score: ${history.result} %',style:TextStyle(color: Colors.black)),
             ],
           ),

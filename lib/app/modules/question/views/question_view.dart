@@ -300,6 +300,7 @@ class QuestionView extends GetView<QuestionController> {
     if (question.selectedOption == null) {
       controller.updateQuestion(question);
       if (selectedOption == question.indiceoptionCorrecte) {
+
         controller.score++;
 
         print("score est ${controller.score}");
