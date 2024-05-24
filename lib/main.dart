@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'codecrafter',
+      title: 'CodeCrafter',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // Définir les couleurs de texte par défaut

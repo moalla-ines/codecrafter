@@ -7,13 +7,28 @@ import 'package:get/get.dart';
 class ProfileController extends GetxController {
   final AuthService userService = Get.find();
   String? role;
-  int? id ;
-var users = [].obs;
+  int? id;
+  var users = [].obs;
   var selectedUser = <int>[].obs;
 
   @override
   void onInit() {
     super.onInit();
+  }
+
+  void updateSelectedRole(String selectedRole) {
+    print("role selectionné $selectedRole");
+    print("id selectionné ${selectedUser.single}");
+
+    if (selectedRole == "admin" || selectedRole == "user") {
+      // Mettre à jour le rôle sélectionné pour l'utilisateur avec l'ID userId
+      userService.updateUserRole(selectedUser.single, selectedRole);
+      // Actualiser l'interface utilisateur
+      update();
+    } else {
+      // Gérer une erreur ou afficher un message d'erreur
+      print("Le rôle doit être soit 'admin' soit 'user'");
+    }
   }
 
   void fetchAllUsers() async {
@@ -27,7 +42,6 @@ var users = [].obs;
     }
   }
   // Dans votre controller
-
 
   void onDeleteUsers(int id) async {
     try {
@@ -44,10 +58,8 @@ var users = [].obs;
       selectedUser.remove(id);
     } else {
       selectedUser.add(id);
-
     }
   }
-
 
   @override
   void onClose() {

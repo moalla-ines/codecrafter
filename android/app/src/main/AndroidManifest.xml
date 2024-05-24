@@ -8,7 +8,8 @@
     <application
         android:label="codecrafter"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
+        
         tools:ignore="ExtraText">
         <activity
             android:name=".MainActivity"

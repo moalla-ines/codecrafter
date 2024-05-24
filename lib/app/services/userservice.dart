@@ -24,7 +24,7 @@ class AuthService extends GetxService {
   }
 
   Future<String> authenticate(String email, String password) async {
-    final url = Uri.parse('http://localhost:8080/api/v1/auth/authenticate');
+    final url = Uri.parse('http://172.20.10.2:8080/api/v1/auth/authenticate');
 
     final response = await http.post(
       url,
@@ -51,7 +51,7 @@ class AuthService extends GetxService {
 
   Future<String> register(
       String username, String email, String password) async {
-    final url = Uri.parse('http://localhost:8080/api/v1/auth/register');
+    final url = Uri.parse('http://172.20.10.2:8080/api/v1/auth/register');
     print(username);
     final response = await http.post(
       url,
@@ -79,7 +79,7 @@ class AuthService extends GetxService {
 
   Future<void> verifyEmail(String token) async {
     final url =
-    Uri.parse('http://localhost:8080/api/v1/auth/verify?token=$token');
+    Uri.parse('http://172.20.10.2:8080/api/v1/auth/verify?token=$token');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -96,7 +96,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user/$id/password');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id/password');
 
       final response = await http.put(
         url,
@@ -126,6 +126,30 @@ class AuthService extends GetxService {
     }
   }
 
+  Future<void> updateUserRole(int userId, String newRole) async {
+    try {
+      final response = await http.put(
+        Uri.parse('http://172.20.10.2:8080/api/v1/user/$userId/role'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: newRole,
+      );
+
+      if (response.statusCode == 200) {
+        // Le rôle de l'utilisateur a été mis à jour avec succès
+      } else {
+        // Gérer l'échec de la mise à jour du rôle
+        throw Exception('Échec de la mise à jour du rôle');
+      }
+    } catch (e) {
+      // Gérer les erreurs de connexion ou de traitement
+      print('Erreur lors de la mise à jour du rôle : $e');
+      throw Exception('Erreur lors de la mise à jour du rôle');
+    }
+  }
+
   Future<List<User>> getAllUsers() async {
     try {
       final token = await getToken();
@@ -133,7 +157,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user');
       final response = await http.get(
         url,
         headers: <String, String>{
@@ -164,7 +188,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id');
 
       final response = await http.delete(
         url,
@@ -196,7 +220,7 @@ class AuthService extends GetxService {
         throw Exception('Token not found');
       }
 
-      final url = Uri.parse('http://localhost:8080/api/v1/user/$id');
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/user/$id');
 
       final response = await http.put(
         url,

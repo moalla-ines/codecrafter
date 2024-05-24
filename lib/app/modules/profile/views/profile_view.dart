@@ -38,6 +38,12 @@ class ProfileView extends GetView<ProfileController> {
               Get.snackbar('Succès', 'Utilisateur supprimé avec succès !');
             },
           ),
+          IconButton(
+            icon: Icon(Icons.edit, color: Colors.white),
+            onPressed: () {
+              _showCodeDialog(context);
+            },
+          ),
         ],
       ),
       drawer: Drawer(
@@ -84,7 +90,6 @@ class ProfileView extends GetView<ProfileController> {
                   Get.off(() => GestionCategorieView(role: role, id: id));
                 },
               ),
-
             if (controller.role == "admin")
               ListTile(
                 title: Text('Gestion Profile'),
@@ -113,7 +118,6 @@ class ProfileView extends GetView<ProfileController> {
                   Get.off(() => SettingsView(role: role, id: id));
                 },
               ),
-
             if (controller.role != "admin")
               ListTile(
                 title: Text('Historique'),
@@ -144,12 +148,19 @@ class ProfileView extends GetView<ProfileController> {
               return CheckboxListTile(
                 key: UniqueKey(), // Ajoutez cette ligne
                 checkColor: Color(0xFFF2C4E80),
-                title: Text(user.email ?? '', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500)),
+                title: Text(user.email ?? '',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500)),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(user.username ?? '', style: TextStyle(color: Colors.black)),
-                    Text('Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}', style: TextStyle(color: Colors.black)),
+                    Text(user.username ?? '',
+                        style: TextStyle(color: Colors.black)),
+                    Text(
+                        'Roles: ${user.roles?.map((role) => role.name).join(", ") ?? ''}',
+                        style: TextStyle(color: Colors.black)),
                   ],
                 ),
                 value: controller.selectedUser.contains(user.id),
@@ -161,17 +172,74 @@ class ProfileView extends GetView<ProfileController> {
               );
             },
           );
-
         }
       }),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFF2C4E80),
         onPressed: () {
           controller.fetchAllUsers();
-          controller.selectedUser.value =[];
+          controller.selectedUser.value = [];
         },
         child: Icon(Icons.refresh, color: Colors.white),
       ),
+    );
+  }
+
+  void _showCodeDialog(BuildContext context) {
+    String? selectedOption;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey.shade50,
+          title: Text('Modifier Role'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('Admin'),
+                leading: Radio(
+                  value: 'admin',
+                  groupValue: selectedOption,
+                  onChanged: (value) {
+                    selectedOption = value.toString();
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('User'),
+                leading: Radio(
+                  value: 'user',
+                  groupValue: selectedOption,
+                  onChanged: (value) {
+                    selectedOption = value.toString();
+                  },
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                if (selectedOption != null) {
+                  controller.updateSelectedRole(selectedOption!);
+                  Get.back(); // Fermer la boîte de dialogue
+                }
+              },
+              child:
+              Text('Valider', style: TextStyle(color: Color(0xFFF2C4E80))),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.back(); // Fermer la boîte de dialogue sans vérifier le code
+              },
+              child:
+              Text('Annuler', style: TextStyle(color: Color(0xFFF2C4E80))),
+            ),
+          ],
+        );
+      },
     );
   }
 }

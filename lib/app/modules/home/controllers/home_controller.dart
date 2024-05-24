@@ -17,11 +17,14 @@ class HomeController extends GetxController {
   String? role;
   int? score;
   var quizHistory = [].obs;
-int? categorie ;
+  var selectedItems = <bool>[].obs;
+  int? categorie;
+
   @override
   void onInit() {
     super.onInit();
     selectedIndex.value = 1;
+    selectedItems.value = List.filled(quizHistory.length, false);  // Initialize with false
   }
 
   void changePassword() {
@@ -33,8 +36,7 @@ int? categorie ;
       content: Column(
         children: [
           TextField(
-            decoration
-                : InputDecoration(hintText: 'Enter new password'),
+            decoration: InputDecoration(hintText: 'Enter new password'),
             obscureText: true,
             onChanged: (value) {
               newPassword = value;
@@ -95,14 +97,12 @@ int? categorie ;
       Get.snackbar('Error', 'Failed to change password');
     }
   }
+
   void fetchQuizHistoriesByUser(int? user) async {
     try {
-      print('123 $user');
-      final token = historiesService.token.value;
       final data = await historiesService.getQuizHistoryByUser(user!);
-
-      print(data);
       quizHistory.assignAll(data);
+      selectedItems.value = List.filled(quizHistory.length, false);  // Update selectedItems length
       update();
     } catch (e) {
       print('Failed to load quizHistory: $e');
@@ -111,32 +111,44 @@ int? categorie ;
 
   void getAllQuizHistories() async {
     try {
-      final token = historiesService.token.value;
       final data = await historiesService.getAllQuizHistory();
-
-      print(data);
       quizHistory.assignAll(data);
+      selectedItems.value = List.filled(quizHistory.length, false);  // Update selectedItems length
       update();
     } catch (e) {
       print('Failed to load quizHistory: $e');
     }
   }
 
+  void onDeleteHistoryQuiz(int? idquizhistory) async {
+    try {
+      await historiesService.deleteHistoryQuizzes(idquizhistory!);
+      update();
 
-    void onItemTapped(int index) {
-      print(" nanes $id, $role");
-      selectedIndex.value = index;
-      switch (index) {
-        case 0:
-          Get.off(() => SettingsView(role:  role,id: id));
-          break;
-        case 1:
-          Get.off(() =>
-              HomeView(role:  role,id: id)); // Utilise Get.to pour empiler la vue HomeView
-          break;
-        case 2:
-          Get.off(() => ListViewPage(role:  role,id: id));
-          break;
-      }
+      Get.snackbar('Succès', 'Quiz-history supprimé avec succès !');
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de la suppression du quiz-history : $e');
     }
   }
+
+  void toggleQuizSelection(int idquizhistory) {
+    selectedItems[idquizhistory] = !selectedItems[idquizhistory];
+    update();
+  }
+
+  void onItemTapped(int index) {
+    print("nanes $id, $role");
+    selectedIndex.value = index;
+    switch (index) {
+      case 0:
+        Get.off(() => SettingsView(role: role, id: id));
+        break;
+      case 1:
+        Get.off(() => HomeView(role: role, id: id)); // Utilise Get.to pour empiler la vue HomeView
+        break;
+      case 2:
+        Get.off(() => ListViewPage(role: role, id: id));
+        break;
+    }
+  }
+}

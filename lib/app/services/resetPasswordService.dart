@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class PasswordResetService {
   Future<void> resetPassword(String email) async {
-    final String url = 'http://localhost:8080/api/v1/reset-password';
+    final String url = 'http://172.20.10.2:8080/api/v1/reset-password';
 
     try {
       final response = await http.post(
@@ -36,7 +36,7 @@ class PasswordResetService {
   Future<void> checkTokenValidity(String token) async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost:8080/api/v1/reset-password?token=$token'),
+        Uri.parse('http://172.20.10.2:8080/api/v1/reset-password?token=$token'),
       );
 
       if (response.statusCode == 200) {
@@ -63,7 +63,7 @@ class PasswordResetService {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://localhost:8080/api/v1/reset-password/change-Password?token=$token&newPassword=$newPassword'),
+            'http://172.20.10.2:8080/api/v1/reset-password/change-Password?token=$token&newPassword=$newPassword'),
         headers: {
           'Content-Type': 'application/json',
         },

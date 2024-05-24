@@ -87,4 +87,35 @@ class HistoriesService extends GetxService {
       throw Exception('Failed to load quizhistory');
     }
   }
+  Future<void> deleteHistoryQuizzes(int idquizhistory) async {
+    try {
+      final token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final url = Uri.parse('http://172.20.10.2:8080/api/v1/quiz-history/$idquizhistory');
+
+      final response = await http.delete(
+        url,
+        headers: <String, String>{
+          "Accept": "application/json",
+          'Content-Type': 'application/json; charset=utf-8',
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 204) {
+        print('Quizhistory deleted successfully');
+        // Handle success as needed
+      } else if (response.statusCode == 403) {
+        throw Exception('Unauthorized');
+      } else {
+        print('Failed to delete quiz. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+    }
+  }
 }

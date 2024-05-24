@@ -43,7 +43,7 @@ class LoginController extends GetxController {
       }
 
       final response = await http.post(
-        Uri.parse('http://localhost:8080/api/v1/auth/authenticate'),
+        Uri.parse('http://172.20.10.2:8080/api/v1/auth/authenticate'),
         headers: <String, String>{
           "Accept": "application/json",
           "Content-Type": "application/json",
